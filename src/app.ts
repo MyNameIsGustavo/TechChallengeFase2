@@ -1,14 +1,15 @@
-import express from "express";
-import dotenv from "dotenv";
-import { bancoDeDados } from "./lib/pg/db";
+import express from 'express';
+import { bancoDeDados } from './lib/pg/db';
+import { papelUsuarioRotas } from './http/controller/papelUsuario/rotas';
 
-dotenv.config();
+const app = express();
+app.use(express.json());
 
-export const app = express();
-const PORT = process.env.API_PORT;
+async function main() {
+    await bancoDeDados.conectar();
+    papelUsuarioRotas(app);
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+    app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
+}
 
-bancoDeDados.getClient();
+main().catch(err => console.error(err));

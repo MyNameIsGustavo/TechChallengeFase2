@@ -8,34 +8,30 @@ datasource db {
 }
 
 model CH_usuario {
-  id              Int       @id @default(autoincrement())
-  nomeCompleto    String
-  telefone        String
-  email           String    @unique
-  senha           String
-  dataCadastro    DateTime  @default(now())
-
-  papelUsuarioID  Int
-  papelUsuario    CH_papelUsuario @relation(fields: [papelUsuarioID], references: [id])
-
-  postagens       CH_postagem[]
+  id             Int             @id @default(autoincrement())
+  nomeCompleto   String
+  telefone       String
+  email          String          @unique
+  senha          String
+  dataCadastro   DateTime        @default(now())
+  papelUsuarioID Int
+  postagens      CH_postagem[]
+  papelUsuario   CH_papelUsuario @relation(fields: [papelUsuarioID], references: [id])
 }
 
 model CH_papelUsuario {
-  id            Int          @id @default(autoincrement())
-  papelUsuario  String
-
-  usuarios      CH_usuario[]
+  id           Int          @id @default(autoincrement())
+  papelUsuario String
+  usuarios     CH_usuario[]
 }
 
 model CH_postagem {
-  id             Int       @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   titulo         String
   descricao      String
   visibilidade   Boolean
-  dataPublicacao DateTime  @default(now())
+  dataPublicacao DateTime   @default(now())
   caminhoImagem  String
-
   autorID        Int
   autor          CH_usuario @relation(fields: [autorID], references: [id])
 }

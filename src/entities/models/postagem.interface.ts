@@ -1,5 +1,5 @@
-export interface Postagem {
-    id: number;
+export interface IPostagem {
+    id?: number;
     dataPublicacao: Date;
     imagem: string;
     titulo: string;

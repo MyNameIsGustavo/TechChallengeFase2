@@ -1,4 +1,4 @@
-export interface PapelUsuario {
-    id: number;
-    papel: string;
+export interface IPapelUsuario {
+    id?: number;
+    papelUsuario: string;
 }
