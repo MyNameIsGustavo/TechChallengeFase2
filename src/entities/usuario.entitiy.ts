@@ -2,18 +2,16 @@ import type { IUsuario } from "./models/usuario.interface";
 
 export class Usuario implements IUsuario {
     id: number;
-    nome: string;
-    sobrenome: string;
+    nomeCompleto: string;
     telefone: string;
     email: string;
     papelUsuarioID: number;
     senha: string;
-    dataCadastro: Date;
+    dataCadastro?: Date;
 
     constructor(
         id: number,
-        nome: string,
-        sobrenome: string,
+        nomeCompleto: string,
         telefone: string,
         email: string,
         papelUsuarioID: number,
@@ -21,8 +19,7 @@ export class Usuario implements IUsuario {
         dataCadastro: Date
     ) {
         this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
+        this.nomeCompleto = nomeCompleto;
         this.telefone = telefone;
         this.email = email;
         this.papelUsuarioID = papelUsuarioID;

@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../repositories/pg/papelUsuario.repository';
+import { UsuarioRepository } from '../../../../repositories/pg/usuario.repository';
 
 export async function buscarPorID(request: Request, response: Response) {
 
     try {
-        const buscarPapelSchema = z.object({ id: z.coerce.number().int().positive() });
+        const buscarUsuarioSchema = z.object({ id: z.coerce.number().int().positive() });
 
-        const objPapelUsuarioRepository = new PapelUsuarioRepository();
+        const objUsuarioRepository = new UsuarioRepository();
 
-        const resultadoValidacaoSchema = buscarPapelSchema.safeParse(request.params);
+        const resultadoValidacaoSchema = buscarUsuarioSchema.safeParse(request.params);
         if (!resultadoValidacaoSchema.success) {
             return response.status(400).json({
                 mensagem: 'ID deve ser número inteiro positivo',
@@ -19,10 +19,10 @@ export async function buscarPorID(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objPapelUsuarioRepository.buscarPapelUsuarioPorID(id);
+        const resultadoProcessado = await objUsuarioRepository.buscarUsuarioPorID(id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {
-        throw new Error(`Erro ao processar a buscar por ID do papel de usuário: ${error}`);
+        throw new Error(`Erro ao processar a buscar por ID do usuário: ${error}`);
     }
 }

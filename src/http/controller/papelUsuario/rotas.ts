@@ -1,9 +1,9 @@
-import { criar } from "./criar";
 import type { Application } from 'express';
-import { deletar } from "./deletar";
-import { buscarPorID } from "./buscarPorID";
-import { buscarTodos } from "./buscarTodos";
-import { editar } from "./editar";
+import { criar } from "./in/criar";
+import { deletar } from "./in/deletar";
+import { buscarPorID } from "./in/buscarPorID";
+import { buscarTodos } from "./in/buscarTodos";
+import { editar } from "./in/editar";
 
 export async function papelUsuarioRotas(app: Application) {
     app.post('/papelUsuario', criar);

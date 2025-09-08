@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../repositories/pg/papelUsuario.repository';
+import { PapelUsuarioRepository } from '../../../../repositories/pg/papelUsuario.repository';
 
 export async function buscarTodos(request: Request, response: Response) {
 
