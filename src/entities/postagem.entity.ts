@@ -3,7 +3,7 @@ import type { IPostagem } from "./models/postagem.interface";
 export class Postagem implements IPostagem {
     id: number;
     dataPublicacao: Date;
-    imagem: string;
+    caminhoImagem: string;
     titulo: string;
     descricao: string;
     visibilidade: boolean;
@@ -12,7 +12,7 @@ export class Postagem implements IPostagem {
     constructor(
         id: number,
         dataPublicacao: Date,
-        imagem: string,
+        caminhoImagem: string,
         titulo: string,
         descricao: string,
         visibilidade: boolean,
@@ -20,7 +20,7 @@ export class Postagem implements IPostagem {
     ) {
         this.id = id;
         this.dataPublicacao = dataPublicacao;
-        this.imagem = imagem;
+        this.caminhoImagem = caminhoImagem;
         this.titulo = titulo;
         this.descricao = descricao;
         this.visibilidade = visibilidade;

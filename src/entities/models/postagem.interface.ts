@@ -1,7 +1,7 @@
 export interface IPostagem {
     id?: number;
     dataPublicacao: Date;
-    imagem: string;
+    caminhoImagem: string;
     titulo: string;
     descricao: string;
     visibilidade: boolean;
