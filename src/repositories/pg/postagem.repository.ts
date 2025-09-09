@@ -50,4 +50,31 @@ export class PostagemRepository implements IPostagemRepository {
         }
     }
 
+    async buscarPostagemPorID(id: number): Promise<IPostagem | null> {
+        try {
+            const postagemExistente = await prisma.cH_postagem.findUnique({
+                where: { id: id }
+            });
+
+            if (!postagemExistente) throw new Error(`Postagem com ID ${id} não encontrado.`);
+
+            return postagemExistente as IPostagem;
+        } catch (error) {
+            throw new Error(`Erro ao buscar postagem por ID: ${error}`);
+        }
+    }
+
+    async buscarTodasPostagens(): Promise<IPostagem[]> {
+        try {
+            const postagens = await prisma.cH_postagem.findMany();
+
+            if (postagens.length === 0) {
+                return [];
+            }
+
+            return postagens as IPostagem[];
+        } catch (error) {
+            throw new Error(`Erro ao buscar todas postagens: ${error}`);
+        }
+    }
 }
