@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PostagemRepository } from '../../../../repositories/pg/postagem.repository';
+import { fabricaCriarPostagem } from '../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem';
 
 export async function criar(request: Request, response: Response) {
     try {
@@ -12,7 +12,7 @@ export async function criar(request: Request, response: Response) {
             autorID: z.number().positive(),
         });
 
-        const objPostagemRepository = new PostagemRepository();
+        const objFabricaCriarPostagem = await fabricaCriarPostagem();
 
         const resultadoValidacaoSchema = criarPostagemSchema.safeParse(request.body);
         if (!resultadoValidacaoSchema.success) {
@@ -23,7 +23,7 @@ export async function criar(request: Request, response: Response) {
         }
 
         const novaPostagem = { dataPublicacao: new Date(), ...resultadoValidacaoSchema.data }
-        const resultadoProcessado = await objPostagemRepository.criarPostagem(novaPostagem);
+        const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

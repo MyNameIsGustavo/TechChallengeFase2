@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PostagemRepository } from '../../../../repositories/pg/postagem.repository';
+import { fabricaBuscarPorIDPostagem } from '../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorID-postagem';
 
 export async function buscarPorID(request: Request, response: Response) {
 
     try {
         const buscarPostagemSchema = z.object({ id: z.coerce.number().int().positive() });
 
-        const objPostagemRepository = new PostagemRepository();
+        const objFabricaBuscarPorIDPostagem = await fabricaBuscarPorIDPostagem();
 
         const resultadoValidacaoSchema = buscarPostagemSchema.safeParse(request.params);
         if (!resultadoValidacaoSchema.success) {
@@ -19,7 +19,7 @@ export async function buscarPorID(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objPostagemRepository.buscarPostagemPorID(id);
+        const resultadoProcessado = await objFabricaBuscarPorIDPostagem.processar(id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {
