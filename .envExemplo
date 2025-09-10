@@ -15,3 +15,9 @@ API_PORT=
 
 #Ambiente PrismaORM;
 DATABASE_URL=
+
+#Ambiente de encriptação de senha;
+BCRYPT_SALT_ROUNDS=
+
+#Ambiente de autenticação;
+SECRET_KEY=

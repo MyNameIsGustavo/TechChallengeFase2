@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../../repositories/pg/papelUsuario.repository';
+import { fabricaEditarPapelUsuario } from '../../../../use-cases/papelUsuarioUseCases/factory/fabricaEditar-papelUsuario';
 
 export async function editar(request: Request, response: Response) {
 
     try {
-        const objPapelUsuarioRepository = new PapelUsuarioRepository();
+        const objFabricaEditarPapelUsuario = await fabricaEditarPapelUsuario();
         const editarPapelSchemaParametro = z.object({ id: z.coerce.number().int().positive() });
         const editarPapelSchemaBody = z.object({ papel: z.string().min(3).max(50) });
 
@@ -28,7 +28,7 @@ export async function editar(request: Request, response: Response) {
         const { id } = resultadoValidacaoSchemaParametro.data;
         const { papel } = resultadoValidacaoSchemaBody.data;
 
-        const resultadoProcessado = await objPapelUsuarioRepository.editarPapelUsuario(id, papel);
+        const resultadoProcessado = await objFabricaEditarPapelUsuario.processar(id, papel);
         if (!resultadoProcessado) {
             return response.status(404).json({ mensagem: 'Papel de usuário não encontrado' });
         }

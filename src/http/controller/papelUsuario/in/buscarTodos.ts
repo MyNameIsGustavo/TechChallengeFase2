@@ -1,11 +1,11 @@
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../../repositories/pg/papelUsuario.repository';
+import { fabricaBuscarTodosPapelUsuario } from '../../../../use-cases/papelUsuarioUseCases/factory/fabricaBuscarTodos-papelUsuario';
 
 export async function buscarTodos(request: Request, response: Response) {
 
     try {
-        const objPapelUsuarioRepository = new PapelUsuarioRepository();
-        const resultadoProcessado = await objPapelUsuarioRepository.buscarTodosPapeisUsuarios();
+        const objFabricaBuscarTodosPapelUsuario = await fabricaBuscarTodosPapelUsuario();
+        const resultadoProcessado = await objFabricaBuscarTodosPapelUsuario.processar();
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

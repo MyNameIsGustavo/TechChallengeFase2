@@ -6,6 +6,28 @@ const prisma = new PrismaClient();
 
 export class UsuarioRepository implements IUsuarioRepository {
 
+    async editarUsuario(id: number, usuario: IUsuario): Promise<IUsuario | null> {
+        try {
+            const usuarioExistente = await prisma.cH_usuario.findUnique({ where: { id: id } });
+
+            if (!usuarioExistente) throw new Error(`Usuário com ID ${id} não encontrado.`);
+
+            const usuarioAtualizado = await prisma.cH_usuario.update({
+                data: {
+                    nomeCompleto: usuario.nomeCompleto,
+                    email: usuario.email,
+                    telefone: usuario.telefone,
+                    papelUsuarioID: usuario.papelUsuarioID,
+                    senha: usuario.senha
+                }, where: { id: id }
+            })
+            return usuarioAtualizado as IUsuario;
+        } catch (error) {
+            throw new Error(`Erro ao editar usuário: ${error}`);
+        }
+    }
+
+
     async criarUsuario(usuario: IUsuario): Promise<IUsuario | null> {
         try {
             const novoUsuario = await prisma.cH_usuario.create({

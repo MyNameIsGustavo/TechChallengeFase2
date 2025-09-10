@@ -34,7 +34,7 @@ jobs:
         # instala o Client do Prisma para conversar com o banco.
       - name: Gerar Prisma Client
         run: npx prisma generate
-
-      - name: Rodar testes
+        
         # comando definido no package.json para rodar testes
+      - name: Rodar testes
         run: npm test

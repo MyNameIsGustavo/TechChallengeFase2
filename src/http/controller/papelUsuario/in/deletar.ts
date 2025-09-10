@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../../repositories/pg/papelUsuario.repository';
+import { fabricaDeletaPapelUsuario } from '../../../../use-cases/papelUsuarioUseCases/factory/fabricaDeleta-papelUsuario';
 
 export async function deletar(request: Request, response: Response) {
 
     try {
         const deletarPapelSchema = z.object({ id: z.coerce.number().int().positive() });
 
-        const objPapelUsuarioRepository = new PapelUsuarioRepository();
+        const objFabricaDeletaPapelUsuario = await fabricaDeletaPapelUsuario();
 
         const resultadoValidacaoSchema = deletarPapelSchema.safeParse(request.params);
         if (!resultadoValidacaoSchema.success) {
@@ -19,7 +19,7 @@ export async function deletar(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objPapelUsuarioRepository.deletarPapelUsuario(id);
+        const resultadoProcessado = await objFabricaDeletaPapelUsuario.processar(id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

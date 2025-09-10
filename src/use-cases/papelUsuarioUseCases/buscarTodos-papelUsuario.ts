@@ -4,7 +4,7 @@ import type { IPapelUsuarioRepository } from "../../repositories/papelUsuario.re
 export class BuscarTodosPapeisUsuariosUseCase {
     constructor(private papelUsuarioRepository: IPapelUsuarioRepository) { }
 
-    async processar(id: number): Promise<IPapelUsuario[]> {
+    async processar(): Promise<IPapelUsuario[]> {
         return this.papelUsuarioRepository.buscarTodosPapeisUsuarios();
     }
 }

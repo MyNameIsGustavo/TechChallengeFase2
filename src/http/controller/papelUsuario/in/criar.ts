@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { PapelUsuarioRepository } from '../../../../repositories/pg/papelUsuario.repository';
+import { fabricaCriaPapelUsuario } from '../../../../use-cases/papelUsuarioUseCases/factory/fabricaCria-papelUsuario';
 
 export async function criar(request: Request, response: Response) {
 
     try {
         const criarPapelSchema = z.object({ papel: z.string().min(3).max(50) });
-
-        const objPapelUsuarioRepository = new PapelUsuarioRepository();
+        const objFabricaCriaPapelUsuario = await fabricaCriaPapelUsuario();
         
         const resultadoValidacaoSchema = criarPapelSchema.safeParse(request.body);
         if (!resultadoValidacaoSchema.success) {
@@ -19,7 +18,7 @@ export async function criar(request: Request, response: Response) {
 
         const { papel } = resultadoValidacaoSchema.data;
         
-        const resultadoProcessado = await objPapelUsuarioRepository.criarPapelUsuario(papel);
+        const resultadoProcessado = await objFabricaCriaPapelUsuario.processar(papel);
         
         return response.status(201).json(resultadoProcessado);
     } catch (error) {
