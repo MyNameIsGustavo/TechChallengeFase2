@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { UsuarioRepository } from '../../../../repositories/pg/usuario.repository';
+import { fabricaDeletarUsuarios } from '../../../../use-cases/usuarioUseCases/factory/fabricaDeleta-usuario';
 
 export async function deletar(request: Request, response: Response) {
 
     try {
         const deletarUsuarioSchema = z.object({ id: z.coerce.number().int().positive() });
 
-        const objUsuarioRepository = new UsuarioRepository();
+        const objFabricaDeletarUsuarios = await fabricaDeletarUsuarios();
 
         const resultadoValidacaoSchema = deletarUsuarioSchema.safeParse(request.params);
         if (!resultadoValidacaoSchema.success) {
@@ -19,7 +19,7 @@ export async function deletar(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objUsuarioRepository.deletarUsuario(id);
+        const resultadoProcessado = await objFabricaDeletarUsuarios.processar(id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

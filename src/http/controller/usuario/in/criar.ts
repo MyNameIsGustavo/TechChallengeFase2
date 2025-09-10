@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { UsuarioRepository } from '../../../../repositories/pg/usuario.repository';
+import { fabricaCriarUsuarios } from '../../../../use-cases/usuarioUseCases/factory/fabricaCria-usuario';
 
 export async function criar(request: Request, response: Response) {
     try {
@@ -12,7 +12,7 @@ export async function criar(request: Request, response: Response) {
             senha: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
         });
 
-        const objUsuarioRepository = new UsuarioRepository();
+        const objFabricaCriarUsuarios = await fabricaCriarUsuarios();
 
         const resultadoValidacaoSchema = usuarioSchema.safeParse(request.body);
         if (!resultadoValidacaoSchema.success) {
@@ -24,7 +24,7 @@ export async function criar(request: Request, response: Response) {
 
         const novoUsuario = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objUsuarioRepository.criarUsuario(novoUsuario);
+        const resultadoProcessado = await objFabricaCriarUsuarios.processar(novoUsuario);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

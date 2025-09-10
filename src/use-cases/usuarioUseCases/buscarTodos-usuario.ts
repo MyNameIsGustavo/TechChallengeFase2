@@ -4,7 +4,7 @@ import type { IUsuarioRepository } from "../../repositories/usuario.repository.i
 export class BuscarTodosUsuariosUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }
 
-    async processar(id: number): Promise<IUsuario[]> {
+    async processar(): Promise<IUsuario[]> {
         return this.usuarioRepository.buscarTodoUsuarios();
     }
 }

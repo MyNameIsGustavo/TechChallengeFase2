@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { UsuarioRepository } from '../../../../repositories/pg/usuario.repository';
+import { fabricaBuscarPorIDUsuario } from '../../../../use-cases/usuarioUseCases/factory/fabricaBuscarPorID-usuario';
 
 export async function buscarPorID(request: Request, response: Response) {
 
     try {
         const buscarUsuarioSchema = z.object({ id: z.coerce.number().int().positive() });
 
-        const objUsuarioRepository = new UsuarioRepository();
+        const objFabricaBuscarPorIDUsuario = await fabricaBuscarPorIDUsuario();
 
         const resultadoValidacaoSchema = buscarUsuarioSchema.safeParse(request.params);
         if (!resultadoValidacaoSchema.success) {
@@ -19,7 +19,7 @@ export async function buscarPorID(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchema.data;
 
-        const resultadoProcessado = await objUsuarioRepository.buscarUsuarioPorID(id);
+        const resultadoProcessado = await objFabricaBuscarPorIDUsuario.processar(id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {
