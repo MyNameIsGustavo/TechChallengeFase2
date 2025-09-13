@@ -4,11 +4,12 @@ import { deletar } from "./in/deletar";
 import { buscarPorID } from "./in/buscarPorID";
 import { buscarTodos } from "./in/buscarTodos";
 import { editar } from "./in/editar";
+import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 
 export async function papelUsuarioRotas(app: Application) {
-    app.post('/papelUsuario', criar);
-    app.delete('/papelUsuario/:id', deletar);
-    app.get('/papelUsuario/:id', buscarPorID)
-    app.get('/papelUsuario', buscarTodos)
-    app.put('/papelUsuario/:id', editar);
+    app.post('/papelUsuario', autenticacaoMiddleware, criar);
+    app.delete('/papelUsuario/:id', autenticacaoMiddleware, deletar);
+    app.get('/papelUsuario/:id', autenticacaoMiddleware, buscarPorID)
+    app.get('/papelUsuario', autenticacaoMiddleware, buscarTodos)
+    app.put('/papelUsuario/:id', autenticacaoMiddleware, editar);
 }
