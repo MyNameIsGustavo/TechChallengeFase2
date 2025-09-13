@@ -1,11 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import type { IPostagem } from "../../entities/models/postagem.interface";
+import type { IPostagem, IPostagemModificacao } from "../../entities/models/postagem.interface";
 import type { IPostagemRepository } from "../postagem.repository.interface";
 
 const prisma = new PrismaClient();
 
 export class PostagemRepository implements IPostagemRepository {
-
     async criarPostagem(postagem: IPostagem): Promise<IPostagem | null> {
         try {
             const novaPostagem = await prisma.cH_postagem.create({
@@ -75,6 +74,26 @@ export class PostagemRepository implements IPostagemRepository {
             return postagens as IPostagem[];
         } catch (error) {
             throw new Error(`Erro ao buscar todas postagens: ${error}`);
+        }
+    }
+
+    async editarPostagem(id: number, postagem: IPostagem): Promise<IPostagemModificacao | null> {
+        try {
+            const postagemExistente = await prisma.cH_postagem.findUnique({ where: { id: id } });
+
+            if (!postagemExistente) throw new Error(`Postagem com ID ${id} não encontrado.`);
+
+            const postagemAtualizada = await prisma.cH_postagem.update({
+                data: {
+                    titulo: postagem.titulo,
+                    descricao: postagem.descricao,
+                    visibilidade: postagem.visibilidade,
+                    caminhoImagem: postagem.caminhoImagem,
+                }, where: { id: id }
+            })
+            return postagemAtualizada as IPostagem;
+        } catch (error) {
+            throw new Error(`Erro ao editar postagem: ${error}`);
         }
     }
 }

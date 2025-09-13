@@ -1,18 +1,19 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { UsuarioRepository } from '../../../../repositories/pg/usuario.repository';
+import { fabricaEditarUsuario } from "../../../../use-cases/usuarioUseCases/factory/fabricaEditar-usuario";
 
 export async function editar(request: Request, response: Response) {
     try {
-        const objUsuarioRepository = new UsuarioRepository();
+        const fbrEditarUsuario = await fabricaEditarUsuario();
+ 
         const editarUsuarioSchemaParametro = z.object({ id: z.coerce.number().int().positive() });
-        const editarUsuarioSchemaBody = z.object({ 
+        const editarUsuarioSchemaBody = z.object({
             nomeCompleto: z.string().min(3, "Nome completo deve ter pelo menos 3 caracteres").max(100),
             telefone: z.string().min(8, "Telefone inválido").max(20),
             email: z.string().email("Email inválido"),
             papelUsuarioID: z.number().int().positive("ID do papel deve ser um número positivo"),
             senha: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
-         });
+        });
 
         const resultadoValidacaoSchemaParametro = editarUsuarioSchemaParametro.safeParse(request.params);
         if (!resultadoValidacaoSchemaParametro.success) {
@@ -32,7 +33,7 @@ export async function editar(request: Request, response: Response) {
 
         const { id } = resultadoValidacaoSchemaParametro.data;
 
-        const resultadoProcessado = await objUsuarioRepository.editarUsuario(id, resultadoValidacaoSchemaBody.data);
+        const resultadoProcessado = await fbrEditarUsuario.processar(id, resultadoValidacaoSchemaBody.data);
         if (!resultadoProcessado) {
             return response.status(404).json({ mensagem: 'Usuário não encontrado' });
         }

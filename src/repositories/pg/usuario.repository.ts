@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import type { IUsuario } from "../../entities/models/usuario.interface";
+import type {  IUsuario, IUsuarioModificacao } from "../../entities/models/usuario.interface";
 import type { IUsuarioRepository } from "../usuario.repository.interface";
 
 const prisma = new PrismaClient();
 
 export class UsuarioRepository implements IUsuarioRepository {
 
-    async editarUsuario(id: number, usuario: IUsuario): Promise<IUsuario | null> {
+    async editarUsuario(id: number, usuario: IUsuarioModificacao): Promise<IUsuarioModificacao | null> {
         try {
             const usuarioExistente = await prisma.cH_usuario.findUnique({ where: { id: id } });
 
@@ -93,6 +93,20 @@ export class UsuarioRepository implements IUsuarioRepository {
             });
 
             if (!usuarioExistente) throw new Error(`Usuário com ID ${id} não encontrado.`);
+
+            return usuarioExistente as IUsuario;
+        } catch (error) {
+            throw new Error(`Erro ao buscar usuário por ID: ${error}`);
+        }
+    }
+
+    async buscarUsuarioPorEmail(email: string): Promise<IUsuario | null> {
+        try {
+            const usuarioExistente = await prisma.cH_usuario.findUnique({
+                where: { email: email }
+            });
+
+            if (!usuarioExistente) throw new Error(`Usuário com email ${email} não encontrado.`);
 
             return usuarioExistente as IUsuario;
         } catch (error) {

@@ -7,3 +7,11 @@ export interface IPostagem {
     visibilidade: boolean;
     autorID: number;
 }
+
+export interface IPostagemModificacao {
+    id?: number;
+    caminhoImagem: string;
+    titulo: string;
+    descricao: string;
+    visibilidade: boolean;
+}
