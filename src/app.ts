@@ -1,18 +1,14 @@
-import express from 'express';
 import { bancoDeDados } from './lib/pg/db';
 import { papelUsuarioRotas } from './http/controller/papelUsuario/rotas';
 import { usuarioRotas } from './http/controller/usuario/rotas';
 import { postagemRotas } from './http/controller/postagem/rotas';
+import { app } from './servidor';
 
-const app = express();
-app.use(express.json());
-
-async function main() {
+async function appChronosAPI() {
     await bancoDeDados.conectar();
     papelUsuarioRotas(app);
     usuarioRotas(app);
     postagemRotas(app);
-    app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
 }
 
-main().catch(err => console.error(err));
+appChronosAPI()

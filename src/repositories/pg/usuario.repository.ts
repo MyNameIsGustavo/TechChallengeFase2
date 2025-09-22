@@ -27,7 +27,6 @@ export class UsuarioRepository implements IUsuarioRepository {
         }
     }
 
-
     async criarUsuario(usuario: IUsuario): Promise<IUsuario | null> {
         try {
             const novoUsuario = await prisma.cH_usuario.create({
@@ -52,7 +51,7 @@ export class UsuarioRepository implements IUsuarioRepository {
 
             return usuarioCriado as IUsuario;
         } catch (error) {
-            throw new Error(`Erro ao criar usuário: ${error}`);
+            throw new Error(`Erro ao criar usuário` + error);
         }
     }
 
@@ -110,7 +109,7 @@ export class UsuarioRepository implements IUsuarioRepository {
 
             return usuarioExistente as IUsuario;
         } catch (error) {
-            throw new Error(`Erro ao buscar usuário por ID: ${error}`);
+            throw new Error(`Erro ao buscar usuário por email: ${error}`);
         }
     }
 }

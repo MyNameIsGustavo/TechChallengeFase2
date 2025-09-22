@@ -43,5 +43,4 @@ class Database {
     }
 }
 
-// Instancia única do banco
 export const bancoDeDados = new Database();
