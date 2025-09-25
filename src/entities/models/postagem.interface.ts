@@ -1,6 +1,6 @@
 export interface IPostagem {
     id?: number;
-    dataPublicacao: Date;
+    dataPublicacao?: Date;
     caminhoImagem: string;
     titulo: string;
     descricao: string;

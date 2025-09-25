@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1758759610857" clover="3.2.0">
-  <project timestamp="1758759610858" name="All files">
-    <metrics statements="64" coveredstatements="51" conditionals="9" coveredconditionals="0" methods="11" coveredmethods="11" elements="84" coveredelements="62" complexity="0" loc="64" ncloc="64" packages="1" files="2" classes="2"/>
+<coverage generated="1758841347044" clover="3.2.0">
+  <project timestamp="1758841347044" name="All files">
+    <metrics statements="94" coveredstatements="75" conditionals="13" coveredconditionals="0" methods="16" coveredmethods="16" elements="123" coveredelements="91" complexity="0" loc="94" ncloc="94" packages="1" files="3" classes="3"/>
     <file name="papelUsuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/papelUsuario.repository.ts">
       <metrics statements="29" coveredstatements="23" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="5"/>
       <line num="3" count="1" type="stmt"/>
@@ -33,6 +33,39 @@
       <line num="73" count="1" type="stmt"/>
       <line num="78" count="1" type="stmt"/>
       <line num="80" count="0" type="stmt"/>
+    </file>
+    <file name="postagem.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/postagem.repository.ts">
+      <metrics statements="30" coveredstatements="24" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="35" count="1" type="stmt"/>
+      <line num="36" count="1" type="stmt"/>
+      <line num="40" count="1" type="cond" truecount="0" falsecount="1"/>
+      <line num="42" count="1" type="stmt"/>
+      <line num="44" count="1" type="stmt"/>
+      <line num="46" count="0" type="stmt"/>
+      <line num="51" count="1" type="stmt"/>
+      <line num="52" count="1" type="stmt"/>
+      <line num="56" count="1" type="cond" truecount="0" falsecount="1"/>
+      <line num="58" count="1" type="stmt"/>
+      <line num="60" count="0" type="stmt"/>
+      <line num="65" count="1" type="stmt"/>
+      <line num="66" count="1" type="stmt"/>
+      <line num="68" count="1" type="cond" truecount="0" falsecount="1"/>
+      <line num="69" count="0" type="stmt"/>
+      <line num="72" count="1" type="stmt"/>
+      <line num="74" count="0" type="stmt"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="80" count="1" type="stmt"/>
+      <line num="82" count="1" type="cond" truecount="0" falsecount="1"/>
+      <line num="84" count="1" type="stmt"/>
+      <line num="92" count="1" type="stmt"/>
+      <line num="94" count="0" type="stmt"/>
     </file>
     <file name="usuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/usuario.repository.ts">
       <metrics statements="35" coveredstatements="28" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="6"/>
