@@ -1,8 +1,6 @@
 import type { IPapelUsuarioRepository } from "../papelUsuario.repository.interface";
 import type { IPapelUsuario } from "../../entities/models/papelUsuario.interface";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../prismaClient";
 
 export class PapelUsuarioRepository implements IPapelUsuarioRepository {
 

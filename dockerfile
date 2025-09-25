@@ -12,11 +12,11 @@ COPY . .
 # Prisma client
 RUN npx prisma generate
 
-# Migrate do banco
-RUN npx prisma migrate dev --name init
+# Build do TypeScript
+RUN npm run build
 
 # Expõe a porta
 EXPOSE 3000
 
-# Comando de inicialização
-CMD ["npm", "start"]
+# Comando para rodar a aplicação
+CMD ["node", "dist/index.js"]

@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import type {  IUsuario, IUsuarioModificacao } from "../../entities/models/usuario.interface";
+import type { IUsuario, IUsuarioModificacao } from "../../entities/models/usuario.interface";
 import type { IUsuarioRepository } from "../usuario.repository.interface";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../prismaClient";
 
 export class UsuarioRepository implements IUsuarioRepository {
 
@@ -71,7 +69,7 @@ export class UsuarioRepository implements IUsuarioRepository {
         }
     }
 
-    async buscarTodoUsuarios(): Promise<IUsuario[]> {
+    async buscarTodosUsuarios(): Promise<IUsuario[]> {
         try {
             const usuarios = await prisma.cH_usuario.findMany();
 

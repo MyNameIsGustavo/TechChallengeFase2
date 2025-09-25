@@ -36,5 +36,5 @@ jobs:
         run: npx prisma generate
         
         # comando definido no package.json para rodar testes
-        #- name: Rodar testes
-        #  run: npm test
+      - name: Rodar testes
+        run: npm test

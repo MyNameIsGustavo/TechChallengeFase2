@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     depends_on:
       - db_chronos
+    command: >
+      sh -c "npx prisma migrate deploy && npm start"
 
   pgadmin:
     image: dpage/pgadmin4

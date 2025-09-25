@@ -1,113 +1,143 @@
-import { UsuarioRepository } from "../../../repositories/pg/usuario.repository";
+import { PapelUsuarioRepository } from "../../../repositories/pg/papelUsuario.repository";
+import { IPapelUsuario } from "../../../entities/models/papelUsuario.interface";
 import { prisma } from "../../../prismaClient";
 
 jest.mock("../../../prismaClient", () => ({
   prisma: {
-    cH_usuario: {
+    cH_papelUsuario: {
+      create: jest.fn(),
+      findMany: jest.fn(),
       findUnique: jest.fn(),
       delete: jest.fn(),
-      findMany: jest.fn(),
-      create: jest.fn()
+      update: jest.fn()
     },
   },
 }));
 
-describe("UsuarioRepository - deletarUsuario", () => {
-  let repo: UsuarioRepository;
+describe("repositories/pg/papelUsuario.repository.ts - criarPapelUsuario", () => {
+  let papelUsuarioRepositorio: PapelUsuarioRepository;
 
   beforeEach(() => {
-    repo = new UsuarioRepository();
+    papelUsuarioRepositorio = new PapelUsuarioRepository();
     jest.clearAllMocks();
   });
 
+  it("Deve retornar um papel usuário cadastrado", async () => {
+    /*Arranjar*/
+    const papelUsuarioMockado: IPapelUsuario = {
+      id: 1,
+      papelUsuario: "Coordenador",
+    };
 
-  it("deve lançar erro se o usuário não for encontrado", async () => {
-    (prisma.cH_usuario.findUnique as jest.Mock).mockResolvedValue(null);
+    /*Executar*/
+    (prisma.cH_papelUsuario.create as jest.Mock).mockResolvedValue(papelUsuarioMockado);
+    const resultadoMockado = await papelUsuarioRepositorio.criarPapelUsuario(papelUsuarioMockado.papelUsuario);
 
-    await expect(repo.deletarUsuario(999)).rejects.toThrow(
-      "Erro ao deletar usuário: Error: Usuário com ID 999 não encontrado."
-    );
-    expect(prisma.cH_usuario.delete).not.toHaveBeenCalled();
-  });
-});
-
-describe("UsuarioRepository - buscarUsuarioPorID", () => {
-  let repo: UsuarioRepository;
-
-  beforeEach(() => {
-    repo = new UsuarioRepository();
-    jest.clearAllMocks();
-  });
-
-  /*it("deve retornar usuário existente pelo ID", async () => {
-    const usuarioFake = { id: 1, nome: "Maria" };
-    (prisma.cH_usuario.findUnique as jest.Mock).mockResolvedValue(usuarioFake);
-
-    const resultado = await repo.buscarUsuarioPorID(1);
-
-    expect(prisma.cH_usuario.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
-    expect(resultado).toEqual(usuarioFake);
-  });*/
-
-  it("deve lançar erro se o usuário não for encontrado", async () => {
-    (prisma.cH_usuario.findUnique as jest.Mock).mockResolvedValue(null);
-
-    await expect(repo.buscarUsuarioPorID(999)).rejects.toThrow(
-      "Erro ao buscar usuário por ID: Error: Usuário com ID 999 não encontrado."
-    );
-  });
-});
-
-/*describe("UsuarioRepository - buscarUsuarioPorEmail", () => {
-  let repo: UsuarioRepository;
-
-  beforeEach(() => {
-    repo = new UsuarioRepository();
-    jest.clearAllMocks();
-  });
-
-  it("deve lançar erro se o usuario por e-mail não for encontrado", async () => {
-    (prisma.cH_usuario.findUnique as jest.Mock).mockResolvedValue(null);
-
-    await expect(repo.buscarUsuarioPorEmail('teste@teste.com.br')).rejects.toThrow(
-      "Erro ao buscar usuário por email: Error: Usuário com email teste@teste.com.br não encontrado."
-    );
-  })
-});*/
-
-/*describe("UsuarioRepository - CriarUsuario", () => {
-  let repo: UsuarioRepository;
-  const usuarioFake = {
-    id: 1,
-    nomeCompleto: "Gustavo",
-    senha: "33234712",
-    email: "grmaia.rochamaia@gmail.com",
-    telefone: "15 99260-4299",
-    papelUsuarioID: 1,
-    dataCadastro: new Date()
-  };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    (prisma.cH_usuario.create as jest.Mock).mockResolvedValue(usuarioFake);
-    repo = new UsuarioRepository();
-  });
-
-  it("Deve retornar um usuário cadastrado", async () => {
-    const resultado = await repo.criarUsuario(usuarioFake);
-
-    // Verifica se o prisma foi chamado corretamente
-    expect(prisma.cH_usuario.create).toHaveBeenCalledWith({
-      data: {
-        nomeCompleto: usuarioFake.nomeCompleto,
-        senha: usuarioFake.senha,
-        email: usuarioFake.email,
-        telefone: usuarioFake.telefone,
-        papelUsuarioID: usuarioFake.papelUsuarioID
-      }
+    /*Afirmar*/
+    expect(prisma.cH_papelUsuario.create).toHaveBeenCalledWith({
+      data: { papelUsuario: papelUsuarioMockado.papelUsuario },
     });
-
-    // Verifica se o retorno tem as propriedades esperadas
-    expect(resultado).toEqual(usuarioFake);
+    expect(resultadoMockado).toEqual(papelUsuarioMockado);
   });
-})*/
+})
+
+describe("repositories/pg/papelUsuario.repository.ts - buscarTodosPapeisUsuarios", () => {
+  let papelUsuarioRepositorio: PapelUsuarioRepository;
+
+  beforeEach(() => {
+    papelUsuarioRepositorio = new PapelUsuarioRepository();
+    jest.clearAllMocks();
+  });
+
+  it("Deve retornar papeis usuários sem parâmetros.", async () => {
+    /*Arranjar*/
+    const papeisUsuariosMockado = [
+      { id: 1, papel: "Professor" },
+      { id: 2, papel: "Coordenador" },
+      { id: 3, papel: "Aluno" }
+    ];
+
+    /*Executar*/
+    (prisma.cH_papelUsuario.findMany as jest.Mock).mockResolvedValue(papeisUsuariosMockado);
+    const resultadoMock = await papelUsuarioRepositorio.buscarTodosPapeisUsuarios();
+
+    /*Afirmar*/
+    expect(prisma.cH_papelUsuario.findMany).toHaveBeenCalledWith();
+    expect(resultadoMock).toEqual(papeisUsuariosMockado);
+  });
+});
+
+describe("repositories/pg/papelUsuario.repository.ts - buscarPapelUsuarioPorID", () => {
+  let papelUsuarioRepositorio: PapelUsuarioRepository;
+
+  beforeEach(() => {
+    papelUsuarioRepositorio = new PapelUsuarioRepository();
+    jest.clearAllMocks();
+  });
+
+  it("Deve retornar um papel usuário com o ID fornecido.", async () => {
+    /*Arranjar*/
+    const papelUsuarioMockado = { id: 1, papel: "Professor" };
+
+    /*Executar*/
+    (prisma.cH_papelUsuario.findUnique as jest.Mock).mockResolvedValue(papelUsuarioMockado);
+    const resultadoMock = await papelUsuarioRepositorio.buscarPapelUsuarioPorID(papelUsuarioMockado.id);
+
+    /*Afirmar*/
+    expect(prisma.cH_papelUsuario.findUnique).toHaveBeenCalledWith({
+      where: { id: papelUsuarioMockado.id },
+    });
+    expect(resultadoMock).toEqual(papelUsuarioMockado);
+  });
+});
+
+describe("repositories/pg/papelUsuario.repository.ts - deletarPapelUsuario", () => {
+  let papelUsuarioRepositorio: PapelUsuarioRepository;
+
+  beforeEach(() => {
+    papelUsuarioRepositorio = new PapelUsuarioRepository();
+    jest.clearAllMocks();
+  });
+
+  it("Deve retornar um papel usuário deletado com ID fornecido.", async () => {
+    /*Arranjar*/
+    const papelUsuarioMockado = { id: 1, papel: "Professor" };
+
+    /*Executar*/
+    (prisma.cH_papelUsuario.delete as jest.Mock).mockResolvedValue(papelUsuarioMockado);
+    const resultadoMock = await papelUsuarioRepositorio.deletarPapelUsuario(papelUsuarioMockado.id);
+
+    /*Afirmar*/
+    expect(prisma.cH_papelUsuario.delete).toHaveBeenCalledWith({ where: { id: papelUsuarioMockado.id } });
+    expect(resultadoMock).toMatchObject(papelUsuarioMockado);
+  });
+});
+
+
+describe("repositories/pg/papelUsuario.repository.ts - editarPapelUsuario", () => {
+  let papelUsuarioRepositorio: PapelUsuarioRepository;
+
+  beforeEach(() => {
+    papelUsuarioRepositorio = new PapelUsuarioRepository();
+    jest.clearAllMocks();
+  });
+
+  it("Deve retornar um papel usuário editado", async () => {
+    /*Arranjar*/
+    const papelUsuarioMockado: IPapelUsuario = {
+      id: 1,
+      papelUsuario: "Aluno",
+    };
+
+    /*Executar*/
+    (prisma.cH_papelUsuario.update as jest.Mock).mockResolvedValue(papelUsuarioMockado);
+    const resultadoMockado = await papelUsuarioRepositorio.editarPapelUsuario(papelUsuarioMockado.id!, papelUsuarioMockado.papelUsuario);
+
+    /*Afirmar*/
+    expect(prisma.cH_papelUsuario.update).toHaveBeenCalledWith({
+      where: { id: papelUsuarioMockado.id },
+      data: { papelUsuario: papelUsuarioMockado.papelUsuario },
+    });
+    expect(resultadoMockado).toEqual(papelUsuarioMockado);
+  });
+})

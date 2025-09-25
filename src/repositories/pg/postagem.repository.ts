@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../prismaClient";
 import type { IPostagem, IPostagemModificacao } from "../../entities/models/postagem.interface";
 import type { IPostagemRepository } from "../postagem.repository.interface";
-
-const prisma = new PrismaClient();
 
 export class PostagemRepository implements IPostagemRepository {
     async criarPostagem(postagem: IPostagem): Promise<IPostagem | null> {

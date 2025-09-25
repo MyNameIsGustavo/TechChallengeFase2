@@ -5,6 +5,6 @@ export class BuscarTodosUsuariosUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }
 
     async processar(): Promise<IUsuario[]> {
-        return this.usuarioRepository.buscarTodoUsuarios();
+        return this.usuarioRepository.buscarTodosUsuarios();
     }
 }
