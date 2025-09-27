@@ -14,19 +14,15 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      # 2️⃣ Instalar Docker
-      - name: Instalar Docker
-        uses: docker/setup-docker@v3
-
-      # 3️⃣ Instalar docker-compose
+      # 2️⃣ Instalar docker-compose
       - name: Instalar docker-compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      # 4️⃣ Criar .env
-      - name: Criar .env para docker-compose
+      # 3️⃣ Criar .env para docker-compose
+      - name: Criar .env
         run: |
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
@@ -40,20 +36,20 @@ jobs:
           echo "BCRYPT_SALT_ROUNDS=${{ secrets.BCRYPT_SALT_ROUNDS }}" >> .env
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
 
-      # 5️⃣ Login no Docker Hub
+      # 4️⃣ Login no Docker Hub
       - name: Login no Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 6️⃣ Build e Push da imagem API
+      # 5️⃣ Build e Push da imagem API
       - name: Build e Push da imagem
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest
 
-      # 7️⃣ Rodar containers com docker-compose
+      # 6️⃣ Rodar containers com docker-compose
       - name: Build e Deploy com docker-compose
         run: |
           docker-compose up -d --build
