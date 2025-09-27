@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   api_chronos:
     container_name: api_chronos
@@ -8,8 +10,23 @@ services:
       - .env
     depends_on:
       - db_chronos
-    command: >
-      sh -c "npx prisma migrate deploy && npm start"
+    networks:
+      - chronos_network
+    command: sh -c "npx prisma migrate deploy && npm start"
+
+  db_chronos:
+    container_name: postgres
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chronos_network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -21,19 +38,12 @@ services:
       - "8080:80"
     depends_on:
       - db_chronos
-
-  db_chronos:
-    container_name: db_chronos
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chronos_network
 
 volumes:
   postgres_data:
-    driver: local
+
+networks:
+  chronos_network:
+    driver: bridge
