@@ -10,6 +10,8 @@ services:
       - db_chronos
     command: >
       sh -c "npx prisma migrate deploy && npm start"
+    networks:
+      - chronos_network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -21,6 +23,8 @@ services:
       - "8080:80"
     depends_on:
       - db_chronos
+    networks:
+      - chronos_network
 
   db_chronos:
     container_name: postgres
@@ -33,7 +37,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chronos_network
 
 volumes:
   postgres_data:
     driver: local
+
+networks:
+  chronos_network:
+    driver: bridge

@@ -10,36 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Clonar repositório
       - name: Checkout código
         uses: actions/checkout@v3
 
+      # 2️⃣ Login no Docker Hub
       - name: Login no Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build da imagem
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest .
-
-      - name: Push da imagem
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest
-
-      - name: Criar .env para container
+      # 3️⃣ Criar arquivo .env
+      - name: Criar .env para docker-compose
         run: |
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
           echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
           echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}" >> .env
+          echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> .env
+          echo "API_PORT=3000" >> .env
+          echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@${{ secrets.POSTGRES_HOST }}:${{ secrets.POSTGRES_PORT }}/${{ secrets.POSTGRES_DB }}?schema=public" >> .env
           echo "BCRYPT_SALT_ROUNDS=${{ secrets.BCRYPT_SALT_ROUNDS }}" >> .env
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
 
-      - name: Rodar container
+      # 4️⃣ Build e deploy usando docker-compose
+      - name: Build e Deploy com docker-compose
         run: |
-          docker run --env-file .env -d \
-            -p 3000:3000 \
-            ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest
+          docker-compose up -d --build
