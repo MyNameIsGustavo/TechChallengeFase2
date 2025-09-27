@@ -39,4 +39,4 @@ jobs:
       # 4️⃣ Build e deploy usando docker-compose
       - name: Build e Deploy com docker-compose
         run: |
-          docker-compose up
+          docker compose up -d --build
