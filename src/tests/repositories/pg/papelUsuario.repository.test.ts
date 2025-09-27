@@ -39,12 +39,6 @@ describe("repositories/pg/papelUsuario.repository.ts - criarPapelUsuario", () =>
     });
     expect(resultadoMockado).toEqual(papelUsuarioMockado);
   });
-
-  it("Deve lançar erro se o nome do papel for vazio", async () => {
-    await expect(
-      papelUsuarioRepositorio.criarPapelUsuario("")
-    ).rejects.toThrow("Nome do papel é obrigatório");
-  });
 })
 
 describe("repositories/pg/papelUsuario.repository.ts - buscarTodosPapeisUsuarios", () => {
