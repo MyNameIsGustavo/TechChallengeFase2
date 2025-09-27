@@ -7,6 +7,7 @@ WORKDIR /app
 # Copia os arquivos do projeto
 COPY package*.json ./
 RUN npm install
+
 COPY . .
 
 # Prisma client
@@ -19,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Comando para rodar a aplicação
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/app.js"]

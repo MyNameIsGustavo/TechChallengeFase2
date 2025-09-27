@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "node16",
+    "moduleResolution": "node16",
     "ignoreDeprecations": "5.0",
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -22,7 +25,7 @@
     "moduleDetection": "force",
   },
   "include": [
-    "src",
+    "src/**/*",
     "tests"
   ],
   "exclude": [
