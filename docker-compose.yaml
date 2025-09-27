@@ -23,7 +23,7 @@ services:
       - db_chronos
 
   db_chronos:
-    container_name: postgres
+    container_name: db_chronos
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
