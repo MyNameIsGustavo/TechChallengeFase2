@@ -13,7 +13,6 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      # 4️⃣ Login no Docker Hub
       - name: Login no Docker Hub
         uses: docker/login-action@v2
         with:

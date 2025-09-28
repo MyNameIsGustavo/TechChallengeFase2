@@ -2,6 +2,7 @@ import { bancoDeDados } from './lib/pg/db';
 import { papelUsuarioRotas } from './http/controller/papelUsuario/rotas';
 import { usuarioRotas } from './http/controller/usuario/rotas';
 import { postagemRotas } from './http/controller/postagem/rotas';
+import { prometheusConfigRota } from './http/controller/prometheus/rotas';
 import { app } from './servidor';
 
 async function appChronosAPI() {
@@ -9,6 +10,7 @@ async function appChronosAPI() {
     papelUsuarioRotas(app);
     usuarioRotas(app);
     postagemRotas(app);
+    prometheusConfigRota();
 }
 
 appChronosAPI()
