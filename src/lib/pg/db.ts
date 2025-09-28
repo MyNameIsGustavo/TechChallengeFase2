@@ -6,14 +6,21 @@ dotenv.config();
 class Database {
     private pool: Pool;
     private client: PoolClient | null = null;
-    
+
     constructor() {
-        const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}?sslmode=require`;
+        const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}?sslmode=${process.env.SSL_MODE}`;
         if (!connectionString) {
             throw new Error('DATABASE_URL não definida no .env');
         }
-        
-        this.pool = new Pool({ connectionString });
+
+        const sslConfig = process.env.SSL_MODE === 'require'
+            ? { rejectUnauthorized: false }
+            : false;
+
+        this.pool = new Pool({
+            connectionString,
+            ssl: sslConfig
+        });
     }
 
     async conectar(): Promise<void> {
