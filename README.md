@@ -81,9 +81,9 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 - Docker: 28.3.2
 - Git: 2.43.0
 
-1. Clonar o repositório disponível no GitHub através do link: 
+1. Clonar o repositório disponível no GitHub através do link: https://github.com/MyNameIsGustavo/TechChallengeFase2.git
 
-2. Criar um arquivo ".env" na raiz do projeto e preencher as chaves conforme ".envExemplo" já disponibilizado originalmente no projeto.
+2. Criar um arquivo ".env" e um ".env.local" na raiz do projeto e preencher as chaves conforme ".envExemplo" já disponibilizado originalmente no projeto.
 
 3. Criar um arquivo ".gitignore" na raiz do projeto, incluindo: /node_modules, .env, /src/generated/prisma.
 
@@ -192,10 +192,12 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 
 ## Bônus
 
-- Administrador Postgrees;
+- Administrador Postgrees (PgAdmin);
 - Criptografia de senhas utilizando o bcrypt;
 - Autenticação utilizando JsonWebToken;
 - CRUD de usuários;
 - CRUD de papéis de usuários;
+- Gerenciamento de Log's com Prometheus;
+- Dashboards de visualização com Grafana;
 
 ## Conclusão
