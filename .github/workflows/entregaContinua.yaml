@@ -24,8 +24,3 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest
-
-      # 6️⃣ Rodar containers com docker-compose
-      - name: Build e Deploy com docker-compose
-        run: |
-          docker-compose up -d --build
