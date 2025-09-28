@@ -22,8 +22,23 @@ export function configuracaoSwagger(app: Express) {
                     url: "https://chronos-latest.onrender.com",
                 },
             ],
+            components: {
+                securitySchemes: {
+                    bearerAuth: {
+                        type: "http",
+                        scheme: "bearer",
+                        bearerFormat: "JWT",
+                    },
+                },
+            },
+            security: [
+                {
+                    bearerAuth: [],
+                },
+            ],
         },
-        apis: ["./src/http/controller/**/*.ts"],
+        apis: ["./src/http/controller/**/*.ts", "./dist/http/controller/**/*.js"]
+
     };
 
     const specs = swaggerJsdoc(configuracaoSwagger);
