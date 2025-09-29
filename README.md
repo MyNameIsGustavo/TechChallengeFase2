@@ -71,7 +71,9 @@ O projeto **Chronos** consiste em uma plataforma de postagem de conteúdo voltad
   Permite buscar posts por palavras-chave, retornando posts que contenham o termo no título ou conteúdo.
 
 ## Fluxograma Chronos
-*(Inserir imagem ou link do fluxograma do sistema aqui)*
+![c36bd9cf-72f4-4d31-89f4-ee9552a6956a](https://github.com/user-attachments/assets/4a5f3042-2f2e-4622-a694-50e83c877219)
+![6a560e47-68a0-4b5e-a6be-d0a9ee934efc](https://github.com/user-attachments/assets/5fa11cb7-dff8-48aa-915d-53d937ce411e)
+![WhatsApp Image 2025-09-29 at 08 13 40](https://github.com/user-attachments/assets/d8f726fe-0147-47d2-8b63-e8891f916047)
 
 ## Configuração de ambiente.
 
@@ -199,5 +201,6 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 - CRUD de papéis de usuários;
 - Gerenciamento de Log's com Prometheus;
 - Dashboards de visualização com Grafana;
+
 
 ## Conclusão
