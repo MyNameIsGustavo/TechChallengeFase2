@@ -1,7 +1,7 @@
 # Chronos - Projeto
 
 ## Sumário
-1. Integrantes do Grupo  
+1. Membro do Grupo 52 
 2. Definição do Projeto  
 3. Requisitos Técnicos 
 4. Requisitos Funcionais 
@@ -14,7 +14,7 @@
 11. Bônus
 12. Conclusão
 
-## Integrantes - Chronos
+## Membro do Grupo 52
 - Gustavo Rocha - RM365401
 
 ## Definição do Projeto
@@ -71,8 +71,48 @@ O projeto **Chronos** consiste em uma plataforma de postagem de conteúdo voltad
   Permite buscar posts por palavras-chave, retornando posts que contenham o termo no título ou conteúdo.
 
 ## Fluxograma Chronos
-![c36bd9cf-72f4-4d31-89f4-ee9552a6956a](https://github.com/user-attachments/assets/4a5f3042-2f2e-4622-a694-50e83c877219)
+
+### Fluxo da aplicação - Chronos.
+Esse diagrama detalha o funcionamento interno da aplicação Chronos, mostrando o caminho de uma requisição.
+
+- Client/HTTP → Pode ser Postman, browser ou frontend, que inicia a requisição.
+
+- Controller/HTTP → Camada que recebe a requisição, aplica middlewares e prepara a resposta.
+
+- Aplica caso de uso → Onde a regra de negócio correspondente à requisição é acionada.
+
+- Lógica de negócios → Coordena regras específicas e interações entre os repositórios.
+
+- Persiste dados → Parte responsável por salvar ou atualizar informações no banco.
+
+- Repositórios → Comunicação direta com o PostgreSQL e suporte via PgAdmin.
+
+- Além disso, o diagrama destaca as tecnologias/ferramentas usadas em cada etapa: Express, Swagger, Prometheus, Grafana, ZOD (camada de controller e monitoramento), JWT, Bcrypt (na lógica de negócios), PostgreSQL e PgAdmin (persistência de dados).
+
 ![6a560e47-68a0-4b5e-a6be-d0a9ee934efc](https://github.com/user-attachments/assets/5fa11cb7-dff8-48aa-915d-53d937ce411e)
+
+### Pipeline da aplicação - Chronos.
+1. Desenvolvimento local: Cada feature é desenvolvida isoladamente.
+
+2. GitHub – Integração Contínua:
+    - Commits são enviados para o repositório.
+  - Workflow executa:
+    - Configuração do ambiente Ubuntu;
+
+    - Instalação do Node.js e dependências;
+
+    - Interação do Prisma com o PostgreSQL;
+
+    - Execução de testes unitários.
+
+3. GitHub – Entrega Contínua:
+    - Faz o build da aplicação Chronos;
+    - Realiza login no DockerHub;
+    - Cria a imagem Docker e faz push para o DockerHub.
+    - DockerHub → Guarda a imagem da aplicação.
+
+4. Deploy no Render: A aplicação é implantada no serviço Render a partir da imagem do DockerHub.
+
 ![WhatsApp Image 2025-09-29 at 08 13 40](https://github.com/user-attachments/assets/d8f726fe-0147-47d2-8b63-e8891f916047)
 
 ## Configuração de ambiente.
@@ -184,7 +224,19 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 - Testes unitários e integração contínua  
 
 ## Relatos dos Desafios Superados
-- Gustavo Rocha - RM365401:
+- Gustavo Rocha - RM365401: Durante a Fase 02 da pós-tech da FIAP, focada em Back-end e Qualidade, enfrentei diversos obstáculos, que consegui superar. Entre as principais dificuldades, a aprendizagem de novos conceitos e tecnologias em um curto período de tempo, como por exemplo: Docker, CI/CD no GitHub Actions, integração com o banco PostgreSQL no Render, Prometheus, Grafana e testes unitários.
+
+Configuração de ambiente do Docker: A configuração inicial do Docker/WSL (Linux), dockerfile e o docker-compose com sua integração com o projeto foi desafiadora. Precisei refazer o processo várias vezes para compreender plenamente seu funcionamento.
+
+Pipeline de projeto: Foi meu primeiro contato com o GitHub Actions para CI/CD. Nesse processo, executei múltiplos testes até identificar e corrigir erros, garantindo o funcionamento correto da pipeline.
+
+Processo de configuração do banco de dados: No início, utilizei o banco PostgreSQL localmente. Porém, no momento final do projeto, durante o deploy da aplicação, percebi que o banco precisava estar disponível no Render para acesso pela API. Esse foi um desafio significativo, pois foi minha primeira experiência com essa situação.
+
+Gerenciamento de logs: O Prometheus e o Grafana também foram conceitos novos para mim nesta fase. Foi muito gratificante conseguir adicioná-los ao projeto, especialmente considerando que estavam fora do escopo técnico inicial — representando um diferencial adicional entregue.
+
+Qualidade do código: Os testes unitários demandaram mais tempo de desenvolvimento, pois tratam-se de um tema muito extenso. Precisei estudar profundamente sobre o assunto e apliquei a técnica dos três A's (Arrange, Act, Assert) para criar testes padronizados e consistentes na aplicação garantindo o mínimo solicitado no escopo técnico de um coverage de, no mínimo, 20% da aplicação.
+
+Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 02 foi um grande desafio. No entanto, apesar das dificuldades, finalizei o projeto entregando todos os requisitos técnicos previstos, além de adicionar tecnologias e funcionalidades extras que enriqueceram a entrega final.
 
 ## Entregas
 
@@ -201,6 +253,5 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 - CRUD de papéis de usuários;
 - Gerenciamento de Log's com Prometheus;
 - Dashboards de visualização com Grafana;
-
 
 ## Conclusão
