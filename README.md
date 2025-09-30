@@ -103,7 +103,7 @@ Esse diagrama detalha o funcionamento interno da aplicação Chronos, mostrando 
 
     - Interação do Prisma com o PostgreSQL;
 
-    - Execução de testes unitários.
+    - Execução de testes unitários
 
 3. GitHub – Entrega Contínua:
     - Faz o build da aplicação Chronos;
