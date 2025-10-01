@@ -94,4 +94,22 @@ export class PostagemRepository implements IPostagemRepository {
             throw new Error(`Erro ao editar postagem: ${error}`);
         }
     }
+
+    async buscarPostagensPorPalavraChave(palavraChave: string): Promise<IPostagem[]> {
+        try {
+            const postagens = await prisma.cH_postagem.findMany({
+                where: {
+                    OR: [
+                        { titulo: { contains: palavraChave, mode: 'insensitive' } },
+                        { descricao: { contains: palavraChave, mode: 'insensitive' } }
+                    ]
+                }
+            });
+            if (postagens.length === 0) return [];
+
+            return postagens as IPostagem[];
+        } catch (error) {
+            throw new Error(`Erro ao buscar postagem por palavra chave: ${error}`);
+        }
+    }
 }
