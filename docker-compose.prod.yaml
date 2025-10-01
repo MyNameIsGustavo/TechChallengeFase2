@@ -6,14 +6,14 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=PRODUCTION
     env_file:
-      - .env
+      - .env.prod
     depends_on:
       - db_chronos
     networks:
       - chronos_network
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
     command: sh -c "npx prisma migrate deploy && npm start"
 
   db_chronos:
@@ -29,20 +29,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - chronos_network
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pg_admin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "8080:80"
-    depends_on:
-      - db_chronos
-    networks:
-      - chronos_network
-
   prometheus:
     image: prom/prometheus
     ports:
@@ -65,7 +51,6 @@ services:
 
 volumes:
   postgres_data:
-
 
 networks:
   chronos_network:

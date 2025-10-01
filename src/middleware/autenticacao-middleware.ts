@@ -2,7 +2,8 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
+dotenv.config({ path: envFile });
 
 export function autenticacaoMiddleware(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers["authorization"];

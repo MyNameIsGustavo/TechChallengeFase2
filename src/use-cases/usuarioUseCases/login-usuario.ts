@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
+dotenv.config({ path: envFile });
 
 export class LoginUsuarioUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }

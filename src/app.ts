@@ -7,7 +7,7 @@ import { app } from './servidor';
 import { configuracaoSwagger } from './swagger';
 import dotenv from 'dotenv';
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
 dotenv.config({ path: envFile });
 
 async function appChronosAPI() {

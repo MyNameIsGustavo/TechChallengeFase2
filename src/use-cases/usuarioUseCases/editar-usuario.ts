@@ -3,7 +3,8 @@ import type { IUsuarioRepository } from "../../repositories/usuario.repository.i
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
+dotenv.config({ path: envFile });
 
 export class EditarUsuarioUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }

@@ -69,7 +69,7 @@ export async function usuarioRotas(app: Application) {
      *       400:
      *         description: Erro de validação.
      */
-    app.post('/usuarios', autenticacaoMiddleware, criar);
+    app.post('/usuarios', criar);
 
     /**
     * @openapi
@@ -82,7 +82,7 @@ export async function usuarioRotas(app: Application) {
     *       201:
     *         description: Usuários selecionados com sucesso.
     */
-    app.get('/usuarios', autenticacaoMiddleware, buscarTodos);
+    app.get('/usuarios', buscarTodos);
 
     /**
     * @openapi
@@ -106,7 +106,7 @@ export async function usuarioRotas(app: Application) {
     *       404:
     *         description: Usuário não encontrado.
     */
-    app.get('/usuarios/:id', autenticacaoMiddleware, buscarPorID);
+    app.get('/usuarios/:id', buscarPorID);
     
     /**
      * @openapi
@@ -152,7 +152,7 @@ export async function usuarioRotas(app: Application) {
      *       404:
      *         description: Usuário não encontrado.
      */
-    app.put("/usuarios/:id", autenticacaoMiddleware, editar);
+    app.put("/usuarios/:id",editar);
 
     /**
     * @openapi
@@ -176,5 +176,5 @@ export async function usuarioRotas(app: Application) {
     *       404:
     *         description: Usuário não encontrado.
     */
-    app.delete('/usuarios/:id', autenticacaoMiddleware, deletar);
+    app.delete('/usuarios/:id',  deletar);
 }

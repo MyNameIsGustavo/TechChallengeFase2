@@ -5,4 +5,9 @@ dotenv.config();
 
 export const app = express();
 app.use(express.json());
-app.listen(process.env.API_PORT, () => console.log('Servidor rodando na porta 3000'));
+
+const PORT = Number(process.env.API_PORT_DEV) || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});

@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  api_chronos:
+    build: .
+    container_name: api_chronos_dev
+    env_file:
+      - .env.local
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER_DEV}:${POSTGRES_PASSWORD_DEV}@${POSTGRES_HOST_DEV}:${POSTGRES_PORT_DEV}/${POSTGRES_DB_DEV}?sslmode=${SSL_MODE_DEV}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "${API_PORT_DEV}:3000"
+    depends_on:
+      - db_chronos_dev
+    networks:
+      - chronos_network_dev
+    command: sh -c "npx prisma migrate deploy && npm run dev" 
+
+  db_chronos_dev:
+    container_name: postgres_dev
+    image: postgres:15-alpine
+    env_file:
+      - .env.local
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_DEV}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_DEV}
+      POSTGRES_DB: ${POSTGRES_DB_DEV}
+    ports:
+      - "${POSTGRES_PORT_DEV}:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - chronos_network_dev
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    env_file:
+      - .env.local
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL_DEV}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD_DEV}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db_chronos_dev
+    networks:
+      - chronos_network_dev
+
+volumes:
+  postgres_data_dev:
+
+networks:
+  chronos_network_dev:
+    driver: bridge

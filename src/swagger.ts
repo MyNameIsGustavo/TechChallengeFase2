@@ -3,7 +3,8 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import dotenv from "dotenv";
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
+dotenv.config({ path: envFile });
 
 export function configuracaoSwagger(app: Express) {
     const configuracaoSwagger = {
