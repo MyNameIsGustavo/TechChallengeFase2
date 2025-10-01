@@ -12,7 +12,7 @@ class Database {
         let connectionString: string;
 
         if (process.env.NODE_ENV === "PRODUCTION") {
-            connectionString = `postgresql://${process.env.POSTGRES_USER_PROD}:${process.env.POSTGRES_PASSWORD_PROD}@${process.env.POSTGRES_HOST_PROD}:${process.env.POSTGRES_PORT_PROD}/${process.env.POSTGRES_DB_PROD}?sslmode=${process.env.SSL_MODE_PROD}`;
+            connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}?sslmode=${process.env.SSL_MODE}`;
         } else {
             connectionString = `postgresql://${process.env.POSTGRES_USER_DEV}:${process.env.POSTGRES_PASSWORD_DEV}@${process.env.POSTGRES_HOST_DEV}:${process.env.POSTGRES_PORT_DEV}/${process.env.POSTGRES_DB_DEV}?sslmode=${process.env.SSL_MODE_DEV}`;
             console.log('Conectando ao banco de dados de desenvolvimento...', connectionString);
