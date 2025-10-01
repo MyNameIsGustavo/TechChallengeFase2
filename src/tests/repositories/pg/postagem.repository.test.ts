@@ -9,7 +9,7 @@ jest.mock("../../../prismaClient", () => ({
             findUnique: jest.fn(),
             findMany: jest.fn(),
             delete: jest.fn(),
-            update: jest.fn()
+            update: jest.fn(),
         },
     },
 }));
@@ -183,6 +183,53 @@ describe("repositories/pg/postagem.repository.ts - editarPostagem", () => {
                 titulo: postagemMockado.titulo,
                 descricao: postagemMockado.descricao,
                 visibilidade: postagemMockado.visibilidade,
+            }
+        });
+        expect(resultadoMockado).toEqual(postagemMockado);
+    });
+});
+
+describe("repositories/pg/postagem.repository.ts - buscarPostagensPorPalavraChave", () => {
+    let postagemRepositorio: PostagemRepository;
+
+    beforeEach(() => {
+        postagemRepositorio = new PostagemRepository();
+        jest.clearAllMocks();
+    });
+
+    it("Deve retornar varias postagens postagem por palavra chave", async () => {
+        /*Arranjar*/
+        const postagemMockado: IPostagem[] =
+            [
+                {
+                    id: 1,
+                    caminhoImagem: "C:\\Users\\gusta\\OneDrive\Documentos",
+                    titulo: "Aula de TypeScript",
+                    descricao: "Introdução de conteúdo de back-end",
+                    visibilidade: true,
+                    autorID: 1,
+                },
+                {
+                    id: 2,
+                    caminhoImagem: "C:\\Users\\gusta\\OneDrive\Documentos",
+                    titulo: "Node no dia a dia",
+                    descricao: "Introdução de aula de back-end",
+                    visibilidade: true,
+                    autorID: 1,
+                },
+            ];
+
+        /*Executar*/
+        (prisma.cH_postagem.findMany as jest.Mock).mockResolvedValue(postagemMockado);
+        const resultadoMockado = await postagemRepositorio.buscarPostagensPorPalavraChave("Aula");
+
+        /*Afirmar*/
+        expect(prisma.cH_postagem.findMany).toHaveBeenCalledWith({
+            where: {
+                OR: [
+                    { titulo: { contains: "Aula", mode: "insensitive" } },
+                    { descricao: { contains: "Aula", mode: "insensitive" } }
+                ]
             }
         });
         expect(resultadoMockado).toEqual(postagemMockado);
