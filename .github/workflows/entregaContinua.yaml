@@ -23,3 +23,5 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/chronos:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/monitoramento:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/monitoramento:latest
