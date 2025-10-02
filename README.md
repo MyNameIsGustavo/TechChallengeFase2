@@ -383,10 +383,10 @@ Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 0
 (Print-screen do token);
 
 - Gerenciamento de Log's com Prometheus: Como parte da evolução técnica no projeto, foi integrado o Prometheus para o monitoramento e coleta de métricas da aplicação.
-Por meio do endpoint /metrics, é possível obter uma visão detalhada do comportamento do sistema em tempo real, facilitando a identificação de falhas e gargalos. Esta foi minha primeira experiência com a ferramenta e achei interessante adiciona-lá ao projeto. 
+Por meio do endpoint /metrics no deploy na plataforma Render *https://chronos-latest.onrender.com/metrics*, é possível obter uma visão detalhada do comportamento do sistema em tempo real, facilitando a identificação de falhas e gargalos. Esta foi minha primeira experiência com a ferramenta e achei interessante adiciona-lá ao projeto. 
 (Print-screen do end-point)
 
-- Dashboards de visualização com Grafana: Complementando o uso do Prometheus e meu primeiro contato com a ferramenta, o Grafana foi integrado ao projeto para possibilitar a visualização gráfica e interativa das métricas coletadas. Com dashboards personalizáveis, foi possível obter insights visuais sobre a performance e funcionamento da aplicação, tornando o monitoramento mais intuitivo e acessível.
+- Dashboards de visualização com Grafana: Complementando o uso do Prometheus e meu primeiro contato com a ferramenta, o Grafana foi integrado ao projeto para possibilitar a visualização gráfica e interativa das métricas coletadas através da URL *https://grafana-4q44.onrender.com/login* com deploy também feito no Render. Com dashboards personalizáveis, foi possível obter insights visuais sobre a performance e funcionamento da aplicação, tornando o monitoramento mais intuitivo e acessível.
 (print-screen do grafana)
 
 ## Conclusão
