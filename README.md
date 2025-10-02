@@ -306,6 +306,9 @@ O projeto foi construído tanto para rodar localmente para execução de testes 
 
 A frequência de esforço empregado para o desenvolvimento das features foram diárias e contínuas para que fosse honrado, primeiramente, os requisitos técnicos e funcionais e posteriormente adicionado novas tecnologias considerando ainda as questões do prazo de desenvolvimento citado acima. 
 
+<img width="1897" height="927" alt="Captura de tela 2025-09-30 222824" src="https://github.com/user-attachments/assets/a9448835-532f-412c-9b6c-7ee9f23e9eb6" />
+
+
 ### Tecnologias e ferramentas 
 Todas as tecnologias, ferramentas e padrões de arquitetura utilizados neste projeto foram selecionados com base no conteúdo abordado durante a Fase 02 do curso de Full Stack Development – Pós-Tech. O objetivo foi garantir coerência com os aprendizados teóricos, além de possibilitar a absorção prática e a consolidação do conhecimento adquirido ao longo da fase.
 
@@ -374,7 +377,8 @@ Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 0
 ## Bônus
 
 - Administrador Postgre (PgAdmin): Para o gerenciamento do banco de dados PostgreSQL em ambiente local, foi utilizada a ferramenta PgAdmin, acessada via navegador através da URL: *http://localhost:8080/login* .Essa interface gráfica facilita a administração do banco ao oferecer uma ampla gama de funcionalidades, como visualização estruturada de dados, execução de queries, criação de esquemas e tabelas, além de dashboards interativos que otimizam o entendimento e análise dos dados.
-(Print-screen do banco de dados)
+
+<img width="1897" height="973" alt="Captura de tela 2025-10-01 212129" src="https://github.com/user-attachments/assets/f86bf45c-6cf4-4981-90f1-a9083403edab" />
 
 - Criptografia de senhas utilizando o Bcrypt: Com o objetivo de garantir a segurança dos dados sensíveis dos usuários, especialmente as senhas, foi utilizada a biblioteca Bcrypt para realizar a criptografia antes de armazená-las no banco de dados. Esse processo garante que as senhas não sejam salvas em texto plano, tornando o sistema mais robusto.
 (Print-screen do banco de dados);
@@ -384,10 +388,13 @@ Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 0
 
 - Gerenciamento de Log's com Prometheus: Como parte da evolução técnica no projeto, foi integrado o Prometheus para o monitoramento e coleta de métricas da aplicação.
 Por meio do endpoint /metrics no deploy na plataforma Render *https://chronos-latest.onrender.com/metrics*, é possível obter uma visão detalhada do comportamento do sistema em tempo real, facilitando a identificação de falhas e gargalos. Esta foi minha primeira experiência com a ferramenta e achei interessante adiciona-lá ao projeto. 
-(Print-screen do end-point)
+
+<img width="1712" height="933" alt="Captura de tela 2025-10-01 211230" src="https://github.com/user-attachments/assets/edca2acb-5f2c-4ab9-bf17-cd3a48a355f1" />
 
 - Dashboards de visualização com Grafana: Complementando o uso do Prometheus e meu primeiro contato com a ferramenta, o Grafana foi integrado ao projeto para possibilitar a visualização gráfica e interativa das métricas coletadas através da URL *https://grafana-4q44.onrender.com/login* com deploy também feito no Render. Com dashboards personalizáveis, foi possível obter insights visuais sobre a performance e funcionamento da aplicação, tornando o monitoramento mais intuitivo e acessível.
-(print-screen do grafana)
+
+<img width="1770" height="860" alt="Captura de tela 2025-10-01 211418" src="https://github.com/user-attachments/assets/f61563b9-faa1-4c42-833c-470cd952611c" />
+
 
 ## Conclusão
 A fase 02 da pós-tech de Full Stack Development representou um desafio significativo para mim devido a complexidade de lidar com novas tecnologias, assimilar o conhecimento das aulas e ainda honrar com o prazo de desenvolvimento do projeto.
@@ -397,5 +404,6 @@ A estrutura da aplicação foi planejada com foco em boas práticas de arquitetu
 Além do backend funcional, implementei uma pipeline completa de CI/CD com GitHub Actions, configurando o ambiente de testes automatizados e o processo de build e deploy contínuo. O uso do DockerHub e o deploy final via Render consolidaram o ciclo DevOps da aplicação, permitindo uma entrega prática e funcional em ambiente de produção.
 
 Apesar das dificuldades, todos os requisitos técnicos foram atendidos com sucesso. Fui além do escopo obrigatório ao adicionar ferramentas de monitoramento e segurança, com o foco em construir uma solução completa, com atenção à performance, qualidade do código e manutenção futura no possível viável.
+
 
 Encerrar esta etapa com uma entrega robusta e tecnicamente madura é motivo de satisfação profissional.
