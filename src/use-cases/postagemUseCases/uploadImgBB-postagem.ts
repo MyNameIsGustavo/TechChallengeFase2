@@ -1,26 +1,36 @@
-import axios from "axios";
-import FormData from "form-data";
 import fs from "fs";
-import dotenv from "dotenv";
+import path from "path";
+import FormData from "form-data";
+import axios from "axios";
 
-const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
-dotenv.config({ path: envFile });
+export async function uploadImagem(arquivo?: Express.Multer.File): Promise<string> {
+    if (!arquivo) return "";
 
-export async function uploadParaImgbb(caminhoArquivo: string): Promise<string> {
-    const form = new FormData();
-    const arquivo = fs.readFileSync(caminhoArquivo);
+    let caminhoImagem = "";
 
-    form.append("image", arquivo.toString("base64"));
+    if (process.env.NODE_ENV === "PRODUCTION") {
+        const imgbbKey = process.env.IMGBB_API_KEY;
+        const formData = new FormData();
+        formData.append("image", fs.createReadStream(arquivo.path));
 
-    const resposta = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`,
-        form,
-        { headers: form.getHeaders() }
-    );
+        const respostaImgBB = await axios.post(
+            `https://api.imgbb.com/1/upload?key=${imgbbKey}`,
+            formData,
+            { headers: formData.getHeaders() }
+        );
 
-    if (resposta.data && resposta.data.data && resposta.data.data.url) {
-        return resposta.data.data.url;
+        caminhoImagem = respostaImgBB.data.data.url;
     }
 
-    throw new Error("Falha ao enviar imagem para o ImgBB");
+    if (process.env.NODE_ENV === "DEVELOPMENT") {
+        const pastaDestino = path.resolve(__dirname, "../../uploads");
+        if (!fs.existsSync(pastaDestino)) fs.mkdirSync(pastaDestino, { recursive: true });
+
+        const caminhoFinal = path.join(pastaDestino, arquivo.filename);
+        fs.copyFileSync(arquivo.path, caminhoFinal);
+
+        caminhoImagem = caminhoFinal;
+    }
+
+    return caminhoImagem;
 }

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { Request, Response } from "express";
 import { fabricaCriarPostagem } from "../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem";
-import { uploadParaImgbb } from "../../../../use-cases/postagemUseCases/uploadImgBB-postagem";
+import { uploadImagem } from "../../../../use-cases/postagemUseCases/uploadImgBB-postagem";
 import dotenv from "dotenv";
 import fs from "fs";
 
@@ -22,23 +22,7 @@ export async function criar(request: Request, response: Response) {
         .transform((val) => Number(val)),
     });
 
-    let caminhoImagem = "";
-
-    if (request.file) {
-      if (process.env.NODE_ENV === "DEVELOPMENT") {
-        caminhoImagem = request.file.path;
-      } else {
-        caminhoImagem = await uploadParaImgbb(request.file.path);
-        fs.unlinkSync(request.file.path);
-      }
-    }
-
-    const dadosParaValidacao = {
-      ...request.body,
-      caminhoImagem,
-    };
-
-    const resultadoValidacaoSchema = criarPostagemSchema.safeParse(dadosParaValidacao);
+    const resultadoValidacaoSchema = criarPostagemSchema.safeParse(request.body);
 
     if (!resultadoValidacaoSchema.success) {
       return response.status(400).json({
@@ -52,10 +36,10 @@ export async function criar(request: Request, response: Response) {
     const novaPostagem = {
       ...resultadoValidacaoSchema.data,
       dataPublicacao: new Date(),
-      caminhoImagem: caminhoImagem || "",
+      caminhoImagem: "",
     };
 
-    const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem);
+    const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem, request.file);
 
     return response.status(201).json(resultadoProcessado);
   } catch (error) {

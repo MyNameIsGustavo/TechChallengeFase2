@@ -1,18 +1,24 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { fabricaDeletarPostagem } from '../../../../use-cases/postagemUseCases/factory/fabricaEditar-postagem';
+import { fabricaEditarPostagem } from '../../../../use-cases/postagemUseCases/factory/fabricaEditar-postagem';
+import { IPostagemModificacao } from '../../../../entities/models/postagem.interface';
 
 export async function editar(request: Request, response: Response) {
 
     try {
-        const fbrEditarPapelUsuario = await fabricaDeletarPostagem();
+        const fbrEditarPapelUsuario = await fabricaEditarPostagem();
 
         const editarPapelSchemaParametro = z.object({ id: z.coerce.number().int().positive() });
         const editarPapelSchemaBody = z.object({
+            caminhoImagem: z.string().max(500).optional(),
             titulo: z.string().max(250),
             descricao: z.string().max(500),
-            caminhoImagem: z.string().max(500),
-            visibilidade: z.boolean(),
+            visibilidade: z
+                .union([z.boolean(), z.string()])
+                .transform((val) => val === "true" || val === true),
+            autorID: z
+                .union([z.number(), z.string()])
+                .transform((val) => Number(val)),
         });
 
         const resultadoValidacaoSchemaParametro = editarPapelSchemaParametro.safeParse(request.params);
@@ -32,8 +38,11 @@ export async function editar(request: Request, response: Response) {
         }
 
         const { id } = resultadoValidacaoSchemaParametro.data;
-
-        const resultadoProcessado = await fbrEditarPapelUsuario.processar(id, resultadoValidacaoSchemaBody.data);
+        const dadosPostagem: IPostagemModificacao = {
+            ...resultadoValidacaoSchemaBody.data,
+            caminhoImagem: resultadoValidacaoSchemaBody.data.caminhoImagem || ""
+        };
+        const resultadoProcessado = await fbrEditarPapelUsuario.processar(id, dadosPostagem, request.file);
         if (!resultadoProcessado) {
             return response.status(404).json({ mensagem: 'Postagem não encontrada' });
         }

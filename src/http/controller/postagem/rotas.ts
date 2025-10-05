@@ -221,5 +221,5 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.put("/postagem/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
+  app.put("/postagem/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), uploadImagemMiddleware.single("caminhoImagem"), editar);
 }
