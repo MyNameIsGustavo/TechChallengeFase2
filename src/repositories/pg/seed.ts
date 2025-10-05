@@ -1,4 +1,4 @@
-import { prisma } from "../src/prismaClient"
+import { prisma } from "../../prismaClient";
 
 export async function seedPapeisUsuarios() {
     const papeis = [
