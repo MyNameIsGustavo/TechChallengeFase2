@@ -8,6 +8,7 @@ import { buscarPorPalavraChave } from './in/buscarPorPalavraChave';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
 import { PapeisUsuario } from '../../../enums/papeisUsuarios';
+import { uploadImagemMiddleware } from '../../../middleware/uploadImagem-middleware';
 
 export async function postagemRotas(app: Application) {
 
@@ -49,7 +50,7 @@ export async function postagemRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), criar);
+  app.post('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), uploadImagemMiddleware.single("caminhoImagem"), criar);
 
   /**
    * @openapi
