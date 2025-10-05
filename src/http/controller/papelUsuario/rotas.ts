@@ -5,6 +5,8 @@ import { buscarPorID } from "./in/buscarPorID";
 import { buscarTodos } from "./in/buscarTodos";
 import { editar } from "./in/editar";
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
+import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
+import { PapeisUsuario } from '../../../enums/papeisUsuarios';
 
 export async function papelUsuarioRotas(app: Application) {
 
@@ -34,7 +36,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/papelUsuario',  criar);
+  app.post('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE),  criar);
 
   /**
    * @openapi
@@ -61,7 +63,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.get('/papelUsuario/:id', buscarPorID);
+  app.get('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarPorID);
 
   /**
    * @openapi
@@ -77,7 +79,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       200:
    *         description: Lista de papéis de usuários retornada com sucesso.
    */
-  app.get('/papelUsuario', buscarTodos);
+  app.get('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarTodos);
 
   /**
    * @openapi
@@ -116,7 +118,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.put('/papelUsuario/:id', editar);
+  app.put('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
 
   /**
    * @openapi
@@ -143,5 +145,5 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.delete('/papelUsuario/:id', deletar);
+  app.delete('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), deletar);
 }

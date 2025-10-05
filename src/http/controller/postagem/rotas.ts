@@ -6,6 +6,8 @@ import { buscarTodos } from './in/buscarTodos';
 import { editar } from './in/editar';
 import { buscarPorPalavraChave } from './in/buscarPorPalavraChave';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
+import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
+import { PapeisUsuario } from '../../../enums/papeisUsuarios';
 
 export async function postagemRotas(app: Application) {
 
@@ -47,7 +49,7 @@ export async function postagemRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/postagem',  criar);
+  app.post('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), criar);
 
   /**
    * @openapi
@@ -74,7 +76,7 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.delete('/postagem/:id', deletar);
+  app.delete('/postagem/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), deletar);
 
   /**
    * @openapi
@@ -126,7 +128,7 @@ export async function postagemRotas(app: Application) {
    *       500:
    *         description: Erro interno do servidor.
    */
-  app.get('/postagem/palavraChave', buscarPorPalavraChave);
+  app.get('/postagem/palavraChave', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarPorPalavraChave);
 
   /**
    * @openapi
@@ -153,7 +155,7 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.get('/postagem/:id', buscarPorID);
+  app.get('/postagem/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarPorID);
 
   /**
    * @openapi
@@ -169,7 +171,7 @@ export async function postagemRotas(app: Application) {
    *       200:
    *         description: Lista de postagens retornada com sucesso.
    */
-  app.get('/postagem',  buscarTodos);
+  app.get('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarTodos);
 
   /**
    * @openapi
@@ -218,5 +220,5 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.put("/postagem/:id", editar);
+  app.put("/postagem/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
 }

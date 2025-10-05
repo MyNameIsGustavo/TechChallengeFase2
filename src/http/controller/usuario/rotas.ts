@@ -6,6 +6,8 @@ import { buscarPorID } from './in/buscarPorID';
 import { editar } from '../papelUsuario/in/editar';
 import { login } from './in/login';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
+import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
+import { PapeisUsuario } from '../../../enums/papeisUsuarios';
 
 export async function usuarioRotas(app: Application) {
 
@@ -76,7 +78,7 @@ export async function usuarioRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/usuarios', criar);
+  app.post('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), criar);
 
   /**
    * @openapi
@@ -92,7 +94,7 @@ export async function usuarioRotas(app: Application) {
    *       200:
    *         description: Lista de usuários retornada com sucesso.
    */
-  app.get('/usuarios', buscarTodos);
+  app.get('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarTodos);
 
   /**
    * @openapi
@@ -119,7 +121,7 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.get('/usuarios/:id', buscarPorID);
+  app.get('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarPorID);
 
   /**
    * @openapi
@@ -168,7 +170,7 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.put("/usuarios/:id", editar);
+  app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
 
   /**
    * @openapi
@@ -195,5 +197,5 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.delete('/usuarios/:id', deletar);
+  app.delete('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), deletar);
 }
