@@ -1,114 +1,428 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1759360185882" clover="3.2.0">
-  <project timestamp="1759360185882" name="All files">
-    <metrics statements="99" coveredstatements="79" conditionals="14" coveredconditionals="0" methods="17" coveredmethods="17" elements="130" coveredelements="96" complexity="0" loc="99" ncloc="99" packages="1" files="3" classes="3"/>
-    <file name="papelUsuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/papelUsuario.repository.ts">
-      <metrics statements="29" coveredstatements="23" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="5"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="8" count="1" type="stmt"/>
-      <line num="9" count="1" type="stmt"/>
-      <line num="15" count="1" type="stmt"/>
-      <line num="17" count="0" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
-      <line num="23" count="1" type="stmt"/>
-      <line num="27" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="29" count="1" type="stmt"/>
-      <line num="31" count="1" type="stmt"/>
-      <line num="33" count="0" type="stmt"/>
-      <line num="38" count="1" type="stmt"/>
-      <line num="39" count="1" type="stmt"/>
-      <line num="43" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="45" count="1" type="stmt"/>
-      <line num="47" count="0" type="stmt"/>
-      <line num="52" count="1" type="stmt"/>
-      <line num="53" count="1" type="stmt"/>
-      <line num="55" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="56" count="0" type="stmt"/>
-      <line num="59" count="1" type="stmt"/>
-      <line num="61" count="0" type="stmt"/>
-      <line num="66" count="1" type="stmt"/>
-      <line num="67" count="1" type="stmt"/>
-      <line num="71" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="73" count="1" type="stmt"/>
-      <line num="78" count="1" type="stmt"/>
-      <line num="80" count="0" type="stmt"/>
-    </file>
-    <file name="postagem.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/postagem.repository.ts">
-      <metrics statements="35" coveredstatements="28" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="6"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="7" count="1" type="stmt"/>
-      <line num="8" count="1" type="stmt"/>
-      <line num="18" count="1" type="stmt"/>
-      <line num="28" count="1" type="stmt"/>
-      <line num="30" count="0" type="stmt"/>
-      <line num="35" count="1" type="stmt"/>
-      <line num="36" count="1" type="stmt"/>
-      <line num="40" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="42" count="1" type="stmt"/>
-      <line num="44" count="1" type="stmt"/>
-      <line num="46" count="0" type="stmt"/>
-      <line num="51" count="1" type="stmt"/>
-      <line num="52" count="1" type="stmt"/>
-      <line num="56" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="58" count="1" type="stmt"/>
-      <line num="60" count="0" type="stmt"/>
-      <line num="65" count="1" type="stmt"/>
-      <line num="66" count="1" type="stmt"/>
-      <line num="68" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="69" count="0" type="stmt"/>
-      <line num="72" count="1" type="stmt"/>
-      <line num="74" count="0" type="stmt"/>
-      <line num="79" count="1" type="stmt"/>
-      <line num="80" count="1" type="stmt"/>
-      <line num="82" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="84" count="1" type="stmt"/>
-      <line num="92" count="1" type="stmt"/>
-      <line num="94" count="0" type="stmt"/>
-      <line num="99" count="1" type="stmt"/>
-      <line num="100" count="1" type="stmt"/>
-      <line num="108" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="110" count="1" type="stmt"/>
-      <line num="112" count="0" type="stmt"/>
-    </file>
-    <file name="usuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/usuario.repository.ts">
-      <metrics statements="35" coveredstatements="28" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="6"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="8" count="1" type="stmt"/>
-      <line num="9" count="1" type="stmt"/>
-      <line num="11" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="13" count="1" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
-      <line num="24" count="0" type="stmt"/>
-      <line num="29" count="1" type="stmt"/>
-      <line num="30" count="1" type="stmt"/>
-      <line num="40" count="1" type="stmt"/>
-      <line num="50" count="1" type="stmt"/>
-      <line num="52" count="0" type="stmt"/>
-      <line num="57" count="1" type="stmt"/>
-      <line num="58" count="1" type="stmt"/>
-      <line num="62" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="64" count="1" type="stmt"/>
-      <line num="66" count="1" type="stmt"/>
-      <line num="68" count="0" type="stmt"/>
-      <line num="73" count="1" type="stmt"/>
-      <line num="74" count="1" type="stmt"/>
-      <line num="76" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="77" count="0" type="stmt"/>
-      <line num="80" count="1" type="stmt"/>
-      <line num="82" count="0" type="stmt"/>
-      <line num="87" count="1" type="stmt"/>
-      <line num="88" count="1" type="stmt"/>
-      <line num="92" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="94" count="1" type="stmt"/>
-      <line num="96" count="0" type="stmt"/>
-      <line num="101" count="1" type="stmt"/>
-      <line num="102" count="1" type="stmt"/>
-      <line num="106" count="1" type="cond" truecount="0" falsecount="1"/>
-      <line num="108" count="1" type="stmt"/>
-      <line num="110" count="0" type="stmt"/>
-    </file>
+<coverage generated="1759708985631" clover="3.2.0">
+  <project timestamp="1759708985631" name="All files">
+    <metrics statements="281" coveredstatements="209" conditionals="36" coveredconditionals="5" methods="69" coveredmethods="51" elements="386" coveredelements="265" complexity="0" loc="281" ncloc="281" packages="8" files="39" classes="39"/>
+    <package name="src">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+      <file name="prismaClient.ts" path="/home/grmaia/fiap_fase02/src/prismaClient.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+        <line num="1" count="18" type="stmt"/>
+        <line num="2" count="18" type="stmt"/>
+        <line num="4" count="18" type="cond" truecount="1" falsecount="1"/>
+        <line num="5" count="18" type="stmt"/>
+        <line num="7" count="18" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.repositories.pg">
+      <metrics statements="99" coveredstatements="79" conditionals="14" coveredconditionals="0" methods="17" coveredmethods="17"/>
+      <file name="papelUsuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/papelUsuario.repository.ts">
+        <metrics statements="29" coveredstatements="23" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="71" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+      </file>
+      <file name="postagem.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/postagem.repository.ts">
+        <metrics statements="35" coveredstatements="28" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="56" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="68" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="82" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="108" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+      </file>
+      <file name="usuario.repository.ts" path="/home/grmaia/fiap_fase02/src/repositories/pg/usuario.repository.ts">
+        <metrics statements="35" coveredstatements="28" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="62" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="76" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="92" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="106" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.papelUsuarioUseCases">
+      <metrics statements="15" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="5"/>
+      <file name="buscarPorID-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/buscarPorID-papelUsuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="buscarTodos-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/buscarTodos-papelUsuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="criar-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/criar-papelUsuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="deletar-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/deletar-papelUsuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="editar-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/editar-papelUsuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.papelUsuarioUseCases.factory">
+      <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="fabricaBuscarPorID-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/factory/fabricaBuscarPorID-papelUsuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+      </file>
+      <file name="fabricaBuscarTodos-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/factory/fabricaBuscarTodos-papelUsuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaCria-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/factory/fabricaCria-papelUsuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaDeleta-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/factory/fabricaDeleta-papelUsuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaEditar-papelUsuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/papelUsuarioUseCases/factory/fabricaEditar-papelUsuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.postagemUseCases">
+      <metrics statements="50" coveredstatements="22" conditionals="9" coveredconditionals="1" methods="13" coveredmethods="6"/>
+      <file name="buscarPorChave-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/buscarPorChave-postagem.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="buscarPorID-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/buscarPorID-postagem.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="buscarTodos-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/buscarTodos-postagem.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="criar-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/criar-postagem.ts">
+        <metrics statements="7" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+      </file>
+      <file name="deletar-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/deletar-postagem.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="editar-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/editar-postagem.ts">
+        <metrics statements="11" coveredstatements="6" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+      </file>
+      <file name="uploadImgBB-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/uploadImgBB-postagem.ts">
+        <metrics statements="20" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.postagemUseCases.factory">
+      <metrics statements="24" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+      <file name="fabricaBuscarPorChave-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaBuscarPorChave-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaBuscarPorID-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaBuscarPorID-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaBuscarTodos-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaBuscarTodos-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaCria-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaCria-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaDeleta-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaDeleta-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaEditar-postagem.ts" path="/home/grmaia/fiap_fase02/src/use-cases/postagemUseCases/factory/fabricaEditar-postagem.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.usuarioUseCases">
+      <metrics statements="44" coveredstatements="25" conditionals="11" coveredconditionals="3" methods="12" coveredmethods="6"/>
+      <file name="buscarPorID-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/buscarPorID-usuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="buscarTodos-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/buscarTodos-usuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="criar-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/criar-usuario.ts">
+        <metrics statements="9" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+      </file>
+      <file name="deletar-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/deletar-usuario.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="editar-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/editar-usuario.ts">
+        <metrics statements="13" coveredstatements="6" conditionals="5" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+      </file>
+      <file name="login-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/login-usuario.ts">
+        <metrics statements="13" coveredstatements="7" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.use-cases.usuarioUseCases.factory">
+      <metrics statements="24" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+      <file name="fabricaBuscarPorID-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaBuscarPorID-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaBuscarTodos-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaBuscarTodos-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaCria-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaCria-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaDeleta-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaDeleta-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaEditar-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaEditar-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="fabricaLogin-usuario.ts" path="/home/grmaia/fiap_fase02/src/use-cases/usuarioUseCases/factory/fabricaLogin-usuario.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>

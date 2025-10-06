@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { Request, Response } from 'express';
-import { fabricaBuscarPorPostagemPorPalavraChave } from '../../../../use-cases/postagemUseCases/factory/buscarPorChave-postagem';
+import { fabricaBuscarPorPostagemPorPalavraChave } from '../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorChave-postagem';
 
 export async function buscarPorPalavraChave(request: Request, response: Response) {
 
