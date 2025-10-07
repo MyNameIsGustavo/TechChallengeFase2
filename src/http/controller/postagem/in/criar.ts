@@ -12,7 +12,7 @@ export async function criar(request: Request, response: Response) {
   try {
     const criarPostagemSchema = z.object({
       caminhoImagem: z.string().max(500).optional(),
-      titulo: z.string().max(250),
+      titulo: z.string().min(1, "Título é obrigatório").max(250),
       descricao: z.string().max(500),
       visibilidade: z
         .union([z.boolean(), z.string()])

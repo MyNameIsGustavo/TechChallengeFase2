@@ -6,7 +6,7 @@ import { IPostagemModificacao } from '../../../../entities/models/postagem.inter
 export async function editar(request: Request, response: Response) {
 
     try {
-        const fbrEditarPapelUsuario = await fabricaEditarPostagem();
+
 
         const editarPapelSchemaParametro = z.object({ id: z.coerce.number().int().positive() });
         const editarPapelSchemaBody = z.object({
@@ -36,7 +36,7 @@ export async function editar(request: Request, response: Response) {
                 erros: resultadoValidacaoSchemaBody.error,
             });
         }
-
+        const fbrEditarPapelUsuario = await fabricaEditarPostagem();
         const { id } = resultadoValidacaoSchemaParametro.data;
         const dadosPostagem: IPostagemModificacao = {
             ...resultadoValidacaoSchemaBody.data,
