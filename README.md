@@ -122,78 +122,68 @@ Conforme os requisitos técnicos e funcionais do documento formalizado do Tech C
 ### Requisitos técnicos
 - Back-end em Node.js: Requisito entregue conforme compartilhado nas aulas disponibilizadas na fase 02, o projeto foi desenvolvido em Node.js (Typescript) sem o uso de nenhum framework, como por exemplo: NestJS.  
     - Implementação do servidor utilizando Node.js 
-    (Imagem do package.json)
     - Uso do framework Express para roteamento e middleware  
-    (Imagem do package.json e configurador do servidor express)
 
 - Persistência de Dados: Requisito efetuado conforme compartilhado em aula, foi utilizado no projeto o banco de dados PostgreSQL em uma instância no Render de deploy e uma local para ambiente de teste.  
   - Utilização de banco de dados (MongoDB ou PostgreSQL)
-  (Print-screen do Render e do PostgreSQL admin)  
   - Implementação de modelos de dados adequados para postagens  
-  (Print-screen do Prisma)
 
 - Containerização com Docker: Requisito entregue utilizando o DockerHub, Dockerfile e Docker-Compose. Todos os arquivos estão disponibilizados no projeto para avaliação.   
   - Desenvolvimento e deploy com contêineres Docker para consistência de ambiente  
-    (Print-screen dos arquivos)
 
 - Automação com GitHub Actions: Os scripts de CI/CD estão disponiveís no caminho .github/workflows/ e disponíveis em forma de evidência nesta documentação.
   - Workflows de CI/CD para testes automáticos e deploy  
-  (print-screen dos arquivos)
 
 - Documentação: A documentação é composta deste arquivo README.md que contempla todo o conteúdo solicitado nas entregas: setup inicial, arquitetura e uso da API.  
   - Guia de setup inicial, arquitetura da aplicação e uso das APIs  
-    (print-screen)
 
 - Cobertura de Testes: Para evidênciar a cobertura de testes, foi gerado o relatório de coverage do Jest e anexado neste requisito.
   - Garantir pelo menos 20% do código coberto por testes unitários, especialmente em funções críticas como criação, edição e exclusão de postagens
-    (print-screen)
 
 ### Requisitos funcionais
 
 #### Endpoints da persona de aluno.
 - GET /posts - Lista de Posts  
   - Permite aos alunos visualizarem todos os posts disponíveis na página principal.
-
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem
 
 - GET /posts/:id - Leitura de Postagens  
   - Permite acessar o conteúdo completo de um post específico pelo ID.
 
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem/${id} - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem/${id}
 
 #### Endpoints da persona de docentes.
 - POST /posts - Criação de Postagens  
   - Permite que docentes criem novas postagens. Aceita dados como título, conteúdo e autor no corpo da requisição.
 
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem
 
 - PUT /posts/:id - Edição de Postagens  
   - Permite editar uma postagem existente. É necessário fornecer o ID do post e os novos dados no corpo da requisição.
 
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem/${id} - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem/${id}
 
 - GET /posts - Listagem de Todas as Postagens  
   - Permite que professores vejam todas as postagens criadas, facilitando a gestão do conteúdo.
 
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem
 
 - DELETE /posts/:id - Exclusão de Postagens  
   - Permite que docentes excluam uma postagem específica usando o ID do post como parâmetro.
 
-  (Url de produção: )
-  (Url de teste: )
+    - URL de produção: https://chronos-latest.onrender.com/postagem/${id} - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem/${id}
 
 - GET /posts/search - Busca de Postagens  
   - Permite buscar posts por palavras-chave, retornando posts que contenham o termo no título ou conteúdo.
 
-  (Url de produção: )
-  (Url de teste: )
-
+    - URL de produção: https://chronos-latest.onrender.com/postagem/${id} - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: 
 
 ## Configuração de ambiente.
 
@@ -223,79 +213,111 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 - Caminho: src/entities/
 - Responsabilidade: Define de forma abstrata os atributos de cada entidade do sistema.
 
-2. Controller/http
+2. Enums
+- Caminho: src/enums/
+- Responsabilidade: Definir valores definitivos que não mudaram ao longo do projeto, havendo uma relação de chave e valor de dado.
+
+3. Controller/http
 - Caminho: src/controllers/http/
 - Responsabilidade: Enviar e receber requisições HTTP, tratando apenas requisição e resposta e retornando o status code adequado.
 
-3. lib/pg
+4. lib/pg
 - Caminho: src/lib/pg/
 - Responsabilidade: Configurar e fornecer a conexão com o banco de dados PostgreSQL.
 
-4. Middleware
+5. Middleware
 - Caminho: src/middleware/
 - Responsabilidade: Interceptar requisições para validações ou tratamentos específicos entre requisição e resposta.
 
-5. Repositories
+6. Repositories
 - Caminho: src/repositories/
 - Responsabilidade: Persistência de dados no banco de dados, sem lógica de negócio.
 
-6. Use-cases
+7. Use-cases
 - Caminho: src/use-cases/
 - Responsabilidade: Aplicar a lógica de negócio e coordenar interações entre camadas, utilizando Factory Pattern quando necessário.
 
-7. Tests
+8. Tests
 - Caminho: src/tests/
 - Responsabilidade: Testar cada método modularmente, seguindo a mesma estrutura de camadas da aplicação.
 
-8. app.ts
+9. app.ts
 - Responsabilidade: Arquivo de entrada da aplicação, inicializando o app.
 
-9. servidor.ts
+10. servidor.ts
 - Responsabilidade: Configurar e iniciar o servidor HTTP utilizando Express.
 
-10. prismaClient.ts
+11. prismaClient.ts
 - Caminho: src/prismaClient.ts
 - Responsabilidade: Instanciar o Prisma Client e disponibilizá-lo para toda a aplicação.
 
-11. prisma/schema.prisma
+12. prometheus.ts
+- Caminho: src/prometheus.ts
+- Responsabilidade: Iniciar a aplicação Prometheus.
+
+13. Swagger.ts
+- Caminho: src/swagger.ts
+- Responsabilidade: Configurar o ambiente para utilização do Swagger.
+
+14. prisma/schema.prisma
 - Caminho: prisma/schema.prisma
 - Responsabilidade: Definir modelos e tabelas do banco de dados PostgreSQL.
 
-12. node_modules/
+15. node_modules/
 - Pasta: node_modules	
 - Responsabilidade: Armazena bibliotecas externas
 
-13. coverage/
+16. coverage/
 - Pasta: coverage	
 - Responsabilidade: Estatísticas do Jest sobre testes unitários
 
-14. /.github
+17. /.github
 - Pasta: .github	
 - Responsabilidade: Configuração de CI/CD com GitHub
 
-15. docker-compose.yaml
-- Arquivo: docker-compose.yaml	
-- Responsabilidade: Orquestração de containers da aplicação
+18. docker-compose.dev.yaml
+- Arquivo: docker-compose.dev.yaml
+- Responsabilidade: Orquestração de containers da aplicação de desenvolvimento
 
-16. dockerfile
+19. docker-compose.prod.yaml
+- Arquivo: docker-compose.pord.yaml
+- Responsabilidade: Orquestração de containers da aplicação de produção
+
+20. dockerfile
 - Arquivo: Dockerfile	
 - Responsabilidade: Arquivo de entrada para container Docker
 
-17. jest.config.ts
+21. jest.config.ts
 - Arquivo: jest.config.ts
 - Responsabilidade: Configuração do Jest para testes unitários
 
-18. package.json
+22. package.json
 - Arquivo: package.json	
 - Responsabilidade: Gerenciamento de dependências e scripts
 
-19. package-lock.json
+23. package-lock.json
 - Arquivo: package-lock.json	
 - Responsabilidade: Registro das versões instaladas
 
-20. tsconfig.json
+24. tsconfig.json
 - Arquivo: tsconfig.json	
 - Responsabilidade: Configuração do TypeScript
+
+25. uploads
+- Caminho: uploads/
+- Responsabilidade: Armazenas as imagens das postagens em ambientes de testes.
+
+26. Coverage
+- Caminho: coverage
+- Responsabilidade: Armazenar informações de cobertura de testes do Jest.
+
+27. Grafana
+- Caminho: grafana/
+- Responsabilidade: Configurar o ambiente para utilização do Grafana.
+
+28. Prometheus
+- Caminho: prometheus/
+- Responsabilidade: Configurar o ambiente para utilização do Prometheus.
 
 ## Processo de Desenvolvimento
 
@@ -322,6 +344,8 @@ Todas as tecnologias, ferramentas e padrões de arquitetura utilizados neste pro
 - Bcrypt – Criptografia de senhas antes da persistência.
 
 - Swagger (OpenAPI) – Documentação da API.
+
+- ImgBB - Armazenamento de imagens online.
 
 - PostgreSQL – Banco de dados relacional.
 
@@ -369,25 +393,27 @@ Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 0
     - Além disso, também é possível acessar apenas a imagem de produção do Docker do projeto através do DockerHub na seguinte URL: https://hub.docker.com/r/grmaia/chronos
 
 - *Arquivos utilizados na apresentação*  
-    - Todos os arquivos utilizados na apresentação do vídeo serão entregues em forma de evidência neste documento "README.md" do projeto. Durante o processo da apresentação foi criado slides de exemplicação do conteúdo e, está evidência, também será entregue e disponibilizada através da seguinte URL:
+    - Todos os arquivos utilizados na apresentação do vídeo serão entregues em forma de evidência neste documento "README.md" do projeto. Durante o processo da apresentação foi criado slides de exemplicação do conteúdo e, está evidência, também será entregue e disponibilizada através da seguinte URL: https://gamma.app/docs/Chronos-Fase-02-qua1xhjydv4w8rn
 
 ## Bônus
 
 - Administrador Postgre (PgAdmin): Para o gerenciamento do banco de dados PostgreSQL em ambiente local, foi utilizada a ferramenta PgAdmin, acessada via navegador através da URL: *http://localhost:8080/login* .Essa interface gráfica facilita a administração do banco ao oferecer uma ampla gama de funcionalidades, como visualização estruturada de dados, execução de queries, criação de esquemas e tabelas, além de dashboards interativos que otimizam o entendimento e análise dos dados.
-(Print-screen do banco de dados)
+<img width="1897" height="973" alt="Captura de tela 2025-10-01 212129" src="https://github.com/user-attachments/assets/b85b2a8a-0dce-40c8-b563-33dad03f97b8" />
 
 - Criptografia de senhas utilizando o Bcrypt: Com o objetivo de garantir a segurança dos dados sensíveis dos usuários, especialmente as senhas, foi utilizada a biblioteca Bcrypt para realizar a criptografia antes de armazená-las no banco de dados. Esse processo garante que as senhas não sejam salvas em texto plano, tornando o sistema mais robusto.
-(Print-screen do banco de dados);
+<img width="1217" height="85" alt="Captura de tela 2025-10-07 201230" src="https://github.com/user-attachments/assets/795feb14-1b9e-42c4-b2d1-fc9cf8b2ff56" />
 
 - Autenticação utilizando JsonWebToken: Para proteger rotas específicas da API — como as destinadas a perfis de aluno e docente — foi implementado o sistema de autenticação via JSON Web Token (JWT). Além de restringir o acesso a usuários autenticados, o JWT também contribui para a integridade e segurança dos dados transmitidos entre cliente e servidor. 
-(Print-screen do token);
+<img width="1758" height="835" alt="Captura de tela 2025-10-07 201415" src="https://github.com/user-attachments/assets/24086475-7cd0-4ef2-9df3-a1e8de535132" />
 
 - Gerenciamento de Log's com Prometheus: Como parte da evolução técnica no projeto, foi integrado o Prometheus para o monitoramento e coleta de métricas da aplicação.
 Por meio do endpoint /metrics no deploy na plataforma Render *https://chronos-latest.onrender.com/metrics*, é possível obter uma visão detalhada do comportamento do sistema em tempo real, facilitando a identificação de falhas e gargalos. Esta foi minha primeira experiência com a ferramenta e achei interessante adiciona-lá ao projeto. 
-(Print-screen do end-point)
+
+<img width="1712" height="933" alt="Captura de tela 2025-10-01 211230" src="https://github.com/user-attachments/assets/39534ca6-5f1d-4da3-bcd9-b691ce84d5e5" />
 
 - Dashboards de visualização com Grafana: Complementando o uso do Prometheus e meu primeiro contato com a ferramenta, o Grafana foi integrado ao projeto para possibilitar a visualização gráfica e interativa das métricas coletadas através da URL *https://grafana-4q44.onrender.com/login* com deploy também feito no Render. Com dashboards personalizáveis, foi possível obter insights visuais sobre a performance e funcionamento da aplicação, tornando o monitoramento mais intuitivo e acessível.
-(print-screen do grafana)
+
+<img width="1770" height="860" alt="Captura de tela 2025-10-01 211418" src="https://github.com/user-attachments/assets/429854af-803d-4971-a81c-d372b842f205" />
 
 ## Conclusão
 A fase 02 da pós-tech de Full Stack Development representou um desafio significativo para mim devido a complexidade de lidar com novas tecnologias, assimilar o conhecimento das aulas e ainda honrar com o prazo de desenvolvimento do projeto.
@@ -397,5 +423,6 @@ A estrutura da aplicação foi planejada com foco em boas práticas de arquitetu
 Além do backend funcional, implementei uma pipeline completa de CI/CD com GitHub Actions, configurando o ambiente de testes automatizados e o processo de build e deploy contínuo. O uso do DockerHub e o deploy final via Render consolidaram o ciclo DevOps da aplicação, permitindo uma entrega prática e funcional em ambiente de produção.
 
 Apesar das dificuldades, todos os requisitos técnicos foram atendidos com sucesso. Fui além do escopo obrigatório ao adicionar ferramentas de monitoramento e segurança, com o foco em construir uma solução completa, com atenção à performance, qualidade do código e manutenção futura no possível viável.
+
 
 Encerrar esta etapa com uma entrega robusta e tecnicamente madura é motivo de satisfação profissional.
