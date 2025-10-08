@@ -1,24 +1,33 @@
 ## Necessário informar as seguintes váriaveis de exemplo para rodar o projeto.
 ## Ou possuir o arquivo .env na raíz do projeto.
 
-#Ambiente_Docker;
+## Variaveis de ambiente para ambiente de produção
+NODE_ENV=
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 POSTGRES_DB=
 POSTGRES_HOST=
 POSTGRES_PORT=
 SSL_MODE=
-PGADMIN_DEFAULT_EMAIL=
-PGADMIN_DEFAULT_PASSWORD=
-
-#Ambiente API;
 API_PORT=
-
-#Ambiente PrismaORM;
 DATABASE_URL=
-
-#Ambiente de encriptação de senha;
 BCRYPT_SALT_ROUNDS=
-
-#Ambiente de autenticação;
 SECRET_KEY=
+GRAFANA_USER=
+GRAFANA_PASSWORD=
+IMGBB_API_KEY=
+
+## Variaveis de ambiente para ambiente de teste local
+NODE_ENV=DEVELOPMENT
+POSTGRES_USER_DEV=administrador
+POSTGRES_PASSWORD_DEV=jUhpo6PTsvR9BstI4rNvCT9vbLmzQ9Sy
+POSTGRES_DB_DEV=api_chronos
+POSTGRES_HOST_DEV=db_chronos_dev
+POSTGRES_PORT_DEV=5432
+SSL_MODE_DEV=disable
+DATABASE_URL=postgresql://administrador:jUhpo6PTsvR9BstI4rNvCT9vbLmzQ9Sy@db_chronos_dev:5432/api_chronos
+API_PORT_DEV=3000
+PGADMIN_DEFAULT_EMAIL_DEV=chronos@admin.com
+PGADMIN_DEFAULT_PASSWORD_DEV=Chronos@2025
+BCRYPT_SALT_ROUNDS=10
+SECRET_KEY=@ChronosFIAP2025

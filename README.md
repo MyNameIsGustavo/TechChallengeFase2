@@ -13,7 +13,8 @@
 10. Relatos dos Desafios Superados  
 11. Entregas  
 12. Bônus
-13. Conclusão
+13. Melhorias futuras
+14. Conclusão
 
 ## Membro do Grupo 52
 - Gustavo Rocha - RM365401
@@ -117,7 +118,7 @@ Esse diagrama detalha o funcionamento interno da aplicação Chronos, mostrando 
 ![WhatsApp Image 2025-09-29 at 08 13 40](https://github.com/user-attachments/assets/d8f726fe-0147-47d2-8b63-e8891f916047)
 
 ## Prova de conceito.
-Conforme os requisitos técnicos e funcionais do documento formalizado do Tech Challenge da fase 2 do curso de Full stack development denominado "Tech Challenge - fase 02", a entrega final do projeto engloba todos os requisitos solicitados nesta fase foram entregues, sendo eles citados acima no tópico 3 (Requisitos Técnicos) e 4 (Requisitos Funcionais) do súmario. A seguir, são relacionados cada tópico com sua respectiva entrega em forma de evidência.
+Conforme os requisitos técnicos e funcionais do documento formalizado do Tech Challenge da fase 2 do curso de Full Stack Development denominado "6FSDT - Fase 2 - Tech challenge" disponibilizado na plataforma da FIAP, a entrega final do projeto engloba todos os requisitos solicitados nesta fase foram entregues, sendo eles citados acima no tópico 3 (Requisitos Técnicos) e 4 (Requisitos Funcionais) do súmario. A seguir, são relacionados cada tópico com sua respectiva entrega em forma de evidência.
 
 ### Requisitos técnicos
 - Back-end em Node.js: Requisito entregue conforme compartilhado nas aulas disponibilizadas na fase 02, o projeto foi desenvolvido em Node.js (Typescript) sem o uso de nenhum framework, como por exemplo: NestJS.  
@@ -141,6 +142,25 @@ Conforme os requisitos técnicos e funcionais do documento formalizado do Tech C
   - Garantir pelo menos 20% do código coberto por testes unitários, especialmente em funções críticas como criação, edição e exclusão de postagens
 
 ### Requisitos funcionais
+
+#### Seeds.
+Para padronizar e facilitar a execução dos testes desenvolvidos, foram criados seeds no banco de dados — ou seja, informações pré-inseridas utilizadas para acelerar o processo de validação. Esses seeds incluem os seguintes usuários e papéis de usuário:
+
+Usuários cadastrados:
+
+- Email: gustavo.professor@fiap.com.br | Senha: docente123
+
+- Email: gustavo.aluno@fiap.com.br | Senha: estudante123
+
+Papéis de usuário disponíveis:
+
+- DOCENTE
+
+- USUARIO
+
+- SUPORTE
+
+Por se tratar de um projeto acadêmico, as senhas foram compartilhadas exclusivamente para fins de validação das rotas e testes de autenticação. A criação desses três papéis tem como objetivo possibilitar a verificação dos diferentes níveis de acesso e requisitos definidos no sistema.
 
 #### Endpoints da persona de aluno.
 - GET /posts - Lista de Posts  
@@ -195,17 +215,19 @@ Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambient
 
 1. Clonar o repositório disponível no GitHub através do link: https://github.com/MyNameIsGustavo/TechChallengeFase2.git
 
-2. Criar um arquivo ".env" e um ".env.local" na raiz do projeto e preencher as chaves conforme ".envExemplo" já disponibilizado originalmente no projeto.
+2. Criar um arquivo ".env.prod" e um ".env.local" na raiz do projeto e preencher as chaves conforme ".envExemplo" já disponibilizado originalmente no projeto. Por se tratar de um projeto acadêmico, portanto, as Variáveis do arquivo ".env.local" serão compartilhadas para fins explicativos.
 
-3. Criar um arquivo ".gitignore" na raiz do projeto, incluindo: /node_modules, .env, .env.local /src/generated/prisma.
+3. Criar um arquivo ".gitignore" na raiz do projeto, incluindo: /node_modules, .env.prod, .env.local /src/generated/prisma, /dist e /.vscode
 
-4. Instalar as dependências do projeto fornecendo o seguinte comando no prompt localizado no diretório do projeto: npm install
+4. Instalar o docker desktop em seu ambiente local através da URL: https://docs.docker.com/desktop/setup/install/windows-install/
 
-5. Com o Docker configurado em seu ambiente e localizado dentro do diretório do projeto, forneça o seguinte comando para iniciar a aplicação Docker: docker compose up
+5. Para replicação completa do ambiente no qual foi desenvolvido o projeto, instale o WSL com a distribuição Ubuntu. Para mais instruções siga está documentação oficial distribuida pela Microsoft: https://learn.microsoft.com/pt-br/windows/wsl/install
 
-6. Após a inicialização da aplicação Docker e seus containers na etapa 5 (cinco), é possível executar a aplicação em ambiente de desenvolvimento com o seguinte comando: npm run dev
+6. Com o Docker configurado em seu ambiente e localizado dentro do diretório do projeto, forneça o seguinte comando para iniciar a aplicação Docker localmente, este comando deve instalar todas dependências do projeto conforme a instrução no arquivo dockerfile: docker compose -f docker-compose.dev.yaml --env-file .env.local up
 
-7. Para executar os testes unitários desenvolvidos utilizando o Jest, forneça o seguinte comando considerando ainda a aplicação iniciada com o Docker na etapa 5 (cinco): npm test 
+7. Para executar os testes unitários desenvolvidos utilizando o Jest, forneça o seguinte comando considerando ainda a aplicação iniciada com o Docker na etapa 5 (cinco): npm test
+
+8. ( Opcional ) Para executar a API em ambiente produtivo, é necessário configurar as instâncias no Render para execução. Obtei por criar uma instância de banco de dados Postgres e três de WEB Service para configuração da API, Prometheus e Grafana. Neste caso, deve-se preencher os arquivos de .env.prod de acordo com suas instancias e fazer o deploy. 
 
 ## Estrutura da aplicação
 
@@ -414,6 +436,18 @@ Por meio do endpoint /metrics no deploy na plataforma Render *https://chronos-la
 - Dashboards de visualização com Grafana: Complementando o uso do Prometheus e meu primeiro contato com a ferramenta, o Grafana foi integrado ao projeto para possibilitar a visualização gráfica e interativa das métricas coletadas através da URL *https://grafana-4q44.onrender.com/login* com deploy também feito no Render. Com dashboards personalizáveis, foi possível obter insights visuais sobre a performance e funcionamento da aplicação, tornando o monitoramento mais intuitivo e acessível.
 
 <img width="1770" height="860" alt="Captura de tela 2025-10-01 211418" src="https://github.com/user-attachments/assets/429854af-803d-4971-a81c-d372b842f205" />
+
+
+## Melhorias futuras
+Como proposta de evolução do projeto desenvolvido nos Tech Challenges da FIAP, o objetivo é transformar esta aplicação em um sistema de software completo, funcional e capaz de atender às demandas de usuários reais.
+
+Entre os próximos passos previstos para o aprimoramento da API desenvolvida nesta fase — voltada ao back-end e à garantia de qualidade — destacam-se:
+
+- Adoção de um framework de back-end, como o NestJS, visando uma arquitetura mais robusta, modular e escalável;
+
+- Implementação do método RBAC (Role-Based Access Control) para controle de permissões de usuários diretamente no back-end, garantindo maior segurança e organização na gestão de papéis e acessos.
+
+Essa entrega já contempla a base necessária para a próxima fase do desenvolvimento, que será detalhada e expandida na etapa seguinte da pós-tech.
 
 ## Conclusão
 A fase 02 da pós-tech de Full Stack Development representou um desafio significativo para mim devido a complexidade de lidar com novas tecnologias, assimilar o conhecimento das aulas e ainda honrar com o prazo de desenvolvimento do projeto.
