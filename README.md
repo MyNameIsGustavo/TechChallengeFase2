@@ -50,26 +50,26 @@ O projeto *Chronos* consiste em uma plataforma de postagem de conteúdo voltada 
 ### Endpoints da API
 
 ### Endpoints de alunos:
-- *GET /posts* - Lista de Posts  
+- *GET /posts* - Lista de Posts - Rota protegida por JWT (Bearer Token). 
   Permite aos alunos visualizarem todos os posts disponíveis na página principal.
 
-- *GET /posts/:id* - Leitura de Postagens  
+- *GET /posts/:id* - Leitura de Postagens - Rota protegida por JWT (Bearer Token).
   Permite acessar o conteúdo completo de um post específico pelo ID.
 
 ### Endpoints de professores:
-- *POST /posts* - Criação de Postagens  
+- *POST /posts* - Criação de Postagens - Rota protegida por JWT (Bearer Token).
   Permite que docentes criem novas postagens. Aceita dados como título, conteúdo e autor no corpo da requisição.
 
-- *PUT /posts/:id* - Edição de Postagens  
+- *PUT /posts/:id* - Edição de Postagens - Rota protegida por JWT (Bearer Token).
   Permite editar uma postagem existente. É necessário fornecer o ID do post e os novos dados no corpo da requisição.
 
-- *GET /posts* - Listagem de Todas as Postagens  
+- *GET /posts* - Listagem de Todas as Postagens - Rota protegida por JWT (Bearer Token).
   Permite que professores vejam todas as postagens criadas, facilitando a gestão do conteúdo.
 
-- *DELETE /posts/:id* - Exclusão de Postagens  
+- *DELETE /posts/:id* - Exclusão de Postagens - Rota protegida por JWT (Bearer Token). 
   Permite que docentes excluam uma postagem específica usando o ID do post como parâmetro.
 
-- *GET /posts/search* - Busca de Postagens  
+- *GET /posts/search* - Busca de Postagens - Rota protegida por JWT (Bearer Token). 
   Permite buscar posts por palavras-chave, retornando posts que contenham o termo no título ou conteúdo.
 
 ## Fluxograma Chronos
@@ -202,8 +202,8 @@ Por se tratar de um projeto acadêmico, as senhas foram compartilhadas exclusiva
 - GET /posts/search - Busca de Postagens  
   - Permite buscar posts por palavras-chave, retornando posts que contenham o termo no título ou conteúdo.
 
-    - URL de produção: https://chronos-latest.onrender.com/postagem/${id} - Disponível enquanto período de teste do Render permitir.
-    - URL de teste: 
+    - URL de produção: https://chronos-latest.onrender.com/postagem/palavraChave?palavra=${busca} - Disponível enquanto período de teste do Render permitir.
+    - URL de teste: http://localhost:3000/postagem/palavraChave?palavra=${busca}
 
 ## Configuração de ambiente.
 
