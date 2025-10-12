@@ -411,7 +411,7 @@ Conciliar o aprendizado e aplicação desses conteúdos com o período da Fase 0
 ## Entregas
 
 - *Apresentação em vídeo gravado*  
-    - Conforme procedimento validado na fase 01 da pós-tech, o vídeo de apresentação gravado foi disponibilizado na plataforma Youtube para acesso irrestrito dos professores e avaliadores. O vídeo pode ser acessado através da seguinte URL:
+    - Conforme procedimento validado na fase 01 da pós-tech, o vídeo de apresentação gravado foi disponibilizado na plataforma Youtube para acesso irrestrito dos professores e avaliadores. O vídeo pode ser acessado através da seguinte URL: https://www.youtube.com/watch?v=NSoDYrO6iFM
 
 - *Código-fonte do projeto*  
     - O código-fonte e a documentação está disponibilizado na plataforma GitHub no repositório do projeto e pode ser acessado através da URL: https://github.com/MyNameIsGustavo/TechChallengeFase2
