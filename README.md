@@ -44,6 +44,7 @@ O projeto *Chronos* consiste em uma plataforma de postagem de conteúdo voltada 
 - *Cobertura de Testes*  
   - Garantir pelo menos 20% do código coberto por testes unitários, especialmente em funções críticas como criação, edição e exclusão de postagens  
 
+<img width="1917" height="647" alt="Captura de tela 2025-10-12 190356" src="https://github.com/user-attachments/assets/2cf9dab4-b4a3-4c60-89f7-320c52202d41" />
 
 ## Requisitos Funcionais
 
@@ -464,4 +465,5 @@ Apesar das dificuldades, todos os requisitos técnicos foram atendidos com suces
 
 
 Encerrar esta etapa com uma entrega robusta e tecnicamente madura é motivo de satisfação profissional.
+
 
