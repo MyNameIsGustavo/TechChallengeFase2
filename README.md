@@ -161,7 +161,7 @@ Papéis de usuário disponíveis:
 
 - SUPORTE
 
-Por se tratar de um projeto acadêmico, as senhas foram compartilhadas exclusivamente para fins de validação das rotas e testes de autenticação. A criação desses três papéis tem como objetivo possibilitar a verificação dos diferentes níveis de acesso e requisitos definidos no sistema. No link a seguir, é possível acessar a documentação da API atráves do Swagger: https://chronos-latest.onrender.com/api-docs/
+Por se tratar de um projeto acadêmico, as senhas e o arquivo .env.prod foram compartilhadas exclusivamente para fins de validação das rotas, testes de autenticação e ajuste para testes em produção. A criação desses três papéis tem como objetivo possibilitar a verificação dos diferentes níveis de acesso e requisitos definidos no sistema. No link a seguir, é possível acessar a documentação da API atráves do Swagger: https://chronos-latest.onrender.com/api-docs/
 
 #### Endpoints da persona de aluno.
 - GET /posts - Lista de Posts  
