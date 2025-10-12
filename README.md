@@ -205,6 +205,8 @@ Por se tratar de um projeto acadêmico, as senhas foram compartilhadas exclusiva
     - URL de produção: https://chronos-latest.onrender.com/postagem/palavraChave?palavra=${busca} - Disponível enquanto período de teste do Render permitir.
     - URL de teste: http://localhost:3000/postagem/palavraChave?palavra=${busca}
 
+Para o ambiente de produção e local, se atende ao local de armazenamento das imagens. Localmente, foi salvo na pasta src/uploads. E em produção foi salvo na minha URL do ImgBB. Neste caso, foi utilizado o ImgBB devido a facilidade de armazenamento e configuração das imagens.
+
 ## Configuração de ambiente.
 
 Recomenda-se que os pré-requisitos de instalação de tecnologia em seu ambiente de execução sejam os seguintes, listados abaixo. Após verificar as tecnologicas instaladas, siga o procedimento em seguida para inicializar o projeto.
