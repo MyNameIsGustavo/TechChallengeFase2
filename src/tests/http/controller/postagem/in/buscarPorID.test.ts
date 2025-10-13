@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { buscarPorID } from "../../../../../http/controller/postagem/in/buscarPorID";
 import { fabricaBuscarPorIDPostagem } from "../../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorID-postagem";
+import request from 'supertest';
 
 jest.mock("../../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorID-postagem");
 
@@ -59,5 +60,27 @@ describe("Controller buscarPorID", () => {
                 erros: expect.any(Object),
             })
         );
+    });
+});
+
+
+describe('GET /postagem/:id', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.get('/postagem/:id', buscarPorID);
+    });
+
+    it('deve retornar 201 com o resultado do use case quando o ID é válido', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue({ mensagem: 'Postagem encontrada', id: 1 });
+        (fabricaBuscarPorIDPostagem as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app).get('/postagem/1');
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({ mensagem: 'Postagem encontrada', id: 1 });
+        expect(mockProcessar).toHaveBeenCalledWith(1);
     });
 });

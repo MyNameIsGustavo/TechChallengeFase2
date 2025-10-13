@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { buscarPorPalavraChave } from "../../../../../http/controller/postagem/in/buscarPorPalavraChave";
 import { fabricaBuscarPorPostagemPorPalavraChave } from "../../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorChave-postagem";
+import request from 'supertest';
 
 jest.mock("../../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorChave-postagem");
 
@@ -57,5 +58,26 @@ describe("Controller buscarPorPalavraChave", () => {
                 erros: expect.any(Object),
             })
         );
+    });
+});
+
+describe('GET /postagem/palavraChave', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.get('/postagem/palavraChave', buscarPorPalavraChave);
+    });
+
+    it('deve retornar 201 com resultado quando palavra válida', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue([{ id: 1, titulo: 'Teste postagem' }]);
+        (fabricaBuscarPorPostagemPorPalavraChave as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app).get('/postagem/palavraChave').query({ palavra: 'teste' });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual([{ id: 1, titulo: 'Teste postagem' }]);
+        expect(mockProcessar).toHaveBeenCalledWith('teste');
     });
 });

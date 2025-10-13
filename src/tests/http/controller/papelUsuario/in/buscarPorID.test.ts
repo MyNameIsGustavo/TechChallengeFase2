@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { buscarPorID } from "../../../../../http/controller/papelUsuario/in/buscarPorID";
 import { fabricaBuscarPorIDPapelUsuario } from "../../../../../use-cases/papelUsuarioUseCases/factory/fabricaBuscarPorID-papelUsuario";
+import request from 'supertest';
 
 jest.mock("../../../../../use-cases/papelUsuarioUseCases/factory/fabricaBuscarPorID-papelUsuario");
 
@@ -58,5 +59,34 @@ describe("Controller buscarPorID", () => {
                 erros: expect.any(Object),
             })
         );
+    });
+});
+
+
+describe('GET /papelUsuario/:id', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.get('/papelUsuario/:id', buscarPorID);
+    });
+
+    it('deve retornar 201 com resultado quando ID for válido', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue({ id: 1, nome: 'Administrador' });
+        (fabricaBuscarPorIDPapelUsuario as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app).get('/papelUsuario/1');
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({ id: 1, nome: 'Administrador' });
+        expect(mockProcessar).toHaveBeenCalledWith(1);
+    });
+
+    it('deve retornar 400 quando ID for inválido', async () => {
+        const response = await request(app).get('/papelUsuario/abc');
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('mensagem', 'ID deve ser número inteiro positivo');
     });
 });

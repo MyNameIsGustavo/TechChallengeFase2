@@ -1,5 +1,7 @@
 import { editar } from "../../../../../http/controller/usuario/in/editar";
 import { fabricaEditarUsuario } from "../../../../../use-cases/usuarioUseCases/factory/fabricaEditar-usuario";
+import request from 'supertest';
+import express from 'express';
 
 jest.mock("../../../../../use-cases/usuarioUseCases/factory/fabricaEditar-usuario");
 
@@ -89,5 +91,69 @@ describe("Controller - editar usuário", () => {
         expect(mockResponse.json).toHaveBeenCalledWith({
             mensagem: "Usuário não encontrado",
         });
+    });
+});
+
+describe('PUT /usuario/:id', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.put('/usuario/:id', editar);
+    });
+
+    it('deve retornar 201 com resultado quando edição for bem-sucedida', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue({
+            id: 1,
+            nomeCompleto: 'Carlo',
+            telefone: '11999999999',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1
+        });
+
+        (fabricaEditarUsuario as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app)
+            .put('/usuario/1')
+            .send({
+                nomeCompleto: 'Carlo',
+                telefone: '11999999999',
+                email: 'carlos@exemplo.com',
+                papelUsuarioID: 1,
+                senha: '123456'
+            });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({
+            id: 1,
+            nomeCompleto: 'Carlo',
+            telefone: '11999999999',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1
+        });
+        expect(mockProcessar).toHaveBeenCalledWith(1, {
+            nomeCompleto: 'Carlo',
+            telefone: '11999999999',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1,
+            senha: '123456'
+        });
+    });
+
+    it('deve retornar 400 quando ID for inválido', async () => {
+        const response = await request(app)
+            .put('/usuario/abc')
+            .send({
+                nomeCompleto: 'Carlo',
+                telefone: '11999999999',
+                email: 'carlos@exemplo.com',
+                papelUsuarioID: 1,
+                senha: '123456'
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('mensagem', 'ID deve ser número inteiro positivo');
+        expect(response.body).toHaveProperty('erros');
     });
 });

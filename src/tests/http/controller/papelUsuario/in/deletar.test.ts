@@ -1,5 +1,7 @@
 import { deletar } from "../../../../../../src/http/controller/papelUsuario/in/deletar";
 import { fabricaDeletaPapelUsuario } from "../../../../../../src/use-cases/papelUsuarioUseCases/factory/fabricaDeleta-papelUsuario";
+import request from 'supertest';
+import express from 'express';
 
 jest.mock("../../../../../../src/use-cases/papelUsuarioUseCases/factory/fabricaDeleta-papelUsuario");
 
@@ -42,9 +44,9 @@ describe("Controller - deletar papel de usuário", () => {
     expect(mockResponse.json).toHaveBeenCalledWith(resultadoEsperado);
   });
 
-  
+
   it("deve retornar 400 se o ID for inválido", async () => {
-    mockRequest.params = { id: "abc" }; 
+    mockRequest.params = { id: "abc" };
 
     await deletar(mockRequest, mockResponse);
 
@@ -57,5 +59,33 @@ describe("Controller - deletar papel de usuário", () => {
 
     expect(fabricaDeletaPapelUsuario).not.toHaveBeenCalled();
     expect(mockProcessar).not.toHaveBeenCalled();
+  });
+});
+
+describe('DELETE /papelUsuario/:id', () => {
+  let app: express.Express;
+
+  beforeAll(() => {
+    app = express();
+    app.use(express.json());
+    app.delete('/papelUsuario/:id', deletar);
+  });
+
+  it('deve retornar 201 com resultado quando ID for válido', async () => {
+    const mockProcessar = jest.fn().mockResolvedValue({ mensagem: 'Papel excluído com sucesso' });
+    (fabricaDeletaPapelUsuario as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+    const response = await request(app).delete('/papelUsuario/1');
+
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({ mensagem: 'Papel excluído com sucesso' });
+    expect(mockProcessar).toHaveBeenCalledWith(1);
+  });
+
+  it('deve retornar 400 quando o ID for inválido', async () => {
+    const response = await request(app).delete('/papelUsuario/abc');
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('mensagem', 'ID deve ser número inteiro positivo');
   });
 });

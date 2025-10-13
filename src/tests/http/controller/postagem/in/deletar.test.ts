@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { deletar } from "../../../../../http/controller/postagem/in/deletar";
 import { fabricaDeletarPostagem } from "../../../../../use-cases/postagemUseCases/factory/fabricaDeleta-postagem";
+import request from 'supertest';
 
 jest.mock("../../../../../use-cases/postagemUseCases/factory/fabricaDeleta-postagem");
 
@@ -56,5 +57,26 @@ describe("Controller deletar", () => {
                 erros: expect.any(Object),
             })
         );
+    });
+});
+
+describe('DELETE /postagem/:id', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.delete('/postagem/:id', deletar);
+    });
+
+    it('deve retornar 201 quando o ID é válido', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue({ mensagem: 'Postagem deletada', id: 1 });
+        (fabricaDeletarPostagem as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app).delete('/postagem/1');
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({ mensagem: 'Postagem deletada', id: 1 });
+        expect(mockProcessar).toHaveBeenCalledWith(1);
     });
 });

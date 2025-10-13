@@ -3,7 +3,7 @@ import { criar } from "./in/criar";
 import { deletar } from "./in/deletar";
 import { buscarTodos } from './in/buscarTodos';
 import { buscarPorID } from './in/buscarPorID';
-import { editar } from '../papelUsuario/in/editar';
+import { editar } from '../usuario/in/editar';
 import { login } from './in/login';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';

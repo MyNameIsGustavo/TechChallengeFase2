@@ -1,5 +1,7 @@
 import { criar } from "../../../../../http/controller/usuario/in/criar";
 import { fabricaCriarUsuarios } from "../../../../../use-cases/usuarioUseCases/factory/fabricaCria-usuario";
+import request from 'supertest';
+import express from 'express';
 
 jest.mock("../../../../../use-cases/usuarioUseCases/factory/fabricaCria-usuario");
 
@@ -49,11 +51,11 @@ describe("Controller - criar usuário", () => {
 
     it("deve retornar erro 400 quando os dados forem inválidos", async () => {
         mockRequest.body = {
-            nomeCompleto: "G", 
+            nomeCompleto: "G",
             telefone: "123",
-            email: "email-invalido", 
-            papelUsuarioID: -1, 
-            senha: "123", 
+            email: "email-invalido",
+            papelUsuarioID: -1,
+            senha: "123",
         };
 
         await criar(mockRequest, mockResponse);
@@ -64,5 +66,69 @@ describe("Controller - criar usuário", () => {
                 mensagem: "Erro de validação",
             })
         );
+    });
+});
+
+describe('POST /usuario', () => {
+    let app: express.Express;
+
+    beforeAll(() => {
+        app = express();
+        app.use(express.json());
+        app.post('/usuario', criar);
+    });
+
+    it('deve retornar 201 com resultado quando os dados forem válidos', async () => {
+        const mockProcessar = jest.fn().mockResolvedValue({
+            id: 1,
+            nomeCompleto: 'Carlos',
+            telefone: '19998888222',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1,
+        });
+
+        (fabricaCriarUsuarios as jest.Mock).mockResolvedValue({ processar: mockProcessar });
+
+        const response = await request(app)
+            .post('/usuario')
+            .send({
+                nomeCompleto: 'Carlos',
+                telefone: '19998888222',
+                email: 'carlos@exemplo.com',
+                papelUsuarioID: 1,
+                senha: '123456',
+            });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({
+            id: 1,
+            nomeCompleto: 'Carlos',
+            telefone: '19998888222',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1,
+        });
+        expect(mockProcessar).toHaveBeenCalledWith({
+            nomeCompleto: 'Carlos',
+            telefone: '19998888222',
+            email: 'carlos@exemplo.com',
+            papelUsuarioID: 1,
+            senha: '123456',
+        });
+    });
+
+    it('deve retornar 400 quando os dados forem inválidos', async () => {
+        const response = await request(app)
+            .post('/usuario')
+            .send({
+                nomeCompleto: 'Ca',
+                telefone: '12',
+                email: 'email_invalido',
+                papelUsuarioID: -1,
+                senha: '123',
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('mensagem', 'Erro de validação');
+        expect(response.body).toHaveProperty('erros');
     });
 });

@@ -1,5 +1,8 @@
 import { editar } from "../../../../../../src/http/controller/postagem/in/editar";
 import { fabricaEditarPostagem } from "../../../../../../src/use-cases/postagemUseCases/factory/fabricaEditar-postagem";
+import request from "supertest";
+import express from "express";
+import multer from "multer";
 
 jest.mock("../../../../../../src/use-cases/postagemUseCases/factory/fabricaEditar-postagem");
 
@@ -70,5 +73,55 @@ describe("Controller - editar postagem", () => {
       })
     );
     expect(fabricaEditarPostagem).not.toHaveBeenCalled();
+  });
+});
+
+
+
+describe("PUT /postagem/:id", () => {
+  let app: express.Express;
+
+  beforeAll(() => {
+    app = express();
+    app.use(express.json());
+    const storage = multer.memoryStorage();
+    const upload = multer({ storage });
+    app.put("/postagem/:id", upload.single("file"), editar);
+  });
+
+  it("deve editar a postagem com sucesso", async () => {
+    const mockProcessar = jest.fn().mockResolvedValue({
+      id: 1,
+      titulo: "Postagem editada",
+      descricao: "Descrição atualizada",
+    });
+    (fabricaEditarPostagem as jest.Mock).mockResolvedValue({
+      processar: mockProcessar,
+    });
+
+    const response = await request(app)
+      .put("/postagem/1")
+      .field("titulo", "Postagem editada")
+      .field("descricao", "Descrição atualizada")
+      .field("visibilidade", "true")
+      .field("autorID", "123");
+
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({
+      id: 1,
+      titulo: "Postagem editada",
+      descricao: "Descrição atualizada",
+    });
+    expect(mockProcessar).toHaveBeenCalledWith(
+      1,
+      {
+        titulo: "Postagem editada",
+        descricao: "Descrição atualizada",
+        visibilidade: true,
+        autorID: 123,
+        caminhoImagem: "",
+      },
+      undefined
+    );
   });
 });

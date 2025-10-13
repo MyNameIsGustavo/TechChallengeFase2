@@ -1,5 +1,8 @@
 import { criar } from "../../../../../http/controller/postagem/in/criar";
 import { fabricaCriarPostagem } from "../../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem";
+import request from 'supertest';
+import express from 'express';
+import multer from "multer";
 
 jest.mock("../../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem");
 jest.mock("dotenv");
@@ -59,7 +62,7 @@ describe("Controller - criar postagem", () => {
 
   it("deve retornar erro 400 quando os dados forem inválidos", async () => {
     mockRequest.body = {
-      titulo: "", 
+      titulo: "",
       descricao: "desc",
       visibilidade: "true",
       autorID: "1",
@@ -74,5 +77,44 @@ describe("Controller - criar postagem", () => {
       })
     );
     expect(fabricaCriarPostagem).not.toHaveBeenCalled();
+  });
+});
+
+
+describe("POST /postagem", () => {
+  let app: express.Express;
+
+  beforeAll(() => {
+    app = express();
+    app.use(express.json());
+    const storage = multer.memoryStorage();
+    const upload = multer({ storage });
+    app.post("/postagem", upload.single("file"), criar);
+  });
+
+  it("deve criar postagem com sucesso", async () => {
+    const mockProcessar = jest.fn().mockResolvedValue({
+      id: 1,
+      titulo: "Teste",
+      descricao: "Descrição teste",
+    });
+    (fabricaCriarPostagem as jest.Mock).mockResolvedValue({
+      processar: mockProcessar,
+    });
+
+    const response = await request(app)
+      .post("/postagem")
+      .field("titulo", "Teste")
+      .field("descricao", "Descrição teste")
+      .field("visibilidade", "true")
+      .field("autorID", "123");
+
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({
+      id: 1,
+      titulo: "Teste",
+      descricao: "Descrição teste",
+    });
+    expect(mockProcessar).toHaveBeenCalled();
   });
 });
