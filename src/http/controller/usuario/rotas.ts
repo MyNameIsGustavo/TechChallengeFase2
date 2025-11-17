@@ -8,6 +8,7 @@ import { login } from './in/login';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
 import { PapeisUsuario } from '../../../enums/papeisUsuarios';
+import { buscarInformacoes } from './in/buscarInformacoes';
 
 export async function usuarioRotas(app: Application) {
 
@@ -95,7 +96,8 @@ export async function usuarioRotas(app: Application) {
    *         description: Lista de usuários retornada com sucesso.
    */
   app.get('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarTodos);
-
+  
+  app.get('/usuarios/buscaInformacoes', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarInformacoes);
   /**
    * @openapi
    * /usuarios/{id}:
@@ -122,6 +124,8 @@ export async function usuarioRotas(app: Application) {
    *         description: Usuário não encontrado.
    */
   app.get('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarPorID);
+
+
 
   /**
    * @openapi
