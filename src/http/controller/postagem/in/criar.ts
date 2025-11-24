@@ -1,9 +1,7 @@
 import { z } from "zod";
 import type { Request, Response } from "express";
 import { fabricaCriarPostagem } from "../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem";
-import { uploadImagem } from "../../../../use-cases/postagemUseCases/uploadImgBB-postagem";
 import dotenv from "dotenv";
-import fs from "fs";
 
 const envFile = process.env.NODE_ENV === "PRODUCTION" ? ".env.prod" : ".env.local";
 dotenv.config({ path: envFile });
@@ -16,10 +14,7 @@ export async function criar(request: Request, response: Response) {
       descricao: z.string().max(500),
       visibilidade: z
         .union([z.boolean(), z.string()])
-        .transform((val) => val === "true" || val === true),
-      autorID: z
-        .union([z.number(), z.string()])
-        .transform((val) => Number(val)),
+        .transform((val) => val === "true" || val === true)
     });
 
     const resultadoValidacaoSchema = criarPostagemSchema.safeParse(request.body);
@@ -32,11 +27,12 @@ export async function criar(request: Request, response: Response) {
     }
 
     const objFabricaCriarPostagem = await fabricaCriarPostagem();
-
+    const autorID = request.usuario!.id;
     const novaPostagem = {
       ...resultadoValidacaoSchema.data,
       dataPublicacao: new Date(),
       caminhoImagem: "",
+      autorID
     };
 
     const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem, request.file);
