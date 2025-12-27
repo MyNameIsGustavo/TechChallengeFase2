@@ -10,7 +10,7 @@ import { seedUsuarios } from './repositories/pg/seedUsuario';
 import dotenv from 'dotenv';
 
 const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
-dotenv.config({ path: envFile })
+dotenv.config({ path: envFile });
 
 async function appChronosAPI() {
     await bancoDeDados.conectar();
