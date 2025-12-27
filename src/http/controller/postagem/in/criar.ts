@@ -6,42 +6,47 @@ import dotenv from "dotenv";
 const envFile = process.env.NODE_ENV === "PRODUCTION" ? ".env.prod" : ".env.local";
 dotenv.config({ path: envFile });
 
-export async function criar(request: Request, response: Response) {-
+export async function criar(request: Request, response: Response) {
   try {
+    if (!request.usuario?.id) {
+      return response.status(401).json({ mensagem: "Usuário não autenticado" });
+    }
+
     const criarPostagemSchema = z.object({
-      caminhoImagem: z.string().max(500).optional(),
-      titulo: z.string().min(1, "Título é obrigatório").max(250),
+      titulo: z.string().min(1).max(250),
       descricao: z.string().max(500),
       visibilidade: z
         .union([z.boolean(), z.string()])
-        .transform((val) => val === "true" || val === true)
+        .transform((val) => val === "true" || val === true),
     });
 
-    const resultadoValidacaoSchema = criarPostagemSchema.safeParse(request.body);
+    const resultado = criarPostagemSchema.safeParse(request.body);
 
-    if (!resultadoValidacaoSchema.success) {
+    if (!resultado.success) {
       return response.status(400).json({
         mensagem: "Erro de validação",
-        erros: resultadoValidacaoSchema.error.format(),
+        erros: resultado.error.format(),
       });
     }
 
-    const objFabricaCriarPostagem = await fabricaCriarPostagem();
-    const autorID = request.usuario!.id;
     const novaPostagem = {
-      ...resultadoValidacaoSchema.data,
+      ...resultado.data,
+      autorID: request.usuario.id,
+      caminhoImagem: request.file?.path ?? "",
       dataPublicacao: new Date(),
-      caminhoImagem: "",
-      autorID
     };
 
-    const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem, request.file);
+    const criarPostagemUseCase = await fabricaCriarPostagem();
+    const resultadoProcessado = await criarPostagemUseCase.processar(
+      novaPostagem,
+      request.file
+    );
 
     return response.status(201).json(resultadoProcessado);
   } catch (error) {
     console.error(error);
     return response.status(500).json({
-      mensagem: `Erro ao processar a criação de nova postagem: ${error}`,
+      mensagem: "Erro ao processar a criação de nova postagem",
     });
   }
 }

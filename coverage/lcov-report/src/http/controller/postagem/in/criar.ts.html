@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
@@ -113,25 +113,24 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -148,13 +147,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,51 +168,52 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { z } from "zod";
 import type { Request, Response } from "express";
 import { fabricaCriarPostagem } from "../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem";
-import { uploadImagem } from "../../../../use-cases/postagemUseCases/uploadImgBB-postagem";
 import dotenv from "dotenv";
-import fs from "fs";
 &nbsp;
 const envFile = process.env.NODE_ENV === "PRODUCTION" ? <span class="branch-0 cbranch-no" title="branch not covered" >".env.prod" </span>: ".env.local";
 dotenv.config({ path: envFile });
 &nbsp;
 export async function criar(request: Request, response: Response) {
   try {
+    if (!request.usuario?.id) {
+      return response.status(401).json({ mensagem: "Usuário não autenticado" });
+    }
+&nbsp;
     const criarPostagemSchema = z.object({
-      caminhoImagem: z.string().max(500).optional(),
-      titulo: z.string().min(1, "Título é obrigatório").max(250),
+      titulo: z.string().min(1).max(250),
       descricao: z.string().max(500),
       visibilidade: z
         .union([z.boolean(), z.string()])
         .transform((val) =&gt; val === "true" || <span class="branch-1 cbranch-no" title="branch not covered" >val === true)</span>,
-      autorID: z
-        .union([z.number(), z.string()])
-        .transform((val) =&gt; Number(val)),
     });
 &nbsp;
-    const resultadoValidacaoSchema = criarPostagemSchema.safeParse(request.body);
+    const resultado = criarPostagemSchema.safeParse(request.body);
 &nbsp;
-    if (!resultadoValidacaoSchema.success) {
+    if (!resultado.success) {
       return response.status(400).json({
         mensagem: "Erro de validação",
-        erros: resultadoValidacaoSchema.error.format(),
+        erros: resultado.error.format(),
       });
     }
 &nbsp;
-    const objFabricaCriarPostagem = await fabricaCriarPostagem();
-&nbsp;
     const novaPostagem = {
-      ...resultadoValidacaoSchema.data,
+      ...resultado.data,
+      autorID: request.usuario.id,
+      caminhoImagem: request.file?.path ?? "",
       dataPublicacao: new Date(),
-      caminhoImagem: "",
     };
 &nbsp;
-    const resultadoProcessado = await objFabricaCriarPostagem.processar(novaPostagem, request.file);
+    const criarPostagemUseCase = await fabricaCriarPostagem();
+    const resultadoProcessado = await criarPostagemUseCase.processar(
+      novaPostagem,
+      request.file
+    );
 &nbsp;
     return response.status(201).json(resultadoProcessado);
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
 <span class="cstat-no" title="statement not covered" >    return response.status(500).json({</span>
-      mensagem: `Erro ao processar a criação de nova postagem: ${error}`,
+      mensagem: "Erro ao processar a criação de nova postagem",
     });
   }
 }</pre></td></tr></table></pre>
@@ -220,7 +223,7 @@ export async function criar(request: Request, response: Response) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-13T22:21:22.089Z
+                at 2025-12-27T22:42:33.396Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

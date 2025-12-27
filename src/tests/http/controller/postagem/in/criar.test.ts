@@ -1,14 +1,14 @@
 import { criar } from "../../../../../http/controller/postagem/in/criar";
 import { fabricaCriarPostagem } from "../../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem";
-import request from 'supertest';
-import express from 'express';
+import request from "supertest";
+import express from "express";
 import multer from "multer";
 
 jest.mock("../../../../../use-cases/postagemUseCases/factory/fabricaCria-postagem");
 jest.mock("dotenv");
 jest.mock("fs");
 
-describe("Controller - criar postagem", () => {
+describe("Controller - criar postagem (unitário)", () => {
   let mockRequest: any;
   let mockResponse: any;
   let mockProcessar: jest.Mock;
@@ -25,9 +25,9 @@ describe("Controller - criar postagem", () => {
         titulo: "Post de teste",
         descricao: "Descrição do post",
         visibilidade: "true",
-        autorID: "1",
       },
       file: { path: "imagem-teste.png" },
+      usuario: { id: 1 }, // 🔥 ESSENCIAL
     };
 
     mockResponse = {
@@ -47,6 +47,7 @@ describe("Controller - criar postagem", () => {
     await criar(mockRequest, mockResponse);
 
     expect(fabricaCriarPostagem).toHaveBeenCalledTimes(1);
+
     expect(mockProcessar).toHaveBeenCalledWith(
       expect.objectContaining({
         titulo: "Post de teste",
@@ -56,6 +57,7 @@ describe("Controller - criar postagem", () => {
       }),
       mockRequest.file
     );
+
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith(resultadoEsperado);
   });
@@ -65,7 +67,6 @@ describe("Controller - criar postagem", () => {
       titulo: "",
       descricao: "desc",
       visibilidade: "true",
-      autorID: "1",
     };
 
     await criar(mockRequest, mockResponse);
@@ -76,19 +77,40 @@ describe("Controller - criar postagem", () => {
         mensagem: "Erro de validação",
       })
     );
+
+    expect(fabricaCriarPostagem).not.toHaveBeenCalled();
+  });
+
+  it("deve retornar erro 401 se o usuário não estiver autenticado", async () => {
+    delete mockRequest.usuario;
+
+    await criar(mockRequest, mockResponse);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(401);
+    expect(mockResponse.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mensagem: "Usuário não autenticado",
+      })
+    );
+
     expect(fabricaCriarPostagem).not.toHaveBeenCalled();
   });
 });
 
-
-describe("POST /postagem", () => {
+describe("POST /postagem (integração)", () => {
   let app: express.Express;
 
   beforeAll(() => {
     app = express();
     app.use(express.json());
-    const storage = multer.memoryStorage();
-    const upload = multer({ storage });
+
+    // 🔐 Middleware fake de autenticação
+    app.use((req: any, _res, next) => {
+      req.usuario = { id: 1 };
+      next();
+    });
+
+    const upload = multer({ storage: multer.memoryStorage() });
     app.post("/postagem", upload.single("file"), criar);
   });
 
@@ -98,6 +120,7 @@ describe("POST /postagem", () => {
       titulo: "Teste",
       descricao: "Descrição teste",
     });
+
     (fabricaCriarPostagem as jest.Mock).mockResolvedValue({
       processar: mockProcessar,
     });
@@ -107,7 +130,7 @@ describe("POST /postagem", () => {
       .field("titulo", "Teste")
       .field("descricao", "Descrição teste")
       .field("visibilidade", "true")
-      .field("autorID", "123");
+      .attach("file", Buffer.from("fake image"), "teste.png");
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
@@ -115,6 +138,7 @@ describe("POST /postagem", () => {
       titulo: "Teste",
       descricao: "Descrição teste",
     });
+
     expect(mockProcessar).toHaveBeenCalled();
   });
 });

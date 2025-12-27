@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1760394082113" clover="3.2.0">
-  <project timestamp="1760394082113" name="All files">
-    <metrics statements="521" coveredstatements="439" conditionals="71" coveredconditionals="36" methods="92" coveredmethods="76" elements="684" coveredelements="551" complexity="0" loc="521" ncloc="521" packages="12" files="57" classes="57"/>
+<coverage generated="1766875353442" clover="3.2.0">
+  <project timestamp="1766875353442" name="All files">
+    <metrics statements="522" coveredstatements="440" conditionals="74" coveredconditionals="39" methods="91" coveredmethods="75" elements="687" coveredelements="554" complexity="0" loc="522" ncloc="522" packages="12" files="57" classes="57"/>
     <package name="src">
       <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="prismaClient.ts" path="/home/grmaia/fiap_fase02/src/prismaClient.ts">
@@ -98,7 +98,7 @@
       </file>
     </package>
     <package name="src.http.controller.postagem.in">
-      <metrics statements="88" coveredstatements="79" conditionals="15" coveredconditionals="10" methods="10" coveredmethods="10"/>
+      <metrics statements="89" coveredstatements="80" conditionals="18" coveredconditionals="13" methods="9" coveredmethods="9"/>
       <file name="buscarPorID.ts" path="/home/grmaia/fiap_fase02/src/http/controller/postagem/in/buscarPorID.ts">
         <metrics statements="13" coveredstatements="12" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -143,26 +143,27 @@
         <line num="12" count="0" type="stmt"/>
       </file>
       <file name="criar.ts" path="/home/grmaia/fiap_fase02/src/http/controller/postagem/in/criar.ts">
-        <metrics statements="19" coveredstatements="17" conditionals="5" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <metrics statements="20" coveredstatements="18" conditionals="8" coveredconditionals="6" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="8" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="22" count="3" type="stmt"/>
-        <line num="25" count="3" type="stmt"/>
-        <line num="27" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="25" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
       </file>
       <file name="deletar.ts" path="/home/grmaia/fiap_fase02/src/http/controller/postagem/in/deletar.ts">
         <metrics statements="13" coveredstatements="12" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
