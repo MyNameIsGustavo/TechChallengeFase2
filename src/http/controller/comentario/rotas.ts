@@ -27,12 +27,12 @@ export async function comentarioRotas(app: Application) {
      *               postagemID:
      *                 type: integer
      *                 example: 1
-     *              conteudo:
-     *                type: string
-     *                example: "Este é um comentário."
-     *              usuarioID:
-     *                type: integer
-     *                example: 2
+     *               conteudo:
+     *                 type: string
+     *                 example: "Este é um comentário."
+     *               usuarioID:
+     *                 type: integer
+     *                 example: 2
      *     responses:
      *       200:
      *         description: Comentário cadastrado com sucesso.
@@ -47,9 +47,9 @@ export async function comentarioRotas(app: Application) {
     /**
      * @openapi
      * /comentario:
-     *   post:
-     *     summary: Deleta um novo comentario
-     *     description: deleta um comentario com o ID da postagem e o ID do comentario.
+     *   delete:
+     *     summary: Deleta um comentario
+     *     description: Deleta um comentario com o ID da postagem e o ID do comentario.
      *     tags:
      *       - Comentarios
      *     security:
@@ -64,9 +64,9 @@ export async function comentarioRotas(app: Application) {
      *               postagemID:
      *                 type: integer
      *                 example: 1
-     *              comentarioID:
-     *                type: integer
-     *                example: 2
+     *               comentarioID:
+     *                 type: integer
+     *                 example: 2
      *     responses:
      *       200:
      *         description: Comentário deletado com sucesso.
