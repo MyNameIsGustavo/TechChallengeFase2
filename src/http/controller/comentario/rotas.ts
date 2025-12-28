@@ -3,7 +3,7 @@ import { criar } from "./in/criar";
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
 import { PapeisUsuario } from '../../../enums/papeisUsuarios';
-import { deletar } from './in/deletar';
+import { deletar } from './in/deletar'
 
 export async function comentarioRotas(app: Application) {
 
