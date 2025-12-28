@@ -47,29 +47,45 @@ export class PostagemRepository implements IPostagemRepository {
         }
     }
 
-    async buscarPostagemPorID(id: number): Promise<IPostagem | null> {
+    async buscarPostagemPorID(id: number): Promise<IPostagem & { totalCurtidas: number } | null> {
         try {
             const postagemExistente = await prisma.cH_postagem.findUnique({
-                where: { id: id }
+                where: { id },
+                include: {
+                    curtidas: {
+                        select: { postagemID: true } 
+                    }
+                }
             });
 
-            if (!postagemExistente) throw new Error(`Postagem com ID ${id} não encontrado.`);
+            if (!postagemExistente) return null;
 
-            return postagemExistente as IPostagem;
+            const { curtidas, ...rest } = postagemExistente;
+
+            return {
+                ...rest,
+                totalCurtidas: curtidas.length
+            };
         } catch (error) {
             throw new Error(`Erro ao buscar postagem por ID: ${error}`);
         }
     }
 
-    async buscarTodasPostagens(): Promise<IPostagem[]> {
+
+    async buscarTodasPostagens(): Promise<(IPostagem & { totalCurtidas: number })[]> {
         try {
-            const postagens = await prisma.cH_postagem.findMany();
+            const postagens = await prisma.cH_postagem.findMany({
+                include: {
+                    curtidas: {
+                        select: { postagemID: true }
+                    }
+                }
+            });
 
-            if (postagens.length === 0) {
-                return [];
-            }
-
-            return postagens as IPostagem[];
+            return postagens.map(postagem => ({
+                ...postagem,
+                totalCurtidas: postagem.curtidas.length
+            }));
         } catch (error) {
             throw new Error(`Erro ao buscar todas postagens: ${error}`);
         }

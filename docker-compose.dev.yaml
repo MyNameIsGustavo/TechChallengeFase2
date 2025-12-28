@@ -10,14 +10,13 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER_DEV}:${POSTGRES_PASSWORD_DEV}@${POSTGRES_HOST_DEV}:${POSTGRES_PORT_DEV}/${POSTGRES_DB_DEV}?sslmode=${SSL_MODE_DEV}
     volumes:
       - .:/app
-      - /app/node_modules
     ports:
       - "${API_PORT_DEV}:3000"
     depends_on:
       - db_chronos_dev
     networks:
       - chronos_network_dev
-    command: sh -c "npx prisma migrate deploy && npm run dev" 
+    command: sh -c "npx prisma migrate deploy && npm run dev"
 
   db_chronos_dev:
     container_name: postgres_dev
