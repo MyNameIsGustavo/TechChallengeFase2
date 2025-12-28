@@ -8,17 +8,19 @@ dotenv.config({ path: envFile });
 
 export async function criar(request: Request, response: Response) {
   try {
-    if (!request.usuario?.id) {
-      return response.status(401).json({ mensagem: "Usuário não autenticado" });
-    }
+    if (!request.usuario?.id) return response.status(401).json({ mensagem: "Usuário não autenticado" });
 
     const criarPostagemSchema = z.object({
       titulo: z.string().min(1).max(250),
       descricao: z.string().max(500),
-      visibilidade: z
-        .union([z.boolean(), z.string()])
-        .transform((val) => val === "true" || val === true),
+      visibilidade: z.union([z.boolean(), z.string()]).transform((val) => val === "true" || val === true),
     });
+    
+    if (!request.file) {
+      return response.status(400).json({
+        mensagem: "Imagem é obrigatória",
+      });
+    }
 
     const resultado = criarPostagemSchema.safeParse(request.body);
 

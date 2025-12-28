@@ -10,6 +10,8 @@ export async function uploadImagem(arquivo?: Express.Multer.File): Promise<strin
 
     if (process.env.NODE_ENV === "PRODUCTION") {
         const imgbbKey = process.env.IMGBB_API_KEY;
+        if (!imgbbKey) throw new Error("IMGBB_API_KEY não definido");
+
         const formData = new FormData();
         formData.append("image", fs.createReadStream(arquivo.path));
 

@@ -6,11 +6,7 @@ export class CriarPostagemUseCase {
     constructor(private postagemRepository: IPostagemRepository) { }
 
     async processar(postagem: IPostagem, arquivo?: Express.Multer.File): Promise<IPostagem | null> {
-        let caminhoImagem = "";
-
-        if (arquivo) {
-            caminhoImagem = await uploadImagem(arquivo);
-        }
+        const caminhoImagem = await uploadImagem(arquivo);
 
         return this.postagemRepository.criarPostagem({
             ...postagem,
