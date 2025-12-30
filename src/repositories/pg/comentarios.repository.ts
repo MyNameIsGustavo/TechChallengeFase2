@@ -12,6 +12,9 @@ export class ComentarioRepository implements IComentarioRepository {
                     usuarioID: idUsuario,
                     postagemID: postagemID,
                     dataCriacao: new Date()
+                },
+                include: {
+                    usuario: true
                 }
             });
 
