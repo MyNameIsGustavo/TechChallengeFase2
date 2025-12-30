@@ -11,7 +11,7 @@ export async function deletar(request: Request, response: Response) {
             comentarioID: z.number().positive(),
         });
 
-        const resultado = deletarComentario.safeParse(request.body);
+        const resultado = deletarComentario.safeParse(request.params);
 
         if (!resultado.success) return response.status(400).json({ mensagem: "Erro de validação", erros: resultado.error.format() });
 
