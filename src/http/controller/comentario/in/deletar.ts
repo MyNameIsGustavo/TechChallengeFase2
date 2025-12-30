@@ -4,28 +4,35 @@ import { fabricaDeletaComentario } from "../../../../use-cases/comentariosUseCas
 
 export async function deletar(request: Request, response: Response) {
     try {
-        if (!request.usuario?.id) return response.status(401).json({ mensagem: "Usuário não autenticado" });
+        if (!request.usuario?.id) {
+            return response.status(401).json({ mensagem: "Usuário não autenticado" });
+        }
 
-        const deletarComentario = z.object({
-            postagemID: z.number().positive(),
-            comentarioID: z.number().positive(),
+        const schema = z.object({
+            postagemID: z.coerce.number().positive(),
+            comentarioID: z.coerce.number().positive(),
         });
 
-        const resultado = deletarComentario.safeParse(request.params);
+        const resultado = schema.safeParse(request.params);
 
-        if (!resultado.success) return response.status(400).json({ mensagem: "Erro de validação", erros: resultado.error.format() });
+        if (!resultado.success) {
+            return response.status(400).json({
+                mensagem: "Erro de validação",
+                erros: resultado.error.format(),
+            });
+        }
 
-        const fabricaDeletarComentario = await fabricaDeletaComentario();
-        const resultadoProcessado = await fabricaDeletarComentario.processar(
+        const useCase = await fabricaDeletaComentario();
+        await useCase.processar(
             resultado.data.postagemID,
-            resultado.data.comentarioID
+            resultado.data.comentarioID,
         );
 
-        return response.status(201).json(resultadoProcessado);
+        return response.status(204).send();
     } catch (error) {
         console.error(error);
         return response.status(500).json({
-            mensagem: "Erro ao processar a criação de nova postagem",
+            mensagem: "Erro ao deletar comentário",
         });
     }
 }

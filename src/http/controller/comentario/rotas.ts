@@ -49,37 +49,31 @@ export async function comentarioRotas(app: Application) {
         criar
     );
 
-
     /**
      * @openapi
-     * /comentario:
+     * /postagem/{postagemID}/comentario/{comentarioID}:
      *   delete:
-     *     summary: Deleta um comentario
-     *     description: Deleta um comentario com o ID da postagem e o ID do comentario.
+     *     summary: Deleta um comentário
      *     tags:
      *       - Comentarios
      *     security:
      *       - bearerAuth: []
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             properties:
-     *               postagemID:
-     *                 type: integer
-     *                 example: 1
-     *               comentarioID:
-     *                 type: integer
-     *                 example: 2
+     *     parameters:
+     *       - in: path
+     *         name: postagemID
+     *         required: true
+     *         schema:
+     *           type: integer
+     *       - in: path
+     *         name: comentarioID
+     *         required: true
+     *         schema:
+     *           type: integer
      *     responses:
      *       200:
      *         description: Comentário deletado com sucesso.
-     *       400:
-     *         description: Erro de validação.
      */
-    app.delete('/comentario',
+    app.delete('/postagem/:postagemID/comentario/:comentarioID',
         autenticacaoMiddleware,
         autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE),
         deletar);
