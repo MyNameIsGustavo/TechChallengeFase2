@@ -32,7 +32,7 @@ export class PostagemRepository implements IPostagemRepository {
 
     async deletarPostagem(id: number): Promise<IPostagem | null> {
         try {
-            const postagemExistente = await prisma.cH_postagem.findUnique({where: { id: id }});
+            const postagemExistente = await prisma.cH_postagem.findUnique({ where: { id: id } });
 
             if (!postagemExistente) throw new Error(`Postagem com ID ${id} não encontrado.`);
 
@@ -211,13 +211,22 @@ export class PostagemRepository implements IPostagemRepository {
                         { titulo: { contains: palavraChave, mode: 'insensitive' } },
                         { descricao: { contains: palavraChave, mode: 'insensitive' } }
                     ]
+                },
+                include: {
+                    usuario: true,
+                    comentarios: {
+                        orderBy: { dataCriacao: 'desc' },
+                        include: {
+                            usuario: true
+                        }
+                    }
                 }
             });
-            if (postagens.length === 0) return [];
 
             return postagens as IPostagem[];
         } catch (error) {
             throw new Error(`Erro ao buscar postagem por palavra chave: ${error}`);
         }
     }
+
 }
