@@ -20,8 +20,6 @@ export class EditarPostagemUseCase {
             if (upload) caminhoImagem = upload;
         }
 
-        console.log('Caminho da imagem editada:', caminhoImagem);
-
         return this.postagemRepository.editarPostagem(id, { ...postagem, caminhoImagem });
     }
 

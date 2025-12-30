@@ -16,10 +16,7 @@ export async function editar(request: Request, response: Response) {
             descricao: z.string().max(500),
             visibilidade: z
                 .union([z.boolean(), z.string()])
-                .transform((val) => val === "true" || val === true),
-            autorID: z
-                .union([z.number(), z.string()])
-                .transform((val) => Number(val)),
+                .transform((val) => val === "true" || val === true)
         });
 
         const resultadoValidacaoSchemaParametro = editarPapelSchemaParametro.safeParse(request.params);
@@ -43,8 +40,6 @@ export async function editar(request: Request, response: Response) {
         const { id } = resultadoValidacaoSchemaParametro.data;
 
         const dadosPostagem: IPostagemModificacao = { ...resultadoValidacaoSchemaBody.data, caminhoImagem: "" };
-        console.log(dadosPostagem)
-        console.log(request.file)
         const resultadoProcessado = await fbrEditarPostagem.processar(id, dadosPostagem, request.file);
 
         if (!resultadoProcessado) {
