@@ -1,5 +1,5 @@
 import { prisma } from "../../prismaClient";
-import type { IPostagem, IPostagemModificacao } from "../../entities/models/postagem.interface";
+import type { IPostagem, IPostagemCompleta, IPostagemModificacao } from "../../entities/models/postagem.interface";
 import type { IPostagemRepository } from "../postagem.repository.interface";
 
 export class PostagemRepository implements IPostagemRepository {
@@ -14,7 +14,6 @@ export class PostagemRepository implements IPostagemRepository {
                     autorID: postagem.autorID
                 }
             });
-
             const postagemCriada: IPostagem = {
                 id: novaPostagem.id,
                 titulo: novaPostagem.titulo,
@@ -33,65 +32,158 @@ export class PostagemRepository implements IPostagemRepository {
 
     async deletarPostagem(id: number): Promise<IPostagem | null> {
         try {
-            const postagemExistente = await prisma.cH_postagem.findUnique({
-                where: { id: id }
-            });
+            const postagemExistente = await prisma.cH_postagem.findUnique({where: { id: id }});
 
             if (!postagemExistente) throw new Error(`Postagem com ID ${id} não encontrado.`);
 
             await prisma.cH_postagem.delete({ where: { id: id } });
-
             return postagemExistente as IPostagem;
         } catch (error) {
             throw new Error(`Erro ao deletar postagem: ${error}`);
         }
     }
 
-    async buscarPostagemPorID(id: number): Promise<IPostagem & { totalCurtidas: number } | null> {
+    async buscarPostagemPorID(id: number): Promise<IPostagemCompleta | null> {
         try {
-            const postagemExistente = await prisma.cH_postagem.findUnique({
+            const postagem = await prisma.cH_postagem.findUnique({
                 where: { id },
                 include: {
+                    autor: {
+                        select: {
+                            id: true,
+                            nomeCompleto: true
+                        }
+                    },
                     curtidas: {
-                        select: { postagemID: true } 
+                        include: {
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true
+                                }
+                            }
+                        }
+                    },
+                    comentarios: {
+                        orderBy: {
+                            dataCriacao: "desc"
+                        },
+                        include: {
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true,
+                                    email: true
+                                }
+                            }
+                        }
                     }
                 }
             });
 
-            if (!postagemExistente) return null;
-
-            const { curtidas, ...rest } = postagemExistente;
+            if (!postagem) return null;
 
             return {
-                ...rest,
-                totalCurtidas: curtidas.length
+                id: postagem.id,
+                titulo: postagem.titulo,
+                descricao: postagem.descricao,
+                visibilidade: postagem.visibilidade,
+                dataPublicacao: postagem.dataPublicacao,
+                caminhoImagem: postagem.caminhoImagem,
+
+                autor: postagem.autor,
+
+                estatisticas: {
+                    totalCurtidas: postagem.curtidas.length,
+                    totalComentarios: postagem.comentarios.length
+                },
+
+                curtidas: postagem.curtidas.map(curtida => ({
+                    id: curtida.usuario.id,
+                    nomeCompleto: curtida.usuario.nomeCompleto
+                })),
+
+                comentarios: postagem.comentarios.map(comentario => ({
+                    id: comentario.id,
+                    conteudo: comentario.conteudo,
+                    dataCriacao: comentario.dataCriacao,
+                    usuario: comentario.usuario
+                }))
             };
         } catch (error) {
             throw new Error(`Erro ao buscar postagem por ID: ${error}`);
         }
     }
 
-
-    async buscarTodasPostagens(): Promise<(IPostagem & { totalCurtidas: number })[]> {
+    async buscarTodasPostagens(): Promise<IPostagemCompleta[]> {
         try {
             const postagens = await prisma.cH_postagem.findMany({
                 include: {
+                    autor: {
+                        select: {
+                            id: true,
+                            nomeCompleto: true
+                        }
+                    },
                     curtidas: {
-                        select: { postagemID: true }
+                        include: {
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true
+                                }
+                            }
+                        }
+                    },
+                    comentarios: {
+                        orderBy: {
+                            dataCriacao: "desc"
+                        },
+                        include: {
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true,
+                                    email: true
+                                }
+                            }
+                        }
                     }
                 }
             });
 
             return postagens.map(postagem => ({
-                ...postagem,
-                totalCurtidas: postagem.curtidas.length
+                id: postagem.id,
+                titulo: postagem.titulo,
+                descricao: postagem.descricao,
+                visibilidade: postagem.visibilidade,
+                dataPublicacao: postagem.dataPublicacao,
+                caminhoImagem: postagem.caminhoImagem,
+
+                autor: postagem.autor,
+
+                curtidas: postagem.curtidas.map(curtida => ({
+                    id: curtida.usuario.id,
+                    nomeCompleto: curtida.usuario.nomeCompleto
+                })),
+                comentarios: postagem.comentarios.map(comentario => ({
+                    id: comentario.id,
+                    conteudo: comentario.conteudo,
+                    dataCriacao: comentario.dataCriacao,
+                    usuario: comentario.usuario
+                })),
+                estatisticas: {
+                    totalCurtidas: postagem.curtidas.length,
+                    totalComentarios: postagem.comentarios.length
+                },
+
             }));
         } catch (error) {
             throw new Error(`Erro ao buscar todas postagens: ${error}`);
         }
     }
 
-    async editarPostagem(id: number, postagem: IPostagem): Promise<IPostagemModificacao | null> {
+    async editarPostagem(id: number, postagem: IPostagemModificacao): Promise<IPostagemModificacao | null> {
         try {
             const postagemExistente = await prisma.cH_postagem.findUnique({ where: { id: id } });
 

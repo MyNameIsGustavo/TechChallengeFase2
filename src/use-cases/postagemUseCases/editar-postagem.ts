@@ -9,19 +9,20 @@ dotenv.config({ path: envFile });
 export class EditarPostagemUseCase {
     constructor(private postagemRepository: IPostagemRepository) { }
 
-    async processar(
-        id: number,
-        postagem: IPostagemModificacao,
-        arquivo?: Express.Multer.File
-    ): Promise<IPostagemModificacao | null> {
-
+    async processar(id: number, postagem: IPostagemModificacao, arquivo?: Express.Multer.File): Promise<IPostagemModificacao | null> {
         const postagemExistente = await this.postagemRepository.buscarPostagemPorID(id);
         if (!postagemExistente) return null;
 
+        let caminhoImagem = postagemExistente.caminhoImagem;
+
         if (arquivo) {
-            postagem.caminhoImagem = await uploadImagem(arquivo);
+            const upload = await uploadImagem(arquivo);
+            if (upload) caminhoImagem = upload;
         }
 
-        return this.postagemRepository.editarPostagem(id, postagem);
+        console.log('Caminho da imagem editada:', caminhoImagem);
+
+        return this.postagemRepository.editarPostagem(id, { ...postagem, caminhoImagem });
     }
+
 }

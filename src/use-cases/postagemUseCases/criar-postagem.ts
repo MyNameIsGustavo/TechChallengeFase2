@@ -7,7 +7,9 @@ export class CriarPostagemUseCase {
 
     async processar(postagem: IPostagem, arquivo?: Express.Multer.File): Promise<IPostagem | null> {
         const caminhoImagem = await uploadImagem(arquivo);
-
+        if(!caminhoImagem) {
+            throw new Error("Erro ao fazer upload da imagem");
+        }
         return this.postagemRepository.criarPostagem({
             ...postagem,
             caminhoImagem

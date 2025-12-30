@@ -34,4 +34,40 @@ export class ComentarioRepository implements IComentarioRepository {
             throw new Error(`Erro ao deletar comentário: ${error}`);
         }
     }
+
+    async listarComentarioPorID(postagemID: number, idComentario: number): Promise<IComentario | null> {
+        try {
+            const comentario = await prisma.cH_comentario.findFirst({ where: { id: idComentario, postagemID } });
+            if (!comentario) return null;
+
+            return comentario as IComentario;
+        } catch (error) {
+            throw new Error(`Erro ao deletar comentário: ${error}`);
+        }
+    }
+
+    async editarComentario(postagemID: number, idComentario: number, conteudo: string): Promise<IComentario | null> {
+        try {
+            const comentario = await prisma.cH_comentario.findFirst({
+                where: {
+                    id: idComentario,
+                    postagemID: postagemID
+                }
+            });
+
+            if (!comentario) return null;
+
+            const comentarioEditado = await prisma.cH_comentario.update({
+                where: {
+                    id: idComentario,
+                    postagemID: postagemID
+                },
+                data: { conteudo }
+            });
+
+            return comentarioEditado as IComentario;
+        } catch (error) {
+            throw new Error(`Erro ao editar comentário: ${error}`);
+        }
+    }
 }
