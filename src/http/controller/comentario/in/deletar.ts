@@ -23,12 +23,12 @@ export async function deletar(request: Request, response: Response) {
         }
 
         const useCase = await fabricaDeletaComentario();
-        await useCase.processar(
+        const comentarioDeletado = await useCase.processar(
             resultado.data.postagemID,
             resultado.data.comentarioID,
         );
 
-        return response.status(204).send();
+        return response.status(201).send(comentarioDeletado);
     } catch (error) {
         console.error(error);
         return response.status(500).json({
