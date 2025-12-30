@@ -214,6 +214,7 @@ export class PostagemRepository implements IPostagemRepository {
                 },
                 include: {
                     usuario: true,
+                    estatisticas: true, 
                     comentarios: {
                         orderBy: { dataCriacao: 'desc' },
                         include: {
