@@ -6,61 +6,55 @@ import { PapeisUsuario } from '../../../enums/papeisUsuarios';
 import { deletar } from './in/deletar';
 
 export async function curtidasRotas(app: Application) {
-
     /**
      * @openapi
-     * /curtida:
+     * /postagem/{postagemID}/curtida:
      *   post:
      *     summary: Cadastra uma nova curtida
-     *     description: Cria uma curtida com o ID da postagem e o ID do usuário.
+     *     description: Cria uma curtida para a postagem informada.
      *     tags:
      *       - Curtidas
      *     security:
      *       - bearerAuth: []
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             properties:
-     *               postagemID:
-     *                 type: integer
-     *                 example: 1
+     *     parameters:
+     *       - in: path
+     *         name: postagemID
+     *         required: true
+     *         schema:
+     *           type: integer
+     *         description: ID da postagem que será curtida.
      *     responses:
-     *       200:
+     *       201:
      *         description: Curtida cadastrada com sucesso.
      *       400:
      *         description: Erro de validação.
      */
-    app.post('/curtida', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), criar);
+
+    app.post('/postagem/:postagemID/curtida', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), criar);
 
 
     /**
      * @openapi
-     * /curtida:
+     * /postagem/{postagemID}/curtida:
      *   delete:
      *     summary: Remove uma curtida existente
-     *     description: Remove uma curtida com o ID da postagem e o ID do usuário.
+     *     description: Remove a curtida do usuário autenticado na postagem.
      *     tags:
      *       - Curtidas
      *     security:
      *       - bearerAuth: []
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             properties:
-     *               postagemID:
-     *                 type: integer
-     *                 example: 1
+     *     parameters:
+     *       - in: path
+     *         name: postagemID
+     *         required: true
+     *         schema:
+     *           type: integer
+     *         description: ID da postagem da qual a curtida será removida.
      *     responses:
      *       200:
      *         description: Curtida removida com sucesso.
      *       400:
      *         description: Erro de validação.
      */
-    app.delete('/curtida', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), deletar);
+    app.delete('/postagem/:postagemID/curtida', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), deletar);
 }
