@@ -79,7 +79,7 @@ export async function usuarioRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), criar);
+  app.post('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), criar);
 
   /**
    * @openapi
@@ -95,9 +95,9 @@ export async function usuarioRotas(app: Application) {
    *       200:
    *         description: Lista de usuários retornada com sucesso.
    */
-  app.get('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarTodos);
+  app.get('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), buscarTodos);
   
-  app.get('/usuarios/buscaInformacoes', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarInformacoes);
+  app.get('/usuarios/buscaInformacoes', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarInformacoes);
   /**
    * @openapi
    * /usuarios/{id}:
@@ -123,7 +123,7 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.get('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarPorID);
+  app.get('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarPorID);
 
 
 
@@ -174,7 +174,7 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
+  app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), editar);
 
   /**
    * @openapi
@@ -201,5 +201,5 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.delete('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), deletar);
+  app.delete('/usuarios/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), deletar);
 }

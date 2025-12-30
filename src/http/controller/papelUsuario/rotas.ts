@@ -36,7 +36,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE),  criar);
+  app.post('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE),  criar);
 
   /**
    * @openapi
@@ -63,7 +63,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.get('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarPorID);
+  app.get('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), buscarPorID);
 
   /**
    * @openapi
@@ -79,7 +79,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       200:
    *         description: Lista de papéis de usuários retornada com sucesso.
    */
-  app.get('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), buscarTodos);
+  app.get('/papelUsuario', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), buscarTodos);
 
   /**
    * @openapi
@@ -118,7 +118,7 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.put('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), editar);
+  app.put('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), editar);
 
   /**
    * @openapi
@@ -145,5 +145,5 @@ export async function papelUsuarioRotas(app: Application) {
    *       404:
    *         description: Papel de usuário não encontrado.
    */
-  app.delete('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), deletar);
+  app.delete('/papelUsuario/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), deletar);
 }

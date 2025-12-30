@@ -129,7 +129,7 @@ export async function postagemRotas(app: Application) {
    *       500:
    *         description: Erro interno do servidor.
    */
-  app.get('/postagem/palavraChave', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarPorPalavraChave);
+  app.get('/postagem/palavraChave', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarPorPalavraChave);
 
   /**
    * @openapi
@@ -156,7 +156,7 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.get('/postagem/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarPorID);
+  app.get('/postagem/:id', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarPorID);
 
   /**
    * @openapi
@@ -172,7 +172,7 @@ export async function postagemRotas(app: Application) {
    *       200:
    *         description: Lista de postagens retornada com sucesso.
    */
-  app.get('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE), buscarTodos);
+  app.get('/postagem', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarTodos);
 
   /**
    * @openapi
@@ -221,5 +221,5 @@ export async function postagemRotas(app: Application) {
    *       404:
    *         description: Postagem não encontrada.
    */
-  app.put("/postagem/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE), uploadImagemMiddleware.single("caminhoImagem"), editar);
+  app.put("/postagem/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), uploadImagemMiddleware.single("caminhoImagem"), editar);
 }
