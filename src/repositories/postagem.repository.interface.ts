@@ -6,5 +6,5 @@ export interface IPostagemRepository {
     buscarTodasPostagens(): Promise<IPostagemCompleta[]>;
     buscarPostagemPorID(id: number): Promise<IPostagemCompleta | null>;
     editarPostagem(id: number, postagem: IPostagemModificacao): Promise<IPostagemModificacao | null>
-    buscarPostagensPorPalavraChave(palavraChave: string): Promise<IPostagem[]>
+    buscarPostagensPorPalavraChave(palavraChave: string): Promise<IPostagemCompleta[]>
 }

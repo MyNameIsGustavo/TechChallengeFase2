@@ -203,31 +203,80 @@ export class PostagemRepository implements IPostagemRepository {
         }
     }
 
-    async buscarPostagensPorPalavraChave(palavraChave: string): Promise<IPostagem[]> {
+    async buscarPostagensPorPalavraChave(
+        palavraChave: string
+    ): Promise<IPostagemCompleta[]> {
         try {
             const postagens = await prisma.cH_postagem.findMany({
                 where: {
                     OR: [
-                        { titulo: { contains: palavraChave, mode: 'insensitive' } },
-                        { descricao: { contains: palavraChave, mode: 'insensitive' } }
+                        { titulo: { contains: palavraChave, mode: "insensitive" } },
+                        { descricao: { contains: palavraChave, mode: "insensitive" } }
                     ]
                 },
                 include: {
-                    usuario: true,
-                    estatisticas: true, 
-                    comentarios: {
-                        orderBy: { dataCriacao: 'desc' },
+                    autor: {
+                        select: {
+                            id: true,
+                            nomeCompleto: true
+                        }
+                    },
+                    curtidas: {
                         include: {
-                            usuario: true
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true
+                                }
+                            }
+                        }
+                    },
+                    comentarios: {
+                        orderBy: { dataCriacao: "desc" },
+                        include: {
+                            usuario: {
+                                select: {
+                                    id: true,
+                                    nomeCompleto: true,
+                                    email: true
+                                }
+                            }
                         }
                     }
                 }
             });
 
-            return postagens as IPostagem[];
+            return postagens.map(postagem => ({
+                id: postagem.id,
+                titulo: postagem.titulo,
+                descricao: postagem.descricao,
+                visibilidade: postagem.visibilidade,
+                dataPublicacao: postagem.dataPublicacao,
+                caminhoImagem: postagem.caminhoImagem,
+
+                autor: postagem.autor,
+
+                estatisticas: {
+                    totalCurtidas: postagem.curtidas.length,
+                    totalComentarios: postagem.comentarios.length
+                },
+
+                curtidas: postagem.curtidas.map(curtida => ({
+                    id: curtida.usuario.id,
+                    nomeCompleto: curtida.usuario.nomeCompleto
+                })),
+
+                comentarios: postagem.comentarios.map(comentario => ({
+                    id: comentario.id,
+                    conteudo: comentario.conteudo,
+                    dataCriacao: comentario.dataCriacao,
+                    usuario: comentario.usuario
+                }))
+            }));
         } catch (error) {
-            throw new Error(`Erro ao buscar postagem por palavra chave: ${error}`);
+            throw new Error(
+                `Erro ao buscar postagem por palavra chave: ${error}`
+            );
         }
     }
-
 }
