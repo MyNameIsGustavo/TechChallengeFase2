@@ -14,7 +14,7 @@ export interface IUsuarioModificacao {
     telefone: string;
     email: string;
     papelUsuarioID: number;
-    senha: string;
+    senha?: string | undefined;
 }
 
 export interface ILogin{

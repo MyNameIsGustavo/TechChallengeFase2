@@ -16,7 +16,7 @@ export class UsuarioRepository implements IUsuarioRepository {
                     email: usuario.email,
                     telefone: usuario.telefone,
                     papelUsuarioID: usuario.papelUsuarioID,
-                    senha: usuario.senha
+                    senha: usuario.senha!
                 }, where: { id: id }
             })
             return usuarioAtualizado as IUsuario;

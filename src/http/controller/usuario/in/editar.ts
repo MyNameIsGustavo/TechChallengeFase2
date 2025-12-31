@@ -12,7 +12,7 @@ export async function editar(request: Request, response: Response) {
             telefone: z.string().min(8, "Telefone inválido").max(20),
             email: z.string().email("Email inválido"),
             papelUsuarioID: z.number().int().positive("ID do papel deve ser um número positivo"),
-            senha: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
+            senha: z.string().min(6, "Senha deve ter pelo menos 6 caracteres").optional(),
         });
 
         const resultadoValidacaoSchemaParametro = editarUsuarioSchemaParametro.safeParse(request.params);
