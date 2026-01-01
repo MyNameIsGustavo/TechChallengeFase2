@@ -11,6 +11,7 @@ datasource db {
 model CH_usuario {
   id             Int             @id @default(autoincrement())
   nomeCompleto   String
+  caminhoImagem  String?
   telefone       String
   email          String          @unique
   senha          String

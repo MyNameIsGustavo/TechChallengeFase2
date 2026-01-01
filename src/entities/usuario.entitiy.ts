@@ -3,6 +3,7 @@ import type { IUsuario } from "./models/usuario.interface";
 export class Usuario implements IUsuario {
     id: number;
     nomeCompleto: string;
+    caminhoImagem?: string;
     telefone: string;
     email: string;
     papelUsuarioID: number;

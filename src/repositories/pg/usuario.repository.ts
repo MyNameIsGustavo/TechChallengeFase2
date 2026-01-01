@@ -16,7 +16,8 @@ export class UsuarioRepository implements IUsuarioRepository {
                     email: usuario.email,
                     telefone: usuario.telefone,
                     papelUsuarioID: usuario.papelUsuarioID,
-                    senha: usuario.senha!
+                    senha: usuario.senha!,
+                    caminhoImagem: usuario.caminhoImagem || null
                 }, where: { id: id }
             })
             return usuarioAtualizado as IUsuario;
@@ -33,7 +34,8 @@ export class UsuarioRepository implements IUsuarioRepository {
                     senha: usuario.senha,
                     email: usuario.email,
                     telefone: usuario.telefone,
-                    papelUsuarioID: usuario.papelUsuarioID
+                    papelUsuarioID: usuario.papelUsuarioID,
+                    caminhoImagem: usuario.caminhoImagem || null
                 }
             });
 
@@ -45,6 +47,7 @@ export class UsuarioRepository implements IUsuarioRepository {
                 telefone: novoUsuario.telefone,
                 papelUsuarioID: novoUsuario.papelUsuarioID,
                 dataCadastro: novoUsuario.dataCadastro,
+                caminhoImagem: usuario.caminhoImagem || null
             };
 
             return usuarioCriado as IUsuario;

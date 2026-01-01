@@ -51,7 +51,8 @@ export class PostagemRepository implements IPostagemRepository {
                     autor: {
                         select: {
                             id: true,
-                            nomeCompleto: true
+                            nomeCompleto: true,
+                            caminhoImagem: true
                         }
                     },
                     curtidas: {
@@ -59,7 +60,8 @@ export class PostagemRepository implements IPostagemRepository {
                             usuario: {
                                 select: {
                                     id: true,
-                                    nomeCompleto: true
+                                    nomeCompleto: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
@@ -73,7 +75,8 @@ export class PostagemRepository implements IPostagemRepository {
                                 select: {
                                     id: true,
                                     nomeCompleto: true,
-                                    email: true
+                                    email: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
@@ -100,14 +103,15 @@ export class PostagemRepository implements IPostagemRepository {
 
                 curtidas: postagem.curtidas.map(curtida => ({
                     id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto
+                    nomeCompleto: curtida.usuario.nomeCompleto,
+                    caminhoImagem: curtida.usuario.caminhoImagem || null
                 })),
 
                 comentarios: postagem.comentarios.map(comentario => ({
                     id: comentario.id,
                     conteudo: comentario.conteudo,
                     dataCriacao: comentario.dataCriacao,
-                    usuario: comentario.usuario
+                    usuario: comentario.usuario,
                 }))
             };
         } catch (error) {
@@ -122,7 +126,8 @@ export class PostagemRepository implements IPostagemRepository {
                     autor: {
                         select: {
                             id: true,
-                            nomeCompleto: true
+                            nomeCompleto: true,
+                            caminhoImagem: true
                         }
                     },
                     curtidas: {
@@ -130,7 +135,8 @@ export class PostagemRepository implements IPostagemRepository {
                             usuario: {
                                 select: {
                                     id: true,
-                                    nomeCompleto: true
+                                    nomeCompleto: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
@@ -144,7 +150,8 @@ export class PostagemRepository implements IPostagemRepository {
                                 select: {
                                     id: true,
                                     nomeCompleto: true,
-                                    email: true
+                                    email: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
@@ -164,13 +171,15 @@ export class PostagemRepository implements IPostagemRepository {
 
                 curtidas: postagem.curtidas.map(curtida => ({
                     id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto
+                    nomeCompleto: curtida.usuario.nomeCompleto,
+                    caminhoImagem: curtida.usuario.caminhoImagem || null
                 })),
+
                 comentarios: postagem.comentarios.map(comentario => ({
                     id: comentario.id,
                     conteudo: comentario.conteudo,
                     dataCriacao: comentario.dataCriacao,
-                    usuario: comentario.usuario
+                    usuario: comentario.usuario,
                 })),
                 estatisticas: {
                     totalCurtidas: postagem.curtidas.length,
@@ -218,7 +227,8 @@ export class PostagemRepository implements IPostagemRepository {
                     autor: {
                         select: {
                             id: true,
-                            nomeCompleto: true
+                            nomeCompleto: true,
+                            caminhoImagem: true
                         }
                     },
                     curtidas: {
@@ -226,19 +236,23 @@ export class PostagemRepository implements IPostagemRepository {
                             usuario: {
                                 select: {
                                     id: true,
-                                    nomeCompleto: true
+                                    nomeCompleto: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
                     },
                     comentarios: {
-                        orderBy: { dataCriacao: "desc" },
+                        orderBy: {
+                            dataCriacao: "desc"
+                        },
                         include: {
                             usuario: {
                                 select: {
                                     id: true,
                                     nomeCompleto: true,
-                                    email: true
+                                    email: true,
+                                    caminhoImagem: true
                                 }
                             }
                         }
@@ -256,22 +270,22 @@ export class PostagemRepository implements IPostagemRepository {
 
                 autor: postagem.autor,
 
+                curtidas: postagem.curtidas.map(curtida => ({
+                    id: curtida.usuario.id,
+                    nomeCompleto: curtida.usuario.nomeCompleto,
+                    caminhoImagem: curtida.usuario.caminhoImagem || null
+                })),
+                comentarios: postagem.comentarios.map(comentario => ({
+                    id: comentario.id,
+                    conteudo: comentario.conteudo,
+                    dataCriacao: comentario.dataCriacao,
+                    usuario: comentario.usuario,
+                })),
                 estatisticas: {
                     totalCurtidas: postagem.curtidas.length,
                     totalComentarios: postagem.comentarios.length
                 },
 
-                curtidas: postagem.curtidas.map(curtida => ({
-                    id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto
-                })),
-
-                comentarios: postagem.comentarios.map(comentario => ({
-                    id: comentario.id,
-                    conteudo: comentario.conteudo,
-                    dataCriacao: comentario.dataCriacao,
-                    usuario: comentario.usuario
-                }))
             }));
         } catch (error) {
             throw new Error(

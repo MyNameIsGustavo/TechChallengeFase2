@@ -9,6 +9,7 @@ import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middlew
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
 import { PapeisUsuario } from '../../../enums/papeisUsuarios';
 import { buscarInformacoes } from './in/buscarInformacoes';
+import { uploadImagemMiddleware } from '../../../middleware/uploadImagem-middleware';
 
 export async function usuarioRotas(app: Application) {
 
@@ -79,7 +80,7 @@ export async function usuarioRotas(app: Application) {
    *       400:
    *         description: Erro de validação.
    */
-  app.post('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), criar);
+  app.post('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), uploadImagemMiddleware.single("caminhoImagem"), criar);
 
   /**
    * @openapi
@@ -174,7 +175,7 @@ export async function usuarioRotas(app: Application) {
    *       404:
    *         description: Usuário não encontrado.
    */
-  app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), editar);
+  app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), uploadImagemMiddleware.single("caminhoImagem"), editar);
 
   /**
    * @openapi

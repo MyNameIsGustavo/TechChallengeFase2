@@ -47,6 +47,7 @@ export interface IPostagemCompleta {
             id: number;
             nomeCompleto: string;
             email: string;
+            caminhoImagem?: string | null;
         };
     }[];
 }
