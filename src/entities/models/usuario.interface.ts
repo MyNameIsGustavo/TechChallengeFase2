@@ -19,7 +19,16 @@ export interface IUsuarioModificacao {
     senha?: string | undefined;
 }
 
-export interface ILogin{
+export interface IUsuarioAlteracao {
+    id?: number;
+    nomeCompleto: string;
+    caminhoImagem?: string | null;
+    telefone: string;
+    senha?: string | undefined;
+    papelUsuarioID?: number;
+}
+
+export interface ILogin {
     email: string;
     senha: string;
 }

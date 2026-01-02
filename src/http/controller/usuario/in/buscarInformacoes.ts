@@ -6,8 +6,6 @@ export async function buscarInformacoes(request: Request, response: Response) {
 
     try {
         const usuarioId = (request as any).usuario.id;
-        
-        console.log(usuarioId);
 
         const objFabricaBuscarPorIDUsuario = await fabricaBuscarPorIDUsuario();
 

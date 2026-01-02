@@ -4,6 +4,7 @@ import { deletar } from "./in/deletar";
 import { buscarTodos } from './in/buscarTodos';
 import { buscarPorID } from './in/buscarPorID';
 import { editar } from '../usuario/in/editar';
+import { alterar } from './in/altera';
 import { login } from './in/login';
 import { autenticacaoMiddleware } from '../../../middleware/autenticacao-middleware';
 import { autorizacaoMiddleware } from '../../../middleware/autorizacao-middleware';
@@ -97,7 +98,7 @@ export async function usuarioRotas(app: Application) {
    *         description: Lista de usuários retornada com sucesso.
    */
   app.get('/usuarios', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), buscarTodos);
-  
+
   app.get('/usuarios/buscaInformacoes', autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.ESTUDANTE, PapeisUsuario.SUPORTE), buscarInformacoes);
   /**
    * @openapi
@@ -176,6 +177,8 @@ export async function usuarioRotas(app: Application) {
    *         description: Usuário não encontrado.
    */
   app.put("/usuarios/:id", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE), uploadImagemMiddleware.single("caminhoImagem"), editar);
+  
+  app.put("/usuarios", autenticacaoMiddleware, autorizacaoMiddleware(PapeisUsuario.DOCENTE, PapeisUsuario.SUPORTE, PapeisUsuario.ESTUDANTE), uploadImagemMiddleware.single("caminhoImagem"), alterar);
 
   /**
    * @openapi

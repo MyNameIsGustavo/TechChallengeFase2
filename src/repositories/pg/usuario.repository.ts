@@ -1,8 +1,28 @@
-import type { IUsuario, IUsuarioModificacao } from "../../entities/models/usuario.interface";
+import type { IUsuario, IUsuarioAlteracao, IUsuarioModificacao } from "../../entities/models/usuario.interface";
 import type { IUsuarioRepository } from "../usuario.repository.interface";
 import { prisma } from "../../prismaClient";
 
 export class UsuarioRepository implements IUsuarioRepository {
+
+    async alterarUsuario(id: number, usuario: IUsuarioAlteracao): Promise<IUsuarioModificacao | null> {
+        try {
+            const usuarioExistente = await prisma.cH_usuario.findUnique({ where: { id: id } });
+
+            if (!usuarioExistente) throw new Error(`Usuário com ID ${id} não encontrado.`);
+
+            const usuarioAtualizado = await prisma.cH_usuario.update({
+                data: {
+                    nomeCompleto: usuario.nomeCompleto,
+                    telefone: usuario.telefone,
+                    senha: usuario.senha!,
+                    caminhoImagem: usuario.caminhoImagem || null
+                }, where: { id: id }
+            })
+            return usuarioAtualizado as IUsuario;
+        } catch (error) {
+            throw new Error(`Erro ao editar usuário: ${error}`);
+        }
+    }
 
     async editarUsuario(id: number, usuario: IUsuarioModificacao): Promise<IUsuarioModificacao | null> {
         try {

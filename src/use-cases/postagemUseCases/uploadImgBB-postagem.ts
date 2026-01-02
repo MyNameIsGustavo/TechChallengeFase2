@@ -10,24 +10,24 @@ dotenv.config({ path: envFile });
 export async function uploadImagem(arquivo?: Express.Multer.File): Promise<string | null> {
     if (!arquivo) return null;
 
-    if (process.env.NODE_ENV === "PRODUCTION") {
-        const imgbbKey = process.env.IMGBB_API_KEY;
-        if (!imgbbKey) throw new Error("IMGBB_API_KEY não definido");
 
-        const formData = new FormData();
+    const imgbbKey = process.env.IMGBB_API_KEY;
+    if (!imgbbKey) throw new Error("IMGBB_API_KEY não definido");
 
-        formData.append("image", fs.createReadStream(arquivo.path), arquivo.originalname);
+    const formData = new FormData();
 
-        const respostaImgBB = await axios.post(
-            `https://api.imgbb.com/1/upload?key=${imgbbKey}`,
-            formData,
-            { headers: formData.getHeaders() }
-        );
+    formData.append("image", fs.createReadStream(arquivo.path), arquivo.originalname);
 
-        return respostaImgBB.data.data.url;
-    }
+    const respostaImgBB = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${imgbbKey}`,
+        formData,
+        { headers: formData.getHeaders() }
+    );
 
-    if (process.env.NODE_ENV === "DEVELOPMENT") {
+    return respostaImgBB.data.data.url;
+
+
+    /*if (process.env.NODE_ENV === "DEVELOPMENT") {
         const pastaDestino = path.resolve(__dirname, "../../uploads");
 
         if (!fs.existsSync(pastaDestino)) {
@@ -39,7 +39,7 @@ export async function uploadImagem(arquivo?: Express.Multer.File): Promise<strin
         fs.copyFileSync(arquivo.path, caminhoFinal);
 
         return caminhoFinal;
-    }
+    }*/
 
     return null;
 }
