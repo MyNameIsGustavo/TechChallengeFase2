@@ -43,7 +43,7 @@ export class PostagemRepository implements IPostagemRepository {
         }
     }
 
-    async buscarPostagemPorID(id: number): Promise<IPostagemCompleta | null> {
+    async buscarPostagemPorID(id: number, usuarioID: number): Promise<IPostagemCompleta | null> {
         try {
             const postagem = await prisma.cH_postagem.findUnique({
                 where: { id },
@@ -60,8 +60,7 @@ export class PostagemRepository implements IPostagemRepository {
                             usuario: {
                                 select: {
                                     id: true,
-                                    nomeCompleto: true,
-                                    caminhoImagem: true
+                                    nomeCompleto: true
                                 }
                             }
                         }
@@ -84,7 +83,12 @@ export class PostagemRepository implements IPostagemRepository {
                 }
             });
 
+
             if (!postagem) return null;
+
+            const usuarioCurtiu = postagem.curtidas.some(
+                curtida => curtida.usuarioID === usuarioID
+            );
 
             return {
                 id: postagem.id,
@@ -98,13 +102,13 @@ export class PostagemRepository implements IPostagemRepository {
 
                 estatisticas: {
                     totalCurtidas: postagem.curtidas.length,
-                    totalComentarios: postagem.comentarios.length
+                    totalComentarios: postagem.comentarios.length,
+                    usuarioCurtiu
                 },
 
                 curtidas: postagem.curtidas.map(curtida => ({
                     id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto,
-                    caminhoImagem: curtida.usuario.caminhoImagem || null
+                    nomeCompleto: curtida.usuario.nomeCompleto
                 })),
 
                 comentarios: postagem.comentarios.map(comentario => ({
@@ -114,12 +118,13 @@ export class PostagemRepository implements IPostagemRepository {
                     usuario: comentario.usuario,
                 }))
             };
+
         } catch (error) {
             throw new Error(`Erro ao buscar postagem por ID: ${error}`);
         }
     }
 
-    async buscarTodasPostagens(): Promise<IPostagemCompleta[]> {
+    async buscarTodasPostagens(usuarioID?: number): Promise<IPostagemCompleta[]> {
         try {
             const postagens = await prisma.cH_postagem.findMany({
                 include: {
@@ -159,38 +164,49 @@ export class PostagemRepository implements IPostagemRepository {
                 }
             });
 
-            return postagens.map(postagem => ({
-                id: postagem.id,
-                titulo: postagem.titulo,
-                descricao: postagem.descricao,
-                visibilidade: postagem.visibilidade,
-                dataPublicacao: postagem.dataPublicacao,
-                caminhoImagem: postagem.caminhoImagem,
+            return postagens.map(postagem => {
+                const usuarioCurtiu = usuarioID
+                    ? postagem.curtidas.some(
+                        curtida => curtida.usuario.id === usuarioID
+                    )
+                    : false;
 
-                autor: postagem.autor,
+                return {
+                    id: postagem.id,
+                    titulo: postagem.titulo,
+                    descricao: postagem.descricao,
+                    visibilidade: postagem.visibilidade,
+                    dataPublicacao: postagem.dataPublicacao,
+                    caminhoImagem: postagem.caminhoImagem,
 
-                curtidas: postagem.curtidas.map(curtida => ({
-                    id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto,
-                    caminhoImagem: curtida.usuario.caminhoImagem || null
-                })),
+                    autor: postagem.autor,
 
-                comentarios: postagem.comentarios.map(comentario => ({
-                    id: comentario.id,
-                    conteudo: comentario.conteudo,
-                    dataCriacao: comentario.dataCriacao,
-                    usuario: comentario.usuario,
-                })),
-                estatisticas: {
-                    totalCurtidas: postagem.curtidas.length,
-                    totalComentarios: postagem.comentarios.length
-                },
+                    curtidas: postagem.curtidas.map(curtida => ({
+                        id: curtida.usuario.id,
+                        nomeCompleto: curtida.usuario.nomeCompleto,
+                        caminhoImagem: curtida.usuario.caminhoImagem ?? null
+                    })),
 
-            }));
+                    estatisticas: {
+                        totalCurtidas: postagem.curtidas.length,
+                        totalComentarios: postagem.comentarios.length,
+                        usuarioCurtiu
+                    },
+
+                    comentarios: postagem.comentarios.map(comentario => ({
+                        id: comentario.id,
+                        conteudo: comentario.conteudo,
+                        dataCriacao: comentario.dataCriacao,
+                        usuario: comentario.usuario
+                    }))
+                };
+            });
+
         } catch (error) {
             throw new Error(`Erro ao buscar todas postagens: ${error}`);
         }
     }
+
 
     async editarPostagem(id: number, postagem: IPostagemModificacao): Promise<IPostagemModificacao | null> {
         try {
@@ -213,7 +229,8 @@ export class PostagemRepository implements IPostagemRepository {
     }
 
     async buscarPostagensPorPalavraChave(
-        palavraChave: string
+        palavraChave: string,
+        usuarioID: number,
     ): Promise<IPostagemCompleta[]> {
         try {
             const postagens = await prisma.cH_postagem.findMany({
@@ -232,7 +249,8 @@ export class PostagemRepository implements IPostagemRepository {
                         }
                     },
                     curtidas: {
-                        include: {
+                        select: {
+                            usuarioID: true,
                             usuario: {
                                 select: {
                                     id: true,
@@ -260,33 +278,44 @@ export class PostagemRepository implements IPostagemRepository {
                 }
             });
 
-            return postagens.map(postagem => ({
-                id: postagem.id,
-                titulo: postagem.titulo,
-                descricao: postagem.descricao,
-                visibilidade: postagem.visibilidade,
-                dataPublicacao: postagem.dataPublicacao,
-                caminhoImagem: postagem.caminhoImagem,
+            return postagens.map(postagem => {
+                const usuarioCurtiu = usuarioID
+                    ? postagem.curtidas.some(
+                        curtida => curtida.usuarioID === usuarioID
+                    )
+                    : false;
 
-                autor: postagem.autor,
+                return {
+                    id: postagem.id,
+                    titulo: postagem.titulo,
+                    descricao: postagem.descricao,
+                    visibilidade: postagem.visibilidade,
+                    dataPublicacao: postagem.dataPublicacao,
+                    caminhoImagem: postagem.caminhoImagem,
 
-                curtidas: postagem.curtidas.map(curtida => ({
-                    id: curtida.usuario.id,
-                    nomeCompleto: curtida.usuario.nomeCompleto,
-                    caminhoImagem: curtida.usuario.caminhoImagem || null
-                })),
-                comentarios: postagem.comentarios.map(comentario => ({
-                    id: comentario.id,
-                    conteudo: comentario.conteudo,
-                    dataCriacao: comentario.dataCriacao,
-                    usuario: comentario.usuario,
-                })),
-                estatisticas: {
-                    totalCurtidas: postagem.curtidas.length,
-                    totalComentarios: postagem.comentarios.length
-                },
+                    autor: postagem.autor,
 
-            }));
+                    curtidas: postagem.curtidas.map(curtida => ({
+                        id: curtida.usuario.id,
+                        nomeCompleto: curtida.usuario.nomeCompleto,
+                        caminhoImagem: curtida.usuario.caminhoImagem || null
+                    })),
+
+                    comentarios: postagem.comentarios.map(comentario => ({
+                        id: comentario.id,
+                        conteudo: comentario.conteudo,
+                        dataCriacao: comentario.dataCriacao,
+                        usuario: comentario.usuario
+                    })),
+
+                    estatisticas: {
+                        totalCurtidas: postagem.curtidas.length,
+                        totalComentarios: postagem.comentarios.length,
+                        usuarioCurtiu
+                    }
+                };
+            });
+
         } catch (error) {
             throw new Error(
                 `Erro ao buscar postagem por palavra chave: ${error}`

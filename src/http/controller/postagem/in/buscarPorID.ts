@@ -3,10 +3,10 @@ import type { Request, Response } from 'express';
 import { fabricaBuscarPorIDPostagem } from '../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorID-postagem';
 
 export async function buscarPorID(request: Request, response: Response) {
-
     try {
-        const buscarPostagemSchema = z.object({ id: z.coerce.number().int().positive() });
+        if (!request.usuario?.id) return response.status(401).json({ mensagem: "Usuário não autenticado" });
 
+        const buscarPostagemSchema = z.object({ id: z.coerce.number().int().positive() });
         const objFabricaBuscarPorIDPostagem = await fabricaBuscarPorIDPostagem();
 
         const resultadoValidacaoSchema = buscarPostagemSchema.safeParse(request.params);
@@ -18,8 +18,7 @@ export async function buscarPorID(request: Request, response: Response) {
         }
 
         const { id } = resultadoValidacaoSchema.data;
-
-        const resultadoProcessado = await objFabricaBuscarPorIDPostagem.processar(id);
+        const resultadoProcessado = await objFabricaBuscarPorIDPostagem.processar(id, request.usuario.id);
 
         return response.status(201).json(resultadoProcessado);
     } catch (error) {

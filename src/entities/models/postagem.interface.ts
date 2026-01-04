@@ -32,6 +32,7 @@ export interface IPostagemCompleta {
     estatisticas: {
         totalCurtidas: number;
         totalComentarios: number;
+        usuarioCurtiu?: boolean;
     };
 
     curtidas: {

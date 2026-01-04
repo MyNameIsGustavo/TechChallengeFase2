@@ -37,6 +37,11 @@ export class DashboardRepository implements IDashboardRepository {
     async usuarioPorPostagem(): Promise<IUsuarioPorPostagem[]> {
         try {
             const postagensPorUsuario = await prisma.cH_usuario.findMany({
+                where: {
+                    papelUsuarioID: {
+                        not: 2
+                    }
+                },
                 select: {
                     nomeCompleto: true,
                     _count: {

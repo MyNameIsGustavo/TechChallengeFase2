@@ -1,10 +1,11 @@
-import { z } from 'zod';
-import type { Request, Response } from 'express';
 import { fabricaBuscarPorPostagemPorPalavraChave } from '../../../../use-cases/postagemUseCases/factory/fabricaBuscarPorChave-postagem';
+import type { Request, Response } from 'express';
+import { z } from 'zod';
 
 export async function buscarPorPalavraChave(request: Request, response: Response) {
-
     try {
+        if (!request.usuario?.id) return response.status(401).json({ mensagem: "Usuário não autenticado" });
+
         const buscarPostagemSchema = z.object({ palavra: z.string().min(3) });
         const objFabricaBuscarPostagemPorChave = await fabricaBuscarPorPostagemPorPalavraChave();
 
@@ -17,8 +18,8 @@ export async function buscarPorPalavraChave(request: Request, response: Response
         }
 
         const { palavra } = resultadoValidacaoSchema.data;
-        console.log(palavra)
-        const resultadoProcessado = await objFabricaBuscarPostagemPorChave.processar(palavra);
+        const resultadoProcessado = await objFabricaBuscarPostagemPorChave.processar(palavra, request.usuario.id);
+
         return response.status(201).json(resultadoProcessado);
     } catch (error) {
         throw new Error(`Erro ao processar a buscar postagem por palavra chave: ${error}`);

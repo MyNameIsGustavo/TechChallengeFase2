@@ -4,7 +4,7 @@ import type { IPostagemRepository } from "../../repositories/postagem.repository
 export class BuscarPostagemPorIDUseCase {
     constructor(private postagemRepository: IPostagemRepository) { }
 
-    async processar(id: number): Promise<IPostagemCompleta | null> {
-        return this.postagemRepository.buscarPostagemPorID(id);
+    async processar(id: number, usuarioID?: number): Promise<IPostagemCompleta | null> {
+        return this.postagemRepository.buscarPostagemPorID(id, usuarioID);
     }
 }
