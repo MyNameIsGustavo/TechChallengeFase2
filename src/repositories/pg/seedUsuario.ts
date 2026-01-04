@@ -22,14 +22,14 @@ export async function seedUsuarios() {
         {
             nomeCompleto: "Professor Gustavo",
             email: "gustavo.professor@fiap.com.br",
-            telefone: "111111111",
+            telefone: "15332234712",
             papelUsuarioID: docente.id,
             senha: senhaDocente
         },
         {
             nomeCompleto: "Aluno Gustavo",
             email: "gustavo.aluno@fiap.com.br",
-            telefone: "222222222",
+            telefone: "15992604299",
             papelUsuarioID: estudante.id,
             senha: senhaEstudante
         }
