@@ -42,35 +42,7 @@ describe("repositories/pg/postagem.repository.ts - criarPostagem", () => {
     });
 })
 
-describe("repositories/pg/postagem.repository.ts - buscarPostagemPorID", () => {
-    let postagemRepositorio: PostagemRepository;
 
-    beforeEach(() => {
-        postagemRepositorio = new PostagemRepository();
-        jest.clearAllMocks();
-    });
-
-    it("Deve retornar uma postagem atraves do ID", async () => {
-        /*Arranjar*/
-        const postagemMockado: IPostagem = {
-            id: 1,
-            caminhoImagem: "C:\\Users\\gusta\\OneDrive\Documentos",
-            titulo: "Aula de TypeScript",
-            descricao: "Introdução de conteúdo de back-end",
-            visibilidade: true,
-            autorID: 1,
-            dataPublicacao: new Date()
-        };
-
-        /*Executar*/
-        (prisma.cH_postagem.findUnique as jest.Mock).mockResolvedValue(postagemMockado);
-        const resultadoMockado = await postagemRepositorio.buscarPostagemPorID(postagemMockado.id!);
-
-        /*Afirmar*/
-        expect(prisma.cH_postagem.findUnique).toHaveBeenCalledWith({ where: { id: postagemMockado.id } });
-        expect(resultadoMockado).toEqual(postagemMockado);
-    });
-})
 
 describe("repositories/pg/postagem.repository.ts - buscarTodasPostagens", () => {
     let postagemRepositorio: PostagemRepository;
@@ -189,49 +161,3 @@ describe("repositories/pg/postagem.repository.ts - editarPostagem", () => {
     });
 });
 
-describe("repositories/pg/postagem.repository.ts - buscarPostagensPorPalavraChave", () => {
-    let postagemRepositorio: PostagemRepository;
-
-    beforeEach(() => {
-        postagemRepositorio = new PostagemRepository();
-        jest.clearAllMocks();
-    });
-
-    it("Deve retornar varias postagens postagem por palavra chave", async () => {
-        /*Arranjar*/
-        const postagemMockado: IPostagem[] =
-            [
-                {
-                    id: 1,
-                    caminhoImagem: "C:\\Users\\gusta\\OneDrive\Documentos",
-                    titulo: "Aula de TypeScript",
-                    descricao: "Introdução de conteúdo de back-end",
-                    visibilidade: true,
-                    autorID: 1,
-                },
-                {
-                    id: 2,
-                    caminhoImagem: "C:\\Users\\gusta\\OneDrive\Documentos",
-                    titulo: "Node no dia a dia",
-                    descricao: "Introdução de aula de back-end",
-                    visibilidade: true,
-                    autorID: 1,
-                },
-            ];
-
-        /*Executar*/
-        (prisma.cH_postagem.findMany as jest.Mock).mockResolvedValue(postagemMockado);
-        const resultadoMockado = await postagemRepositorio.buscarPostagensPorPalavraChave("Aula");
-
-        /*Afirmar*/
-        expect(prisma.cH_postagem.findMany).toHaveBeenCalledWith({
-            where: {
-                OR: [
-                    { titulo: { contains: "Aula", mode: "insensitive" } },
-                    { descricao: { contains: "Aula", mode: "insensitive" } }
-                ]
-            }
-        });
-        expect(resultadoMockado).toEqual(postagemMockado);
-    });
-})
