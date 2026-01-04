@@ -37,23 +37,21 @@ export class DashboardRepository implements IDashboardRepository {
     async usuarioPorPostagem(): Promise<IUsuarioPorPostagem[]> {
         try {
             const postagensPorUsuario = await prisma.cH_usuario.findMany({
-                where: {
-                    id: {
-                        not: 2
-                    }
-                },
                 select: {
                     nomeCompleto: true,
+                    papelUsuarioID: true,
                     _count: {
                         select: { postagens: true }
                     }
                 }
             });
 
-            const resultado = postagensPorUsuario.map(u => ({
-                usuario: u.nomeCompleto,
-                total: u._count.postagens
-            }));
+            const resultado = postagensPorUsuario
+                .filter(u => u.papelUsuarioID !== 2)
+                .map(u => ({
+                    usuario: u.nomeCompleto,
+                    total: u._count.postagens
+                }));
 
             return resultado;
         } catch (error) {
