@@ -38,7 +38,7 @@ export class DashboardRepository implements IDashboardRepository {
         try {
             const postagensPorUsuario = await prisma.cH_usuario.findMany({
                 where: {
-                    papelUsuarioID: {
+                    id: {
                         not: 2
                     }
                 },
