@@ -11,19 +11,19 @@ export class EditarUsuarioUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }
 
     async processar(id: number, usuario: IUsuarioAlteracao, arquivo?: Express.Multer.File): Promise<IUsuarioModificacao | null> {
+        const usuarioAtual = await this.usuarioRepository.buscarUsuarioPorID(id);
+        if (!usuarioAtual) return null;
+
         if (usuario.senha) {
             const roundsSenha = Number(process.env.BCRYPT_SALT_ROUNDS);
             usuario.senha = await bcrypt.hash(usuario.senha, roundsSenha);
         } else {
-            const usuarioSolicitado = await this.usuarioRepository.buscarUsuarioPorID(id);
-            if (usuarioSolicitado) {
-                usuario.senha = usuarioSolicitado.senha;
-            }
+            usuario.senha = usuarioAtual.senha;
         }
         if (arquivo) {
             usuario.caminhoImagem = await uploadImagem(arquivo);
         } else {
-            usuario.caminhoImagem = usuario.caminhoImagem ?? null;;
+            usuario.caminhoImagem = usuarioAtual.caminhoImagem ?? null;;
         }
         return this.usuarioRepository.alterarUsuario(id, usuario);
     }
