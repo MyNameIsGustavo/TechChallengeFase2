@@ -13,7 +13,7 @@ import dotenv from 'dotenv';
 import { dashboardRotas } from './http/controller/dashboard/rotas';
 
 const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
-dotenv.config({ path: envFile })
+dotenv.config({ path: envFile });
 
 async function appChronosAPI() {
     await bancoDeDados.conectar();
