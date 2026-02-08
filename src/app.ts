@@ -10,25 +10,23 @@ import { seedUsuarios } from './repositories/pg/seedUsuario';
 import { curtidasRotas } from './http/controller/curtida/rotas';
 import { comentarioRotas } from './http/controller/comentario/rotas';
 import { dashboardRotas } from './http/controller/dashboard/rotas';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
 const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
-dotenv.config({ path: envFile });
+dotenv.config({ path: envFile })
 
 async function appChronosAPI() {
     await bancoDeDados.conectar();
     await seedPapeisUsuarios();
     await seedUsuarios();
-    
     papelUsuarioRotas(app);
     usuarioRotas(app);
     postagemRotas(app);
     curtidasRotas(app);
     comentarioRotas(app);
     dashboardRotas(app);
-    
     prometheusConfigRota(); 
-    configuracaoSwagger(app);
+    configuracaoSwagger(app)
 }
 
 appChronosAPI()
