@@ -9,8 +9,8 @@ import { seedPapeisUsuarios } from './repositories/pg/seedPapelUsuario';
 import { seedUsuarios } from './repositories/pg/seedUsuario';
 import { curtidasRotas } from './http/controller/curtida/rotas';
 import { comentarioRotas } from './http/controller/comentario/rotas';
-import dotenv from 'dotenv';
 import { dashboardRotas } from './http/controller/dashboard/rotas';
+import dotenv from 'dotenv';
 
 const envFile = process.env.NODE_ENV === 'PRODUCTION' ? '.env.prod' : '.env.local';
 dotenv.config({ path: envFile });
