@@ -93,7 +93,7 @@ export class UsuarioRepository implements IUsuarioRepository {
         }
     }
 
-    async buscarTodosUsuarios(pagina = 1, limite = 10, papelUsuarioId?: number): Promise<IUsuario[]> {
+    async buscarTodosUsuarios( pagina = 1, limite = 10, papelUsuarioId?: number): Promise<{ usuarios: IUsuario[]; total: number }> {
         try {
             const skip = (pagina - 1) * limite;
 
@@ -105,18 +105,24 @@ export class UsuarioRepository implements IUsuarioRepository {
                 };
             }
 
-            const usuarios = await prisma.cH_usuario.findMany({
-                where,
-                skip,
-                take: limite,
-                include: {
-                    papelUsuario: true
-                }
-            });
+            const [usuarios, total] = await prisma.$transaction([
+                prisma.cH_usuario.findMany({
+                    where,
+                    skip,
+                    take: limite,
+                    include: {
+                        papelUsuario: true
+                    }
+                }),
+                prisma.cH_usuario.count({ where })
+            ]);
 
-            return usuarios as IUsuario[];
+            return {
+                usuarios: usuarios as IUsuario[],
+                total
+            };
         } catch (error) {
-            throw new Error(`Erro ao buscar todos usuários: ${error}`);
+            throw new Error(`Erro ao buscar usuários: ${error}`);
         }
     }
 

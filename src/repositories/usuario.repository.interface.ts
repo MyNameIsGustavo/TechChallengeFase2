@@ -3,7 +3,7 @@ import type { IUsuario, IUsuarioAlteracao, IUsuarioModificacao } from "../entiti
 export interface IUsuarioRepository {
     criarUsuario(usuario: IUsuario): Promise<IUsuario | null>;
     deletarUsuario(id: number): Promise<IUsuario | null>;
-    buscarTodosUsuarios(pagina?: number, limite?: number, tipoUsuario?: number): Promise<IUsuario[]>;
+    buscarTodosUsuarios(pagina?: number, limite?: number, tipoUsuario?: number): Promise<{ usuarios: IUsuario[]; total: number }>;
     buscarUsuarioPorID(id: number): Promise<IUsuario | null>;
     buscarUsuarioPorEmail(email: string): Promise<IUsuario | null>;
     editarUsuario(id: number, usuario: IUsuarioModificacao): Promise<IUsuarioModificacao | null>;
