@@ -1,6 +1,7 @@
 import type { IUsuario, IUsuarioAlteracao, IUsuarioModificacao } from "../../entities/models/usuario.interface";
 import type { IUsuarioRepository } from "../usuario.repository.interface";
 import { prisma } from "../../prismaClient";
+import { Prisma } from "@prisma/client";
 
 export class UsuarioRepository implements IUsuarioRepository {
 
@@ -92,13 +93,26 @@ export class UsuarioRepository implements IUsuarioRepository {
         }
     }
 
-    async buscarTodosUsuarios(): Promise<IUsuario[]> {
+    async buscarTodosUsuarios(pagina = 1, limite = 10, papelUsuarioId?: number): Promise<IUsuario[]> {
         try {
-            const usuarios = await prisma.cH_usuario.findMany();
+            const skip = (pagina - 1) * limite;
 
-            if (usuarios.length === 0) {
-                return [];
+            const where: Prisma.CH_usuarioWhereInput = {};
+
+            if (papelUsuarioId !== undefined) {
+                where.papelUsuario = {
+                    id: papelUsuarioId
+                };
             }
+
+            const usuarios = await prisma.cH_usuario.findMany({
+                where,
+                skip,
+                take: limite,
+                include: {
+                    papelUsuario: true
+                }
+            });
 
             return usuarios as IUsuario[];
         } catch (error) {

@@ -4,7 +4,11 @@ import type { IUsuarioRepository } from "../../repositories/usuario.repository.i
 export class BuscarTodosUsuariosUseCase {
     constructor(private usuarioRepository: IUsuarioRepository) { }
 
-    async processar(): Promise<IUsuario[]> {
-        return this.usuarioRepository.buscarTodosUsuarios();
+    async processar(pagina?: number,limite?: number, tipoUsuario?: number): Promise<IUsuario[]> {
+        return this.usuarioRepository.buscarTodosUsuarios(
+            pagina,
+            limite,
+            tipoUsuario
+        );
     }
 }
